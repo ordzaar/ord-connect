@@ -1,4 +1,4 @@
 import React from "react";
 export var WalletConnect = function () {
-    return React.createElement("div", null, "Bitconnect");
+    return React.createElement("div", null, "Bitconnecter!");
 };
