@@ -1,1 +1,3 @@
 node_modules
+packages/sado-connect/node_modules
+packages/sado-connect/dist
