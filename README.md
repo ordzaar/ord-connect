@@ -48,12 +48,13 @@ pnpm dev
 
 For inter-repo local testing:
 
-1. `cd` to any repo of your choosing (e.g., ordzaar).
-2. Link the global package to the local project:
+1. Link the global package to the local project:
 
    ```bash
    pnpm link packages/sado-connect --global
    ```
+
+2. `cd` to any repo of your choosing (e.g., ordzaar).
 
 3. Add sado-connect to your project:
 
