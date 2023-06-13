@@ -1,0 +1,11 @@
+{
+  "name": "family-sado-connect",
+  "version": "0.0.0",
+  "main": "packages/sado-connect/src/index.tsx",
+  "private": true,
+  "scripts": {
+    "dev:vite": "pnpm workspace vite run dev",
+    "build": "pnpm workspace sado-connect run build"
+  },
+  "packageManager": "pnpm@8.6.0"
+}
