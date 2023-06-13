@@ -1,2 +1,2 @@
 import React from "react";
-export declare const WalletConnect: () => React.JSX.Element;
+export default function SadoConnect(): React.JSX.Element;
