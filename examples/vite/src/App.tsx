@@ -1,8 +1,9 @@
 import "./App.css";
-import SadoConnect from "sado-connect";
+import { ConnectKit } from "sado-connect";
+import "../node_modules/sado-connect/dist/style.css";
 
 function App() {
-  return <SadoConnect />;
+  return <ConnectKit />;
 }
 
 export default App;
