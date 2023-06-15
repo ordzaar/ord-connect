@@ -1,20 +1,54 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 export default function SadoConnect() {
+  const [text, setText] = useState("");
+  useEffect(() => {
+    const scriptUrls = [
+      "ecc.js",
+      "bip32.js",
+      "bip39.js",
+      "buffer.js",
+      "bitcoin-tap.js",
+      "ordit-sdk.js",
+    ];
+    const scripts: HTMLScriptElement[] = [];
+
+    scriptUrls.forEach((url) => {
+      const script = document.createElement("script");
+      script.src = `ordit/${url}`;
+      script.async = true;
+
+      document.body.appendChild(script);
+      scripts.push(script);
+    });
+
+    return () => {
+      scripts.forEach((script) => {
+        document.body.removeChild(script);
+      });
+    };
+  }, []);
+
   let [isOpen, setIsOpen] = useState(true);
 
   function closeModal() {
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
+  async function openModal() {
+    // setIsOpen(true);
+    const wallet = await (window as any).ordit.sdk.get("wallet", {
+      seed: "msmalley",
+    });
+    console.log(wallet);
+    setText(JSON.stringify(wallet.addresses));
   }
 
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center">
+        {text}
         <button
           type="button"
           onClick={openModal}
