@@ -1,5 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import CloseModalIcon from "../assets/close-modal.svg";
+import ChevronRightIcon from "../assets/chevron-right.svg";
+import UnisatWalletIcon from "../assets/unisat-wallet.svg";
+import XverseWalletIcon from "../assets/xverse-wallet.svg";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -50,7 +54,7 @@ export const SelectWalletModal = ({
                     onClick={closeModal}
                     className="close-button"
                   >
-                    <img src="/images/close-modal.svg" />
+                    <img src={CloseModalIcon} />
                   </button>
                 </section>
 
@@ -60,9 +64,9 @@ export const SelectWalletModal = ({
                     className="wallet-option-button"
                     onClick={closeModal}
                   >
-                    <img src="/images/unisat-wallet.svg" />
+                    <img src={UnisatWalletIcon} />
                     <span className="wallet-option-label">Unisat wallet</span>
-                    <img src="/images/chevron-right.svg" />
+                    <img src={ChevronRightIcon} />
                   </button>
                   <hr className="horizontal-separator" />
                   <button
@@ -70,9 +74,9 @@ export const SelectWalletModal = ({
                     className="wallet-option-button"
                     onClick={closeModal}
                   >
-                    <img src="/images/xverse-wallet.svg" />
+                    <img src={XverseWalletIcon} />
                     <span className="wallet-option-label">Xverse</span>
-                    <img src="/images/chevron-right.svg" />
+                    <img src={ChevronRightIcon} />
                   </button>
                 </section>
               </Dialog.Panel>
