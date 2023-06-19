@@ -4,3 +4,15 @@ packages/sado-connect/dist
 
 # misc
 .DS_Store
+
+# IntelliJ
+.idea/*
+!.idea/inspectionProfiles/
+!.idea/dictionaries/
+!.idea/codeStyles/
+!.idea/modules.xml
+!.idea/*.iml
+!.idea/README.md
+
+# VSCode
+.vscode/*
