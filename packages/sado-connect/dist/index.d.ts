@@ -1,2 +1,2 @@
-export { ConnectKit } from "./components/ConnectKit";
-export type { ConnectKitProp } from "./components/ConnectKit";
+export { SadoConnectKit } from "./components/SadoConnectKit";
+export type { ConnectKitProp } from "./components/SadoConnectKit";

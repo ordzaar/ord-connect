@@ -7,7 +7,7 @@ export interface ConnectKitProp {
   customStyle?: string;
 }
 
-export const ConnectKit = ({
+export const SadoConnectKit = ({
   customStyle,
   customLabel = "Connect wallet",
 }: ConnectKitProp) => {
@@ -39,7 +39,7 @@ export const ConnectKit = ({
     };
   }, []);
 
-  let [isOpen, setIsOpen] = useState(true);
+  let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
