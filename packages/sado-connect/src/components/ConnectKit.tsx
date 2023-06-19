@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./style.css";
+import { SelectWalletModal } from "./SelectWalletModal";
 
 export interface ConnectKitProp {
   customLabel?: string;
@@ -10,7 +11,7 @@ export const ConnectKit = ({
   customStyle,
   customLabel = "Connect wallet",
 }: ConnectKitProp) => {
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState<string | undefined>();
   useEffect(() => {
     const scriptUrls = [
       "ecc.js",
@@ -24,7 +25,7 @@ export const ConnectKit = ({
 
     scriptUrls.forEach((url) => {
       const script = document.createElement("script");
-      script.src = `ordit/${url}`;
+      script.src = `/ordit/${url}`;
       script.async = true;
 
       document.body.appendChild(script);
@@ -45,20 +46,25 @@ export const ConnectKit = ({
   }
 
   async function openModal() {
-    // setIsOpen(true);
+    setIsOpen(true);
     const wallet = await (window as any).ordit.sdk.get("wallet", {
       seed: "msmalley",
     });
     console.log(wallet);
-    setText(JSON.stringify(wallet.addresses));
+    setAddress(JSON.stringify(wallet.addresses));
   }
 
   return (
-    <button
-      type="button"
-      className={`sado-connect-wallet-button ${customStyle}`}
-    >
-      {customLabel}
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={openModal}
+        className={`sado-connect-wallet-button ${customStyle}`}
+      >
+        {/* // TODO update ui of button to display address */}
+        {address ?? customLabel}
+      </button>
+      <SelectWalletModal isOpen={isOpen} closeModal={closeModal} />
+    </>
   );
 };
