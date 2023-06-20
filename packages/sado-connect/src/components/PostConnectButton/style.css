@@ -1,3 +1,8 @@
+.sado-wallet-connected-container {
+  position: relative;
+  display: inline-block;
+}
+
 .sado-wallet-connected-button {
   border-radius: 52px;
   border: 1px solid #8c8c8c;
@@ -50,8 +55,17 @@
   margin-right: 8px;
 }
 
+.sado-wallet-connected-button .dropdown-button {
+  transition: transform 300ms ease;
+}
+
 .sado-wallet-connected-button .expand-dropdown-button {
   width: 20px;
+  transform: rotate(0deg);
+}
+
+.sado-wallet-connected-button .close-dropdown-button {
+  transform: rotate(-180deg);
 }
 
 .sado-wallet-connection-dropdown {
@@ -59,6 +73,9 @@
   border-radius: 15px;
   border: 0.5px solid rgba(255, 255, 255, 0.5);
   width: 256px;
+  position: absolute;
+  top: 54px;
+  right: 0px;
 }
 
 .sado-wallet-connection-dropdown .dropdown-button {

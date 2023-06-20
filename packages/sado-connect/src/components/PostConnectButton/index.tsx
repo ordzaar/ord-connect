@@ -18,28 +18,35 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
   };
 
   return (
-    <>
-      <div className="fixed top-16 w-56 text-right">
-        <Menu as="div" className="relative inline-block text-left">
-          <div>
-            <Menu.Button className="sado-wallet-connected-button">
-              <Avatar
-                size={28}
-                variant="beam"
-                name={address}
-                colors={["#1C2DCB", "#F226B8"]}
-              />
+    <Menu
+      as="section"
+      className="sado-wallet-connected-container relative inline-block text-left"
+    >
+      {({ open }) => (
+        <>
+          <Menu.Button className="sado-wallet-connected-button">
+            <Avatar
+              size={28}
+              variant="beam"
+              name={address}
+              colors={["#1C2DCB", "#F226B8"]}
+            />
 
-              <div className="address-container">
-                <p className="address">{TruncateMiddle(address)}</p>
-                <div className="network-container">
-                  <div className="status-indicator"></div>
-                  <p className="network">{network}</p>
-                </div>
-              </div>
-              <img src={ChevronDownIcon} className="expand-dropdown-button" />
-            </Menu.Button>
-          </div>
+            <section className="address-container">
+              <p className="address">{TruncateMiddle(address)}</p>
+              <section className="network-container">
+                <div className="status-indicator"></div>
+                <p className="network">{network}</p>
+              </section>
+            </section>
+            <img
+              src={ChevronDownIcon}
+              className={`dropdown-button ${
+                open ? "close-dropdown-button" : "expand-dropdown-button"
+              }`}
+            />
+          </Menu.Button>
+
           <Transition
             as={Fragment}
             enter="transition ease-out duration-100"
@@ -49,7 +56,7 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="sado-wallet-connection-dropdown absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="sado-wallet-connection-dropdown">
               <Menu.Item as="button" className="dropdown-button">
                 <span className="label">View wallet</span>
                 <span className="value">{TruncateMiddle(address)}</span>
@@ -70,8 +77,8 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
               </Menu.Item>
             </Menu.Items>
           </Transition>
-        </Menu>
-      </div>
-    </>
+        </>
+      )}
+    </Menu>
   );
 }
