@@ -9,7 +9,7 @@ import btctap from '../node_modules/ordit/js/bitcoin-tap.js'
 
 window.bitcointp = btctap
 window.ecc = ecc
-window.bip32 = {BIP32Factory: bip32}
+window.bip32 = { BIP32Factory: bip32 }
 window.bip39 = bip39
 window.Buffer = buffer.Buffer
 
