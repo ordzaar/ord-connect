@@ -1,0 +1,54 @@
+.sado-wallet-detail-button {
+  border-radius: 52px;
+  border: 1px solid #8c8c8c;
+  background-color: #0f0229;
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.sado-wallet-detail-button .address-container {
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+.sado-wallet-detail-button .address {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  margin: 0px;
+}
+
+.sado-wallet-detail-button .network-container {
+  display: flex;
+  align-items: center;
+}
+
+.sado-wallet-detail-button .status-indicator {
+  width: 8px;
+  height: 8px;
+  background: #00ad1d;
+  border-radius: 999px;
+  margin-right: 8px;
+}
+
+.sado-wallet-detail-button .network {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.sado-wallet-detail-button .wallet-profile-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: pink;
+  margin-right: 8px;
+}
+
+.sado-wallet-detail-button .expand-dropdown-button {
+  width: 20px;
+}
