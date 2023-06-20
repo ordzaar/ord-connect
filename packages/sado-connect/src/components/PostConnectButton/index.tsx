@@ -4,6 +4,7 @@ import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import LogoutIcon from "../../assets/logout.svg";
+import { useAddressContext } from "../../providers/AddressContext";
 
 interface PostConnectButtonProp {
   address: string;
@@ -11,6 +12,11 @@ interface PostConnectButtonProp {
 }
 
 export function PostConnectButton({ address, network }: PostConnectButtonProp) {
+  const { updateAddress } = useAddressContext();
+  const onDisconnectWallet = () => {
+    updateAddress(null);
+  };
+
   return (
     <>
       <div className="fixed top-16 w-56 text-right">
@@ -48,11 +54,17 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
                 <span className="label">View wallet</span>
                 <span className="value">{TruncateMiddle(address)}</span>
               </Menu.Item>
+              <hr className="horizontal-separator" />
               <Menu.Item as="button" className="dropdown-button">
                 <span className="label">Offers</span>
-                <span>{TruncateMiddle(address)}</span>
+                <div className="offers">0</div>
               </Menu.Item>
-              <Menu.Item as="button" className="dropdown-button">
+              <hr className="horizontal-separator" />
+              <Menu.Item
+                as="button"
+                className="dropdown-button"
+                onClick={onDisconnectWallet}
+              >
                 <span className="label">Disconnect wallet</span>
                 <img src={LogoutIcon} className="logout-icon" />
               </Menu.Item>

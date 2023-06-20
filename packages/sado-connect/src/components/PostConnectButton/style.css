@@ -67,6 +67,8 @@
   background: transparent;
   border: 0px;
   cursor: pointer;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .sado-wallet-connection-dropdown .dropdown-button:hover {
@@ -82,7 +84,7 @@
   padding: 26px 16px 18px;
 }
 
-.sado-wallet-connection-dropdown .dropdown-button:nth-child(2) {
+.sado-wallet-connection-dropdown .dropdown-button:nth-child(3) {
   padding: 18px 16px;
 }
 
@@ -94,10 +96,27 @@
   color: #fff;
   font-size: 14px;
   font-weight: 600;
-  min-width: 188px;
+  width: 70%;
   text-align: left;
 }
 
 .sado-wallet-connection-dropdown .value {
   color: #a6a6a6;
+}
+
+.sado-wallet-connection-dropdown .offers {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sado-wallet-connection-dropdown .horizontal-separator {
+  margin: 0px 16px;
+  border: 0px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.1);
 }

@@ -45,6 +45,7 @@
   overflow: hidden;
   text-align: left;
   height: 100%;
+  border-radius: 20px;
 }
 
 @media screen and (min-width: 768px) {

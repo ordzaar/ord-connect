@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 interface AddressContextI {
   address: string | null;
-  updateAddress: (address: string) => void;
+  updateAddress: (address: string | null) => void;
 }
 
 const AddressContext = createContext<AddressContextI>(undefined as any);
