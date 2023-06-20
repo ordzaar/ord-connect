@@ -33,7 +33,7 @@ export function SelectWalletModal({
         throw Error("No address found in UniSat wallet");
       }
 
-      console.log(accounts);
+      console.log("Unisat wallet:", accounts);
       updateAddress(accounts[0]);
       closeModal();
     } catch (err) {
@@ -55,7 +55,7 @@ export function SelectWalletModal({
           },
         },
         onFinish: (response) => {
-          console.log(response);
+          console.log("Xverse wallet:", response);
           if (response.addresses.length === 0) {
             throw Error("No address found in UniSat wallet");
           }

@@ -65,11 +65,7 @@ export function SadoConnectKit({
           customLabel={customLabel}
         />
       ) : (
-        <PostConnectButton
-          openModal={openModal}
-          address={address}
-          network={network}
-        />
+        <PostConnectButton address={address} network={network} />
       )}
 
       <SelectWalletModal isOpen={isOpen} closeModal={closeModal} />
