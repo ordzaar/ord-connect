@@ -14,8 +14,14 @@
 }
 
 .sado-wallet-connected-button .address-container {
-  margin-left: 8px;
-  margin-right: 16px;
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .sado-wallet-connected-button .address-container {
+    display: block;
+    margin-left: 8px;
+  }
 }
 
 .sado-wallet-connected-button .address {
@@ -57,6 +63,7 @@
 
 .sado-wallet-connected-button .dropdown-button {
   transition: transform 300ms ease;
+  margin-left: 16px;
 }
 
 .sado-wallet-connected-button .expand-dropdown-button {
