@@ -4,3 +4,9 @@ packages/sado-connect/dist
 
 # misc
 .DS_Store
+
+# IntelliJ
+.idea/*
+
+# VSCode
+.vscode/*
