@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./style.css";
 import { useAddressContext } from "../providers/AddressContext";
 import { PreConnectButton } from "./PreConnectButton";
@@ -14,36 +14,9 @@ export function SadoConnectKit({
   customStyle,
   customLabel = "Connect wallet",
 }: SadoConnectKitProp) {
+  const [isOpen, setIsOpen] = useState(false);
   const { address } = useAddressContext();
   const network = "MainNet";
-  useEffect(() => {
-    const scriptUrls = [
-      "ecc.js",
-      "bip32.js",
-      "bip39.js",
-      "buffer.js",
-      "bitcoin-tap.js",
-      "ordit-sdk.js",
-    ];
-    const scripts: HTMLScriptElement[] = [];
-
-    scriptUrls.forEach((url) => {
-      const script = document.createElement("script");
-      script.src = `/ordit/${url}`;
-      script.async = true;
-
-      document.body.appendChild(script);
-      scripts.push(script);
-    });
-
-    return () => {
-      scripts.forEach((script) => {
-        document.body.removeChild(script);
-      });
-    };
-  }, []);
-
-  let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
