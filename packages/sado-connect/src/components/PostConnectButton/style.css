@@ -1,0 +1,146 @@
+.sado-wallet-connected-container {
+  position: relative;
+  display: inline-block;
+}
+
+.sado-wallet-connected-button {
+  border-radius: 52px;
+  border: 1px solid #8c8c8c;
+  background-color: #0f0229;
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sado-wallet-connected-button .address-container {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .sado-wallet-connected-button .address-container {
+    display: block;
+    margin-left: 8px;
+  }
+}
+
+.sado-wallet-connected-button .address {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  margin: 0px;
+}
+
+.sado-wallet-connected-button .network-container {
+  display: flex;
+  align-items: center;
+}
+
+.sado-wallet-connected-button .status-indicator {
+  width: 8px;
+  height: 8px;
+  background: #00ad1d;
+  border-radius: 999px;
+  margin-right: 8px;
+}
+
+.sado-wallet-connected-button .network {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.sado-wallet-connected-button .wallet-profile-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: pink;
+  margin-right: 8px;
+}
+
+.sado-wallet-connected-button .dropdown-button {
+  transition: transform 300ms ease;
+  margin-left: 16px;
+}
+
+.sado-wallet-connected-button .expand-dropdown-button {
+  width: 20px;
+  transform: rotate(0deg);
+}
+
+.sado-wallet-connected-button .close-dropdown-button {
+  transform: rotate(-180deg);
+}
+
+.sado-wallet-connection-dropdown {
+  background: #121212;
+  border-radius: 15px;
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  width: 256px;
+  position: absolute;
+  top: 54px;
+  right: 0px;
+}
+
+.sado-wallet-connection-dropdown .dropdown-button {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 0px;
+  cursor: pointer;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sado-wallet-connection-dropdown .dropdown-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sado-wallet-connection-dropdown .dropdown-button:active {
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0.7;
+}
+
+.sado-wallet-connection-dropdown .dropdown-button:first-child {
+  padding: 26px 16px 18px;
+}
+
+.sado-wallet-connection-dropdown .dropdown-button:nth-child(3) {
+  padding: 18px 16px;
+}
+
+.sado-wallet-connection-dropdown .dropdown-button:last-child {
+  padding: 18px 16px 26px;
+}
+
+.sado-wallet-connection-dropdown .label {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  width: 70%;
+  text-align: left;
+}
+
+.sado-wallet-connection-dropdown .value {
+  color: #a6a6a6;
+}
+
+.sado-wallet-connection-dropdown .offers {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sado-wallet-connection-dropdown .horizontal-separator {
+  margin: 0px 16px;
+  border: 0px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+}
