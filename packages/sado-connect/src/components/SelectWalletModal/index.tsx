@@ -28,13 +28,22 @@ export function SelectWalletModal({
         throw Error("UniSat browser extension is not installed");
       }
 
-      const accounts = await (window as any).unisat.requestAccounts();
-      if (accounts.length === 0) {
-        throw Error("No address found in UniSat wallet");
-      }
+      await (window as any).ordit.sdk.wallet.get(
+        {
+          connect: "unisat",
+        },
+        function (resp: any) {
+          console.log(resp);
+        }
+      );
 
-      console.log("Unisat wallet:", accounts);
-      updateAddress(accounts[0]);
+      // const accounts = await (window as any).unisat.requestAccounts();
+      // if (accounts.length === 0) {
+      //   throw Error("No address found in UniSat wallet");
+      // }
+
+      // console.log("Unisat wallet:", accounts);
+      // updateAddress(accounts[0]);
       closeModal();
     } catch (err) {
       console.error("Error while connecting to UniSat wallet", err);
@@ -46,26 +55,34 @@ export function SelectWalletModal({
       "https://chrome.google.com/webstore/detail/xverse-wallet/idnnbdplmphpflfnlkomgpfbpcgelopg";
 
     try {
-      const getXverseAddressOptions: GetAddressOptions = {
-        payload: {
-          purposes: [AddressPurposes.ORDINALS, AddressPurposes.PAYMENT],
-          message: "Address for receiving Ordinals and payments",
-          network: {
-            type: "Mainnet",
-          },
-        },
-        onFinish: (response) => {
-          console.log("Xverse wallet:", response);
-          if (response.addresses.length === 0) {
-            throw Error("No address found in UniSat wallet");
-          }
-          updateAddress(response.addresses[0].address);
-        },
-        onCancel: () =>
-          console.log("Request to access Xverse wallet is cancelled"),
-      };
+      // const getXverseAddressOptions: GetAddressOptions = {
+      //   payload: {
+      //     purposes: [AddressPurposes.ORDINALS, AddressPurposes.PAYMENT],
+      //     message: "Address for receiving Ordinals and payments",
+      //     network: {
+      //       type: "Mainnet",
+      //     },
+      //   },
+      //   onFinish: (response) => {
+      //     console.log("Xverse wallet:", response);
+      //     if (response.addresses.length === 0) {
+      //       throw Error("No address found in UniSat wallet");
+      //     }
+      //     updateAddress(response.addresses[0].address);
+      //   },
+      //   onCancel: () =>
+      //     console.log("Request to access Xverse wallet is cancelled"),
+      // };
 
-      await getAddress(getXverseAddressOptions);
+      // await getAddress(getXverseAddressOptions);
+      await (window as any).ordit.sdk.wallet.get(
+        {
+          connect: "xverse",
+        },
+        function (resp: any) {
+          console.log(resp);
+        }
+      );
       closeModal();
     } catch (err) {
       const { message } = err as Error;
