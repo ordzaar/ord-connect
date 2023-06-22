@@ -45,7 +45,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
-    "boring-avatars": "^1.10.1",
-    "sats-connect": "^0.2.0"
+    "boring-avatars": "^1.10.1"
   }
 }
