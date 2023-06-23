@@ -21,11 +21,11 @@ export function SelectWalletModal({
   closeModal,
 }: SelectWalletModalProp) {
   const { updateAddress } = useAddressContext();
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onConnectUnisatWallet = async () => {
     try {
-      if (typeof (window as any).unisat === "undefined") {
+      if (!(window as any).unisat) {
         window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
         throw Error("UniSat browser extension is not installed");
       }
