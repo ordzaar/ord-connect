@@ -15,3 +15,8 @@ export interface GetWalletModel {
   message: string;
   success: boolean;
 }
+
+export enum SupportedWallets {
+  "Unisat" = "unisat",
+  "Xverse" = "xverse",
+}
