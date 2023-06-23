@@ -1,11 +1,15 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { AddressPurposes, GetAddressOptions, getAddress } from "sats-connect";
 import { useAddressContext } from "../../providers/AddressContext";
+import { GetWalletModel } from "../../types/OrditSdk";
+import {
+  UNISAT_WALLET_CHROME_EXTENSION_URL,
+  XVERSE_WALLET_CHROME_EXTENSION_URL,
+} from "../../utils/constant";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -17,64 +21,63 @@ export function SelectWalletModal({
   closeModal,
 }: SelectWalletModalProp) {
   const { updateAddress } = useAddressContext();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onConnectUnisatWallet = async () => {
-    const UNISAT_WALLET_CHROME_EXTENSION_URL =
-      "https://chrome.google.com/webstore/detail/unisat-wallet/ppbibelpcjmhbdihakflkdcoccbgbkpo";
-
     try {
-      if (typeof (window as any).unisat === "undefined") {
+      if (!(window as any).unisat) {
         window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
         throw Error("UniSat browser extension is not installed");
       }
 
-      const accounts = await (window as any).unisat.requestAccounts();
-      if (accounts.length === 0) {
-        throw Error("No address found in UniSat wallet");
-      }
-
-      console.log("Unisat wallet:", accounts);
-      updateAddress(accounts[0]);
-      closeModal();
+      await (window as any).ordit.sdk.wallet.get(
+        {
+          connect: "unisat",
+        },
+        (resp: GetWalletModel) => {
+          console.log(resp);
+          updateAddress(resp.data.addresses[0].address);
+          closeModal();
+        }
+      );
     } catch (err) {
+      setErrorMessage((err as any).toString());
       console.error("Error while connecting to UniSat wallet", err);
     }
   };
 
   const onConnectXverseWallet = async () => {
-    const XVERSE_WALLET_CHROME_EXTENSION_URL =
-      "https://chrome.google.com/webstore/detail/xverse-wallet/idnnbdplmphpflfnlkomgpfbpcgelopg";
-
     try {
-      const getXverseAddressOptions: GetAddressOptions = {
-        payload: {
-          purposes: [AddressPurposes.ORDINALS, AddressPurposes.PAYMENT],
-          message: "Address for receiving Ordinals and payments",
-          network: {
-            type: "Mainnet",
-          },
+      await (window as any).ordit.sdk.wallet.get(
+        {
+          connect: "xverse",
         },
-        onFinish: (response) => {
-          console.log("Xverse wallet:", response);
-          if (response.addresses.length === 0) {
-            throw Error("No address found in UniSat wallet");
-          }
-          updateAddress(response.addresses[0].address);
-        },
-        onCancel: () =>
-          console.log("Request to access Xverse wallet is cancelled"),
-      };
-
-      await getAddress(getXverseAddressOptions);
-      closeModal();
+        (resp: GetWalletModel) => {
+          console.log(resp);
+          updateAddress(resp.data.addresses[0].address);
+          closeModal();
+        }
+      );
     } catch (err) {
-      const { message } = err as Error;
-      if (message === "No Bitcoin Wallet installed") {
-        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
-      }
+      setErrorMessage((err as any).toString());
       console.error("Error while connecting to Xverse wallet", err);
     }
   };
+
+  useEffect(() => {
+    const updateErrorMessage = (event: PromiseRejectionEvent) => {
+      const errorMessage = event.reason?.message;
+
+      if (errorMessage === "No Bitcoin Wallet installed") {
+        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
+      }
+      setErrorMessage(errorMessage);
+    };
+    window.addEventListener("unhandledrejection", updateErrorMessage);
+
+    return () =>
+      window.removeEventListener("unhandledrejection", updateErrorMessage);
+  }, []);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -121,29 +124,32 @@ export function SelectWalletModal({
                 </section>
 
                 <section className="panel-content-container">
-                  <button
-                    type="button"
-                    className="wallet-option-button"
-                    onClick={async () => {
-                      await onConnectUnisatWallet();
-                    }}
-                  >
-                    <img src={UnisatWalletIcon} />
-                    <span className="wallet-option-label">Unisat wallet</span>
-                    <img src={ChevronRightIcon} />
-                  </button>
-                  <hr className="horizontal-separator" />
-                  <button
-                    type="button"
-                    className="wallet-option-button"
-                    onClick={async () => {
-                      await onConnectXverseWallet();
-                    }}
-                  >
-                    <img src={XverseWalletIcon} />
-                    <span className="wallet-option-label">Xverse</span>
-                    <img src={ChevronRightIcon} />
-                  </button>
+                  <section className="panel-content-inner-container">
+                    <button
+                      type="button"
+                      className="wallet-option-button"
+                      onClick={async () => {
+                        await onConnectUnisatWallet();
+                      }}
+                    >
+                      <img src={UnisatWalletIcon} />
+                      <span className="wallet-option-label">Unisat wallet</span>
+                      <img src={ChevronRightIcon} />
+                    </button>
+                    <hr className="horizontal-separator" />
+                    <button
+                      type="button"
+                      className="wallet-option-button"
+                      onClick={async () => {
+                        await onConnectXverseWallet();
+                      }}
+                    >
+                      <img src={XverseWalletIcon} />
+                      <span className="wallet-option-label">Xverse</span>
+                      <img src={ChevronRightIcon} />
+                    </button>
+                  </section>
+                  <p className="error-message">{errorMessage}</p>
                 </section>
               </Dialog.Panel>
             </Transition.Child>

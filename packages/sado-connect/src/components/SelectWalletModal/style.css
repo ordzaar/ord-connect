@@ -45,12 +45,12 @@
   overflow: hidden;
   text-align: left;
   height: 100%;
-  border-radius: 20px;
 }
 
 @media screen and (min-width: 768px) {
   .sado-connect-wallet-modal .panel {
     border: 1px solid rgba(51, 51, 51, 0.5);
+    border-radius: 20px;
   }
 }
 
@@ -86,8 +86,6 @@
 
 .sado-connect-wallet-modal .panel-content-container {
   margin: 64px 24px 0px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media screen and (min-width: 768px) {
@@ -95,6 +93,11 @@
     margin-bottom: 48px;
     margin-top: 48px;
   }
+}
+
+.sado-connect-wallet-modal .panel-content-inner-container {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sado-connect-wallet-modal .wallet-option-button {
@@ -128,7 +131,7 @@
   border-radius: 20px 20px 0px 0px;
 }
 
-.sado-connect-wallet-modal .wallet-option-button:last-child {
+.sado-connect-wallet-modal .wallet-option-button:nth-of-type(2) {
   border: 0px;
   padding: 24px 32px 32px;
   margin-bottom: 0px;
@@ -145,4 +148,11 @@
   margin: 0px 16px;
   border: 0px;
   border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.sado-connect-wallet-modal .error-message {
+  margin: 16px 0px 0px 0px;
+  color: #e54545;
+  font-size: 14px;
+  line-height: 20px;
 }
