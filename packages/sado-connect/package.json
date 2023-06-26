@@ -1,6 +1,10 @@
 {
-  "name": "sado-connect",
+  "name": "@sadoprotocol/sado-connect",
   "version": "0.0.0",
+  "description": "React component library for Bitcoin Ordinals and Sado Protocol Connections",
+  "repository": "https://github.com/sadoprotocol/sado-connect",
+  "bugs": "https://github.com/sadoprotocol/sado-connect/issues",
+  "license": "MIT",
   "type": "module",
   "files": [
     "dist/*",
