@@ -1,0 +1,46 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  npm:
+    name: NPM
+    runs-on: ubuntu-latest
+    environment: NPM Release Publishing
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+
+      - uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd
+        with:
+          version: 8
+
+      - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+        with:
+          node-version-file: ".nvmrc"
+          cache: pnpm
+
+      - uses: actions/github-script@e3cbab99d3a9b271e1b79fc96d103a4a5534998c
+        id: version
+        with:
+          script: |
+            const semver = context.ref.replace('refs/tags/v', '')
+            if (semver.match(/^[0-9]+\.[0-9]+\.[0-9]+$/)){
+              return semver
+            }
+            throw new Error('not semver')
+          result-encoding: string
+
+      - run: pnpm install
+      - run: pnpm build
+
+      - name: Version
+        run: |
+          node ./scripts/version.js --version ${{ steps.version.outputs.result }}
+      - name: Publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+          npm run publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
