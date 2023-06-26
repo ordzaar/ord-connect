@@ -1,0 +1,17 @@
+{
+  "name": "@sadoprotocol/sado-connect-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "repository": "https://github.com/sadoprotocol/sado-connect",
+  "bugs": "https://github.com/sadoprotocol/sado-connect/issues",
+  "license": "MIT",
+  "scripts": {
+    "publish": "node ./scripts/publish.js",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "husky": "8.0.3",
+    "prettier": "2.8.8",
+    "turbo": "1.9.1"
+  }
+}
