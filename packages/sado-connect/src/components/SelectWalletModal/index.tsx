@@ -5,7 +5,6 @@ import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useAddressContext } from "../../providers/AddressContext";
-import { GetWalletModel } from "../../types/OrditSdk";
 import {
   // UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
@@ -26,27 +25,25 @@ export function SelectWalletModal({
 
   const onConnectUnisatWallet = async () => {
     try {
-      await ordit.unisat.getAddresses("testnet");
+      const unisat = await ordit.unisat.getAddresses("testnet");
+      updateAddress(unisat[0].address);
+      closeModal();
     } catch (err) {
       setErrorMessage((err as any).toString());
       console.error("Error while connecting to UniSat wallet", err);
-    } finally {
-      closeModal();
     }
   };
 
   const onConnectXverseWallet = async () => {
     try {
-      await (window as any).ordit.sdk.wallet.get(
-        {
-          connect: "xverse",
-        },
-        (resp: GetWalletModel) => {
-          console.log(resp);
-          updateAddress(resp.data.addresses[0].address);
-          closeModal();
-        }
-      );
+      const xverse = await ordit.xverse.getAddresses({
+        network: "testnet",
+        // Temporary empty string until ordit-sdk fixes their types
+        payload: { message: "" },
+      });
+      // Temporary typecast until ordit-sdk fixes their return
+      updateAddress((xverse as any)[0].address);
+      closeModal();
     } catch (err) {
       setErrorMessage((err as any).toString());
       console.error("Error while connecting to Xverse wallet", err);
