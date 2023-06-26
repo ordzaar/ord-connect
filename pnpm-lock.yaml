@@ -23,9 +23,6 @@ importers:
       boring-avatars:
         specifier: ^1.10.1
         version: 1.10.1
-      rollup-plugin-node-polyfills:
-        specifier: ^0.2.1
-        version: 0.2.1
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^25.0.2
