@@ -23,6 +23,7 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
+    "@sadoprotocol/ordit-sdk": "^0.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
@@ -45,6 +46,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
+    "@sadoprotocol/ordit-sdk": "^0.0.1",
     "boring-avatars": "^1.10.1"
   }
 }

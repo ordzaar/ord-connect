@@ -7,9 +7,10 @@ import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useAddressContext } from "../../providers/AddressContext";
 import { GetWalletModel } from "../../types/OrditSdk";
 import {
-  UNISAT_WALLET_CHROME_EXTENSION_URL,
+  // UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
+import { ordit } from "@sadoprotocol/ordit-sdk";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -25,24 +26,12 @@ export function SelectWalletModal({
 
   const onConnectUnisatWallet = async () => {
     try {
-      if (!(window as any).unisat) {
-        window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
-        throw Error("UniSat browser extension is not installed");
-      }
-
-      await (window as any).ordit.sdk.wallet.get(
-        {
-          connect: "unisat",
-        },
-        (resp: GetWalletModel) => {
-          console.log(resp);
-          updateAddress(resp.data.addresses[0].address);
-          closeModal();
-        }
-      );
+      await ordit.unisat.getAddresses("testnet");
     } catch (err) {
       setErrorMessage((err as any).toString());
       console.error("Error while connecting to UniSat wallet", err);
+    } finally {
+      closeModal();
     }
   };
 
