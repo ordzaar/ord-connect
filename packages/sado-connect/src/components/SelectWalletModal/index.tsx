@@ -95,7 +95,7 @@ export function SelectWalletModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="panel max-w-md transform p-6 align-middle shadow-xl transition-all">
+              <Dialog.Panel className="panel">
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
                     Choose wallet to connect
