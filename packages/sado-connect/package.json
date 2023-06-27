@@ -17,6 +17,10 @@
     ".": {
       "import": "./dist/sado-connect.js",
       "require": "./dist/sado-connect.umd.cjs"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "scripts": {
