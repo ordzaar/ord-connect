@@ -38,11 +38,8 @@ export function SelectWalletModal({
     try {
       const xverse = await ordit.xverse.getAddresses({
         network: "testnet",
-        // Temporary empty string until ordit-sdk fixes their types
-        payload: { message: "" },
       });
-      // Temporary typecast until ordit-sdk fixes their return
-      updateAddress((xverse as any)[0].address);
+      updateAddress(xverse[0].address);
       closeModal();
     } catch (err) {
       setErrorMessage((err as any).toString());
