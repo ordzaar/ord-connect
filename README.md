@@ -4,7 +4,33 @@
 
 **sado-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app).
 
-## Getting Started
+## Quick Start
+
+Just two simple steps:
+
+1.  Add dependency:
+
+    ```bash
+    npm install @sadoprotocol/sado-connect
+    ```
+
+2.  Import sado-connect into your dApp:
+
+    ```javascript
+    import { AddressProvider, SadoConnectKit } from "@sadoprotocol/sado-connect";
+    // Styling will be directly embedded in the near future
+    import "../../node_modules/@sadoprotocol/sado-connect/dist/style.css";
+
+    export default function YourReactComponent() {
+      return (
+        <AddressProvider>
+          <SadoConnectKit />
+        </AddressProvider>
+      );
+    }
+    ```
+
+## Contribute
 
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -16,35 +42,19 @@ You'll need to have `pnpm` installed on your system. If it's not yet installed, 
 npm install -g pnpm
 ```
 
-### Installing
+### Development
 
-To compile sado-connect, navigate to the sado-connect directory, install the necessary packages and build the project:
-
-```bash
-cd packages/sado-connect
-pnpm install
-pnpm build
-```
-
-To continuously watch the sado-connect package and recompile on changes, use the `watch` command:
+To develop sado-connect, navigate to the sado-connect directory, install the necessary packages and serve the project:
 
 ```bash
 cd packages/sado-connect
-pnpm install
-pnpm watch
-```
-
-## Live Development Server
-
-To observe live changes in the browser, first ensure that sado-connect has been compiled. Then navigate to the `examples/vite` directory, install the necessary packages, and start the development server:
-
-```bash
-cd examples/vite
 pnpm install
 pnpm dev
 ```
 
-## Testing
+Changes made to the code will be reflected immediately.
+
+## Local Integration Testing
 
 For inter-repo local testing:
 
@@ -56,16 +66,6 @@ For inter-repo local testing:
 
 2. `cd` to any repo of your choosing (e.g., ordzaar).
 
-3. Add sado-connect to your project:
-
-   ```bash
-   pnpm add sado-connect
-   ```
-
-4. Import sado-connect in your code as follows:
-
-   ```javascript
-   import SadoConnect from "sado-connect";
-   ```
+3. The remaining steps are identical to [Quick Start](#quick-start).
 
 Happy coding! For any issues or feature requests, please raise an issue in the GitHub repository.
