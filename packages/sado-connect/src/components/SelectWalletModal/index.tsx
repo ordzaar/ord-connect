@@ -1,12 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useAddressContext } from "../../providers/AddressContext";
 import {
-  // UNISAT_WALLET_CHROME_EXTENSION_URL,
+  UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
 import { ordit } from "@sadoprotocol/ordit-sdk";
@@ -28,7 +28,10 @@ export function SelectWalletModal({
       const unisat = await ordit.unisat.getAddresses("testnet");
       updateAddress(unisat[0].address);
       closeModal();
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.message === "Unisat not installed.") {
+        window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
+      }
       setErrorMessage((err as any).toString());
       console.error("Error while connecting to UniSat wallet", err);
     }
@@ -41,26 +44,14 @@ export function SelectWalletModal({
       });
       updateAddress(xverse[0].address);
       closeModal();
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.message === "Xverse not installed.") {
+        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
+      }
       setErrorMessage((err as any).toString());
       console.error("Error while connecting to Xverse wallet", err);
     }
   };
-
-  useEffect(() => {
-    const updateErrorMessage = (event: PromiseRejectionEvent) => {
-      const errorMessage = event.reason?.message;
-
-      if (errorMessage === "No Bitcoin Wallet installed") {
-        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
-      }
-      setErrorMessage(errorMessage);
-    };
-    window.addEventListener("unhandledrejection", updateErrorMessage);
-
-    return () =>
-      window.removeEventListener("unhandledrejection", updateErrorMessage);
-  }, []);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
