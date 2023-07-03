@@ -24,9 +24,6 @@ export function SadoConnectKit({
 
   async function openModal() {
     setIsOpen(true);
-    // const wallet = await (window as any).ordit.sdk.get("wallet", {
-    //   seed: "msmalley",
-    // });
   }
 
   return (
