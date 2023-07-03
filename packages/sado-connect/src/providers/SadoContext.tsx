@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 type Network = "mainnet" | "testnet";
 
@@ -38,6 +38,23 @@ export function SadoConnectProvider({
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<string | null>(null);
   const [network, setNetwork] = useState<Network>("testnet");
+
+  // Load address from session storage on component mount
+  useEffect(() => {
+    const storedAddress = sessionStorage.getItem("address");
+    if (storedAddress) {
+      setAddress(storedAddress);
+    }
+  }, []);
+
+  // Sync address to session storage whenever it changes
+  useEffect(() => {
+    if (address) {
+      sessionStorage.setItem("address", address);
+    } else {
+      sessionStorage.removeItem("address");
+    }
+  }, [address]);
 
   const context: SadoContextI = {
     address,
