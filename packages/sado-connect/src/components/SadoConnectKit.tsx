@@ -15,10 +15,11 @@ export interface SadoConnectKitProp {
  * Parent React component for SadoConnectKit, in the form of a button.
  *
  * @component
+ * @param {Object} props - Props for the SadoConnectKit component.
  * @param {string} [props.customLabel="Connect wallet"] - Custom label for the button.
  * @param {string} [props.customStyle] - Custom CSS style for the button.
  * @param {Function} [props.onViewWallet] - Callback function to handle viewing wallet.
- * @returns {JSX.Element} SadoConnectKit component.
+ * @returns {JSX.Element} SadoConnectKit React component.
  */
 export function SadoConnectKit({
   customStyle,
