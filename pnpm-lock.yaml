@@ -30,8 +30,8 @@ importers:
         specifier: ^1.7.15
         version: 1.7.15(react-dom@18.2.0)(react@18.2.0)
       '@sadoprotocol/ordit-sdk':
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.0.7
+        version: 0.0.7
       boring-avatars:
         specifier: ^1.10.1
         version: 1.10.1
@@ -531,8 +531,8 @@ packages:
       string-argv: 0.3.2
     dev: true
 
-  /@sadoprotocol/ordit-sdk@0.0.4:
-    resolution: {integrity: sha512-WtxYNdqQfm3U5/B/R/GVHzRTOoUb5bXEmb5MVrjcgHiIXyhgevHm76xoBG+d1WKaTq6SXfHSDlyEGgtku8Ym2Q==}
+  /@sadoprotocol/ordit-sdk@0.0.7:
+    resolution: {integrity: sha512-IMORg4punwcqR7ZzyWyA4P+G7GOYFzvcn78AyAzo7kSQhl8/HilcxbiJ4UKIEkyzjNaRV889PICfm1q0bj6+Cw==}
     dependencies:
       '@bitcoinerlab/secp256k1': 1.0.2
       bip32: 4.0.0

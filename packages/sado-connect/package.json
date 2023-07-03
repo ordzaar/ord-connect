@@ -31,7 +31,7 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "@sadoprotocol/ordit-sdk": "^0.0.4",
+    "@sadoprotocol/ordit-sdk": "^0.0.7",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
@@ -56,7 +56,7 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@headlessui/react": "^1.7.15",
-    "@sadoprotocol/ordit-sdk": "^0.0.4",
+    "@sadoprotocol/ordit-sdk": "^0.0.7",
     "boring-avatars": "^1.10.1"
   }
 }
