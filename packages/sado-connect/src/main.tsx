@@ -7,9 +7,7 @@ import "./style.css";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <SadoConnectProvider>
-      <SadoConnectKit
-        onViewWallet={() => console.log("You can provide a callback here.")}
-      />
+      <SadoConnectKit />
     </SadoConnectProvider>
   </React.StrictMode>
 );

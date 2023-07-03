@@ -11,6 +11,28 @@ interface SadoContextI {
 
 const SadoContext = createContext<SadoContextI>(undefined as any);
 
+/**
+ * (Optionally) global context provider for SadoConnectKit and its consumer(s).
+ *
+ * @component
+ * @example
+ * // Usage:
+ * // Wrap your application with the SadoConnectProvider to access the SadoContext.
+ * // The provider manages the state and provides it to the child components.
+ *
+ * import { SadoConnectProvider } from "./SadoConnectProvider";
+ *
+ * function App() {
+ *   return (
+ *     <SadoConnectProvider>
+ *       <YourAppContent />
+ *     </SadoConnectProvider>
+ *   );
+ * }
+ *
+ * @param {React.PropsWithChildren<any>} props - Props object.
+ * @returns {JSX.Element} Provider component for SadoConnect.
+ */
 export function SadoConnectProvider({
   children,
 }: React.PropsWithChildren<any>) {

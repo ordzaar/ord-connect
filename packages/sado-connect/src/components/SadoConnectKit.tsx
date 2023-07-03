@@ -11,6 +11,15 @@ export interface SadoConnectKitProp {
   onViewWallet?: () => void;
 }
 
+/**
+ * Parent React component for SadoConnectKit, in the form of a button.
+ *
+ * @component
+ * @param {string} [props.customLabel="Connect wallet"] - Custom label for the button.
+ * @param {string} [props.customStyle] - Custom CSS style for the button.
+ * @param {Function} [props.onViewWallet] - Callback function to handle viewing wallet.
+ * @returns {JSX.Element} SadoConnectKit component.
+ */
 export function SadoConnectKit({
   customStyle,
   customLabel = "Connect wallet",
