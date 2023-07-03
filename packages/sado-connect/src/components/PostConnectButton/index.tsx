@@ -4,15 +4,20 @@ import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import LogoutIcon from "../../assets/logout.svg";
-import { useAddressContext } from "../../providers/AddressContext";
+import { useSadoContext } from "../../providers/SadoContext";
 
 interface PostConnectButtonProp {
   address: string;
   network: string;
+  onViewWallet?: () => void;
 }
 
-export function PostConnectButton({ address, network }: PostConnectButtonProp) {
-  const { updateAddress } = useAddressContext();
+export function PostConnectButton({
+  address,
+  network,
+  onViewWallet,
+}: PostConnectButtonProp) {
+  const { updateAddress } = useSadoContext();
   const onDisconnectWallet = () => {
     updateAddress(null);
   };
@@ -36,7 +41,9 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
               <p className="address">{TruncateMiddle(address)}</p>
               <section className="network-container">
                 <div className="status-indicator"></div>
-                <p className="network">{network}</p>
+                <p className="network">
+                  {network === "mainnet" ? "MainNet" : "TestNet"}
+                </p>
               </section>
             </section>
             <img
@@ -57,7 +64,11 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="sado-wallet-connection-dropdown">
-              <Menu.Item as="button" className="dropdown-button">
+              <Menu.Item
+                as="button"
+                className="dropdown-button"
+                onClick={onViewWallet}
+              >
                 <span className="label">View wallet</span>
                 <span className="value">{TruncateMiddle(address)}</span>
               </Menu.Item>
