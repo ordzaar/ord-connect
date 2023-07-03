@@ -57,6 +57,7 @@
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@headlessui/react": "^1.7.15",
     "@sadoprotocol/ordit-sdk": "^0.0.7",
-    "boring-avatars": "^1.10.1"
+    "boring-avatars": "^1.10.1",
+    "vite-plugin-css-injected-by-js": "^3.1.2"
   }
 }

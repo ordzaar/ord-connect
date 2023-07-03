@@ -6,6 +6,7 @@ import * as packageJson from "./package.json";
 import commonjs from "@rollup/plugin-commonjs";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -38,5 +39,6 @@ export default defineConfig({
       insertTypesEntry: true,
     }),
     commonjs(),
+    cssInjectedByJsPlugin(),
   ],
 });
