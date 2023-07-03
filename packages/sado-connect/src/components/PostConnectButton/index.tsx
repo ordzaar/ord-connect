@@ -9,9 +9,14 @@ import { useSadoContext } from "../../providers/SadoContext";
 interface PostConnectButtonProp {
   address: string;
   network: string;
+  onViewWallet?: () => void;
 }
 
-export function PostConnectButton({ address, network }: PostConnectButtonProp) {
+export function PostConnectButton({
+  address,
+  network,
+  onViewWallet,
+}: PostConnectButtonProp) {
   const { updateAddress } = useSadoContext();
   const onDisconnectWallet = () => {
     updateAddress(null);
@@ -59,7 +64,11 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="sado-wallet-connection-dropdown">
-              <Menu.Item as="button" className="dropdown-button">
+              <Menu.Item
+                as="button"
+                className="dropdown-button"
+                onClick={onViewWallet}
+              >
                 <span className="label">View wallet</span>
                 <span className="value">{TruncateMiddle(address)}</span>
               </Menu.Item>

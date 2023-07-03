@@ -8,11 +8,13 @@ import { SelectWalletModal } from "./SelectWalletModal";
 export interface SadoConnectKitProp {
   customLabel?: string;
   customStyle?: string;
+  onViewWallet?: () => void;
 }
 
 export function SadoConnectKit({
   customStyle,
   customLabel = "Connect wallet",
+  onViewWallet,
 }: SadoConnectKitProp) {
   const [isOpen, setIsOpen] = useState(false);
   const { address, network } = useSadoContext();
@@ -34,7 +36,11 @@ export function SadoConnectKit({
           customLabel={customLabel}
         />
       ) : (
-        <PostConnectButton address={address} network={network} />
+        <PostConnectButton
+          address={address}
+          network={network}
+          onViewWallet={onViewWallet}
+        />
       )}
 
       <SelectWalletModal isOpen={isOpen} closeModal={closeModal} />
