@@ -67,6 +67,11 @@
     border-bottom: 0px;
     padding-bottom: 8px;
   }
+
+  .sado-connect-wallet-modal .unsupported-browser-message {
+    font-size: 16px;
+    padding-left: 24px;
+  }
 }
 
 .sado-connect-wallet-modal .panel-title {
@@ -75,6 +80,10 @@
   line-height: 32px;
   color: #fff;
   margin: 0px;
+}
+
+.sado-connect-wallet-modal .unsupported-browser-message {
+  color: #fff;
 }
 
 .sado-connect-wallet-modal .close-button {

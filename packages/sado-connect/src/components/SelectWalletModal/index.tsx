@@ -22,6 +22,7 @@ export function SelectWalletModal({
 }: SelectWalletModalProp) {
   const { updateAddress, network } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const isChromium = (window as any).chrome;
 
   const onConnectUnisatWallet = async () => {
     try {
@@ -86,7 +87,9 @@ export function SelectWalletModal({
               <Dialog.Panel className="panel">
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
-                    Choose wallet to connect
+                    {isChromium
+                      ? "Choose wallet to connect"
+                      : "Unsupported Browser"}
                   </Dialog.Title>
                   <button
                     type="button"
@@ -98,31 +101,42 @@ export function SelectWalletModal({
                 </section>
 
                 <section className="panel-content-container">
-                  <section className="panel-content-inner-container">
-                    <button
-                      type="button"
-                      className="wallet-option-button"
-                      onClick={async () => {
-                        await onConnectUnisatWallet();
-                      }}
-                    >
-                      <img src={UnisatWalletIcon} />
-                      <span className="wallet-option-label">Unisat wallet</span>
-                      <img src={ChevronRightIcon} />
-                    </button>
-                    <hr className="horizontal-separator" />
-                    <button
-                      type="button"
-                      className="wallet-option-button"
-                      onClick={async () => {
-                        await onConnectXverseWallet();
-                      }}
-                    >
-                      <img src={XverseWalletIcon} />
-                      <span className="wallet-option-label">Xverse</span>
-                      <img src={ChevronRightIcon} />
-                    </button>
-                  </section>
+                  {isChromium ? (
+                    <section className="panel-content-inner-container">
+                      <button
+                        type="button"
+                        className="wallet-option-button"
+                        onClick={async () => {
+                          await onConnectUnisatWallet();
+                        }}
+                      >
+                        <img src={UnisatWalletIcon} alt="Unisat Wallet" />
+                        <span className="wallet-option-label">
+                          Unisat wallet
+                        </span>
+                        <img src={ChevronRightIcon} alt="Chevron Right" />
+                      </button>
+                      <hr className="horizontal-separator" />
+                      <button
+                        type="button"
+                        className="wallet-option-button"
+                        onClick={async () => {
+                          await onConnectXverseWallet();
+                        }}
+                      >
+                        <img src={XverseWalletIcon} alt="Xverse Wallet" />
+                        <span className="wallet-option-label">Xverse</span>
+                        <img src={ChevronRightIcon} alt="Chevron Right" />
+                      </button>
+                    </section>
+                  ) : (
+                    <>
+                      <Dialog.Description className="unsupported-browser-message">
+                        To connect to your wallet, please download Google Chrome
+                        or any other Chromium-based browser.
+                      </Dialog.Description>
+                    </>
+                  )}
                   <p className="error-message">{errorMessage}</p>
                 </section>
               </Dialog.Panel>
