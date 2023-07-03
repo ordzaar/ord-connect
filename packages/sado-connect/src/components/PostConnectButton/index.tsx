@@ -36,7 +36,9 @@ export function PostConnectButton({ address, network }: PostConnectButtonProp) {
               <p className="address">{TruncateMiddle(address)}</p>
               <section className="network-container">
                 <div className="status-indicator"></div>
-                <p className="network">{network}</p>
+                <p className="network">
+                  {network === "mainnet" ? "MainNet" : "TestNet"}
+                </p>
               </section>
             </section>
             <img

@@ -15,8 +15,7 @@ export function SadoConnectKit({
   customLabel = "Connect wallet",
 }: SadoConnectKitProp) {
   const [isOpen, setIsOpen] = useState(false);
-  const { address } = useSadoContext();
-  const network = "MainNet";
+  const { address, network } = useSadoContext();
 
   function closeModal() {
     setIsOpen(false);

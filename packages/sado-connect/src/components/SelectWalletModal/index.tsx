@@ -20,12 +20,12 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress } = useSadoContext();
+  const { updateAddress, network } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onConnectUnisatWallet = async () => {
     try {
-      const unisat = await ordit.unisat.getAddresses("testnet");
+      const unisat = await ordit.unisat.getAddresses(network);
       updateAddress(unisat[0].address);
       closeModal();
     } catch (err: any) {
@@ -40,7 +40,7 @@ export function SelectWalletModal({
   const onConnectXverseWallet = async () => {
     try {
       const xverse = await ordit.xverse.getAddresses({
-        network: "testnet",
+        network,
       });
       updateAddress(xverse[0].address);
       closeModal();
