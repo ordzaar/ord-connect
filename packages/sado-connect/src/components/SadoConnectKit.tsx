@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style.css";
-import { useAddressContext } from "../providers/AddressContext";
+import { useSadoContext } from "../providers/SadoContext";
 import { PreConnectButton } from "./PreConnectButton";
 import { PostConnectButton } from "./PostConnectButton";
 import { SelectWalletModal } from "./SelectWalletModal";
@@ -15,7 +15,7 @@ export function SadoConnectKit({
   customLabel = "Connect wallet",
 }: SadoConnectKitProp) {
   const [isOpen, setIsOpen] = useState(false);
-  const { address } = useAddressContext();
+  const { address } = useSadoContext();
   const network = "MainNet";
 
   function closeModal() {

@@ -4,7 +4,7 @@ import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import LogoutIcon from "../../assets/logout.svg";
-import { useAddressContext } from "../../providers/AddressContext";
+import { useSadoContext } from "../../providers/SadoContext";
 
 interface PostConnectButtonProp {
   address: string;
@@ -12,7 +12,7 @@ interface PostConnectButtonProp {
 }
 
 export function PostConnectButton({ address, network }: PostConnectButtonProp) {
-  const { updateAddress } = useAddressContext();
+  const { updateAddress } = useSadoContext();
   const onDisconnectWallet = () => {
     updateAddress(null);
   };

@@ -4,7 +4,7 @@ import CloseModalIcon from "../../assets/close-modal.svg";
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useAddressContext } from "../../providers/AddressContext";
+import { useSadoContext } from "../../providers/SadoContext";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
@@ -20,7 +20,7 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress } = useAddressContext();
+  const { updateAddress } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onConnectUnisatWallet = async () => {

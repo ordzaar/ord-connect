@@ -17,15 +17,15 @@ Just two simple steps:
 2.  Import sado-connect into your dApp:
 
     ```javascript
-    import { AddressProvider, SadoConnectKit } from "@sadoprotocol/sado-connect";
+    import { SadoConnectProvider, SadoConnectKit } from "@sadoprotocol/sado-connect";
     // Styling will be directly embedded in the near future
     import "../../node_modules/@sadoprotocol/sado-connect/dist/style.css";
 
     export default function YourReactComponent() {
       return (
-        <AddressProvider>
+        <SadoConnectProvider>
           <SadoConnectKit />
-        </AddressProvider>
+        </SadoConnectProvider>
       );
     }
     ```
