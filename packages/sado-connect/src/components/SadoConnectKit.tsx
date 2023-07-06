@@ -16,14 +16,12 @@ export interface SadoConnectKitProp {
  *
  * @component
  * @param {Object} props - Props for the SadoConnectKit component.
- * @param {string} [props.customLabel="Connect wallet"] - Custom label for the button.
  * @param {string} [props.customStyle] - Custom CSS style for the button.
  * @param {Function} [props.onViewWallet] - Callback function to handle viewing wallet.
  * @returns {JSX.Element} SadoConnectKit React component.
  */
 export function SadoConnectKit({
   customStyle,
-  customLabel = "Connect wallet",
   onViewWallet,
 }: SadoConnectKitProp) {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,11 +38,7 @@ export function SadoConnectKit({
   return (
     <>
       {address === null ? (
-        <PreConnectButton
-          openModal={openModal}
-          customStyle={customStyle}
-          customLabel={customLabel}
-        />
+        <PreConnectButton openModal={openModal} customStyle={customStyle} />
       ) : (
         <PostConnectButton
           address={address}

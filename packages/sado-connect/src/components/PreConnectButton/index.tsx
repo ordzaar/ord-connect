@@ -7,7 +7,6 @@ interface PreConnectButtonProp extends SadoConnectKitProp {
 export function PreConnectButton({
   openModal,
   customStyle,
-  customLabel,
 }: PreConnectButtonProp) {
   return (
     <button
@@ -15,7 +14,7 @@ export function PreConnectButton({
       onClick={openModal}
       className={`sado-connect-wallet-button ${customStyle}`}
     >
-      {customLabel}
+      <span></span>
     </button>
   );
 }

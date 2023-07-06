@@ -5,8 +5,22 @@
   font-size: 14px;
   line-height: 20px;
   border-radius: 40px;
-  padding: 10px 24px;
+  padding: 10px 16px;
   border: 0px;
+}
+
+.sado-connect-wallet-button span::before {
+  content: "Connect";
+}
+
+@media screen and (min-width: 768px) {
+  .sado-connect-wallet-button {
+    padding: 10px 24px;
+  }
+
+  .sado-connect-wallet-button span::before {
+    content: "Connect wallet";
+  }
 }
 
 .sado-connect-wallet-button:hover {
