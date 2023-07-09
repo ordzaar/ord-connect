@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useState, useEffect } from "react";
 
 type Network = "mainnet" | "testnet";
@@ -9,7 +10,12 @@ interface SadoContextI {
   updateNetwork: (network: Network) => void;
 }
 
-const SadoContext = createContext<SadoContextI>(undefined as any);
+const SadoContext = createContext<SadoContextI>({
+  address: null,
+  updateAddress: () => {},
+  network: "testnet",
+  updateNetwork: () => {},
+});
 
 /**
  * (Optionally) global context provider for SadoConnectKit and its consumer(s).

@@ -22,22 +22,23 @@ export function SelectWalletModal({
 }: SelectWalletModalProp) {
   const { updateAddress, network } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const isChromium = (window as any).chrome;
+  const isChromium = window.chrome;
 
   const onConnectUnisatWallet = async () => {
     try {
       const unisat = await ordit.unisat.getAddresses(network);
       updateAddress(unisat[0].address);
       closeModal();
-    } catch (err: any) {
-      if (err?.message === "Unisat not installed.") {
-        window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err.message === "Unisat not installed.") {
+          window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
+        }
+        setErrorMessage(err.toString());
+        console.error("Error while connecting to UniSat wallet", err);
       }
-      setErrorMessage((err as any).toString());
-      console.error("Error while connecting to UniSat wallet", err);
     }
   };
-
   const onConnectXverseWallet = async () => {
     try {
       const xverse = await ordit.xverse.getAddresses({
@@ -45,12 +46,14 @@ export function SelectWalletModal({
       });
       updateAddress(xverse[0].address);
       closeModal();
-    } catch (err: any) {
-      if (err?.message === "Xverse not installed.") {
-        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err?.message === "Xverse not installed.") {
+          window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
+        }
+        setErrorMessage(err.toString());
+        console.error("Error while connecting to Xverse wallet", err);
       }
-      setErrorMessage((err as any).toString());
-      console.error("Error while connecting to Xverse wallet", err);
     }
   };
 
