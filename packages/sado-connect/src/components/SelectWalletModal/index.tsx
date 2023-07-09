@@ -30,14 +30,12 @@ export function SelectWalletModal({
       updateAddress(unisat[0].address);
       updateWallet(Wallet.UNISAT);
       closeModal();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        if (err.message === "Unisat not installed.") {
-          window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
-        }
-        setErrorMessage(err.toString());
-        console.error("Error while connecting to UniSat wallet", err);
+    } catch (err: any) {
+      if (err.message === "Unisat not installed.") {
+        window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
       }
+      setErrorMessage(err.toString());
+      console.error("Error while connecting to UniSat wallet", err);
     }
   };
   const onConnectXverseWallet = async () => {
@@ -48,14 +46,12 @@ export function SelectWalletModal({
       updateAddress(xverse[0].address);
       updateWallet(Wallet.XVERSE);
       closeModal();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        if (err?.message === "Xverse not installed.") {
-          window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
-        }
-        setErrorMessage(err.toString());
-        console.error("Error while connecting to Xverse wallet", err);
+    } catch (err: any) {
+      if (err?.message === "Xverse not installed.") {
+        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
       }
+      setErrorMessage(err.toString());
+      console.error("Error while connecting to Xverse wallet", err);
     }
   };
 
