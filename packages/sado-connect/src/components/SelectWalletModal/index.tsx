@@ -4,7 +4,7 @@ import CloseModalIcon from "../../assets/close-modal.svg";
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useSadoContext } from "../../providers/SadoContext";
+import { useSadoContext, Wallet } from "../../providers/SadoContext";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
@@ -20,7 +20,7 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress, network } = useSadoContext();
+  const { updateAddress, network, updateWallet } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
 
@@ -28,6 +28,7 @@ export function SelectWalletModal({
     try {
       const unisat = await ordit.unisat.getAddresses(network);
       updateAddress(unisat[0].address);
+      updateWallet(Wallet.UNISAT);
       closeModal();
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -45,6 +46,7 @@ export function SelectWalletModal({
         network,
       });
       updateAddress(xverse[0].address);
+      updateWallet(Wallet.XVERSE);
       closeModal();
     } catch (err: unknown) {
       if (err instanceof Error) {
