@@ -31,7 +31,6 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "@sadoprotocol/ordit-sdk": "^0.0.7",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
@@ -50,14 +49,15 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
-    "vite-plugin-dts": "^2.3.0",
-    "vite-plugin-css-injected-by-js": "^3.1.2"
+    "vite-plugin-css-injected-by-js": "^3.1.2",
+    "vite-plugin-dts": "^2.3.0"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@headlessui/react": "^1.7.15",
-    "@sadoprotocol/ordit-sdk": "^0.0.7",
+    "@sadoprotocol/ordit-sdk": "^0.0.9",
+    "bitcoinjs-lib": "^6.1.3",
     "boring-avatars": "^1.10.1"
   }
 }

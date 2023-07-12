@@ -30,8 +30,11 @@ importers:
         specifier: ^1.7.15
         version: 1.7.15(react-dom@18.2.0)(react@18.2.0)
       '@sadoprotocol/ordit-sdk':
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.9
+        version: 0.0.9
+      bitcoinjs-lib:
+        specifier: ^6.1.3
+        version: 6.1.3
       boring-avatars:
         specifier: ^1.10.1
         version: 1.10.1
@@ -534,8 +537,8 @@ packages:
       string-argv: 0.3.2
     dev: true
 
-  /@sadoprotocol/ordit-sdk@0.0.7:
-    resolution: {integrity: sha512-IMORg4punwcqR7ZzyWyA4P+G7GOYFzvcn78AyAzo7kSQhl8/HilcxbiJ4UKIEkyzjNaRV889PICfm1q0bj6+Cw==}
+  /@sadoprotocol/ordit-sdk@0.0.9:
+    resolution: {integrity: sha512-c/Zf3wfkqCYtyparZbF/Ex4cdAVfF9DSrTAHpyvL+wlpcZcYEyp7gDmWcvXolfL71qaFtzLUDm/a6ffWOPtGHw==}
     dependencies:
       '@bitcoinerlab/secp256k1': 1.0.2
       bip32: 4.0.0
@@ -1175,7 +1178,7 @@ packages:
   /cross-fetch@3.1.6:
     resolution: {integrity: sha512-riRvo06crlE8HiqOwIpQhxwdOk4fOeR7FVM/wXoxchFEqMNUjvbs3bfo4OTgMEMHzppd4DxFBDbyySj8Cv781g==}
     dependencies:
-      node-fetch: 2.6.11
+      node-fetch: 2.6.12
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -1979,8 +1982,8 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /node-fetch@2.6.11:
-    resolution: {integrity: sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==}
+  /node-fetch@2.6.12:
+    resolution: {integrity: sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
       encoding: ^0.1.0
@@ -2494,7 +2497,7 @@ packages:
       is-arguments: 1.1.1
       is-generator-function: 1.0.10
       is-typed-array: 1.1.10
-      which-typed-array: 1.1.9
+      which-typed-array: 1.1.10
     dev: false
 
   /validator@13.9.0:
@@ -2583,8 +2586,8 @@ packages:
       webidl-conversions: 3.0.1
     dev: false
 
-  /which-typed-array@1.1.9:
-    resolution: {integrity: sha512-w9c4xkx6mPidwp7180ckYWfMmvxpjlZuIudNtDf4N/tTAUB8VJbX25qZoAsrtGuYNnGw3pa0AXgbGKRB8/EceA==}
+  /which-typed-array@1.1.10:
+    resolution: {integrity: sha512-uxoA5vLUfRPdjCuJ1h5LlYdmTLbYfums398v3WLkM+i/Wltl2/XyZpQWKbN++ck5L64SR/grOHqtXCUKmlZPNA==}
     engines: {node: '>= 0.4'}
     dependencies:
       available-typed-arrays: 1.0.5
