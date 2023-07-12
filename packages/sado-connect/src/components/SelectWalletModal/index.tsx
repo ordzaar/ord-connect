@@ -28,6 +28,7 @@ export function SelectWalletModal({
   const onConnectUnisatWallet = async () => {
     try {
       const unisat = await ordit.unisat.getAddresses(network);
+      // Unisat only returns one address by default
       updateAddress(unisat[0].address);
       updatePublicKey(unisat[0].pub);
       updateWallet(Wallet.UNISAT);
@@ -45,8 +46,12 @@ export function SelectWalletModal({
       const xverse = await ordit.xverse.getAddresses({
         network,
       });
-      updateAddress(xverse[0].address);
-      updatePublicKey(xverse[0].pub);
+      // Xverse returns a segwit and a taproot address
+      // The taproot one is missing the secp256k1 Y coordinate for some reason
+      // So we have to fallback to the segwit address
+      const address = xverse.find((address) => address.format === "segwit");
+      updateAddress(address.address);
+      updatePublicKey(address.pub);
       updateWallet(Wallet.XVERSE);
       closeModal();
     } catch (err: any) {
