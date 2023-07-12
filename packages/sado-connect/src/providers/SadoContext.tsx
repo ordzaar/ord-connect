@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useState, useEffect } from "react";
 
-enum Network {
+export enum Network {
   MAINNET = "mainnet",
   TESTNET = "testnet",
 }

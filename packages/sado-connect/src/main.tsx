@@ -17,7 +17,6 @@ function SampleComponent() {
         onClick={async () => {
           const txId = await send(
             "tb1qzxtxwhsqkh0yp6ne0mpefu99gn49a945m9hc28",
-            1,
             1
           );
           if (typeof txId === "string") setResult(txId);
