@@ -14,6 +14,8 @@ export enum Wallet {
 interface SadoContextI {
   address: string | null;
   updateAddress: (address: string | null) => void;
+  publicKey: string | null;
+  updatePublicKey: (publicKey: string | null) => void;
   network: Network;
   updateNetwork: (network: Network) => void;
   wallet: Wallet | null;
@@ -23,6 +25,8 @@ interface SadoContextI {
 const SadoContext = createContext<SadoContextI>({
   address: null,
   updateAddress: () => {},
+  publicKey: null,
+  updatePublicKey: () => {},
   network: Network.TESTNET,
   updateNetwork: () => {},
   wallet: null,
@@ -31,6 +35,7 @@ const SadoContext = createContext<SadoContextI>({
 
 const ADDRESS = "address";
 const WALLET = "wallet";
+const PUBLIC_KEY = "publicKey";
 
 /**
  * (Optionally) global context provider for SadoConnectKit and its consumer(s).
@@ -60,6 +65,7 @@ export function SadoConnectProvider({
   const [address, setAddress] = useState<string | null>(null);
   const [network, setNetwork] = useState<Network>(Network.TESTNET);
   const [wallet, setWallet] = useState<Wallet | null>(null);
+  const [publicKey, setPublicKey] = useState<string>(null);
 
   useEffect(() => {
     try {
@@ -101,9 +107,23 @@ export function SadoConnectProvider({
     }
   }, [wallet]);
 
+  useEffect(() => {
+    try {
+      if (publicKey) {
+        sessionStorage.setItem(PUBLIC_KEY, publicKey);
+      } else {
+        sessionStorage.removeItem(publicKey);
+      }
+    } catch (error) {
+      console.error("Error saving publicKey to sessionStorage", error);
+    }
+  }, [publicKey]);
+
   const context: SadoContextI = {
     address,
     updateAddress: setAddress,
+    publicKey,
+    updatePublicKey: setPublicKey,
     network,
     updateNetwork: setNetwork,
     wallet,
