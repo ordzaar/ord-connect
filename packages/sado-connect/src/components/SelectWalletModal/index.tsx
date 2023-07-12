@@ -20,7 +20,8 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress, network, updateWallet } = useSadoContext();
+  const { updateAddress, network, updateWallet, updatePublicKey } =
+    useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
 
@@ -28,6 +29,7 @@ export function SelectWalletModal({
     try {
       const unisat = await ordit.unisat.getAddresses(network);
       updateAddress(unisat[0].address);
+      updatePublicKey(unisat[0].pub);
       updateWallet(Wallet.UNISAT);
       closeModal();
     } catch (err: any) {
@@ -44,6 +46,7 @@ export function SelectWalletModal({
         network,
       });
       updateAddress(xverse[0].address);
+      updatePublicKey(xverse[0].pub);
       updateWallet(Wallet.XVERSE);
       closeModal();
     } catch (err: any) {
