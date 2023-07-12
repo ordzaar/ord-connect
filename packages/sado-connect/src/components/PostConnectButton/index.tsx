@@ -17,10 +17,11 @@ export function PostConnectButton({
   network,
   onViewWallet,
 }: PostConnectButtonProp) {
-  const { updateAddress, updateWallet } = useSadoContext();
+  const { updateAddress, updateWallet, updatePublicKey } = useSadoContext();
   const onDisconnectWallet = () => {
     updateAddress(null);
     updateWallet(null);
+    updatePublicKey(null);
   };
 
   return (

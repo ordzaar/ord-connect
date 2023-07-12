@@ -23,80 +23,73 @@ function deriveAddressFormat(address: string, network: Network) {
 
   return format;
 }
-
 function useSend(): [SendFunction, string | null] {
   const { wallet, network, address, publicKey } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
-
-  const format = deriveAddressFormat(address, network);
-
   const orditWallet = new Ordit({
     // Ordit must be initialized with a wallet, no matter what
-    bip39:
-      "bunker coyote fatal canvas critic despair morning region book method phrase decide",
+    bip39: "abandon",
     network,
   });
 
   const send: SendFunction = async (toAddress, satoshis) => {
-    const unsignedPsbtBase64 = (
-      await ordit.transactions.createPsbt({
-        // Use master node by default (BIP32 HD Wallet)
-        path: "/m",
-        format,
-        network,
-        pubKey: publicKey,
-        ins: [
-          {
-            address,
-          },
-        ],
-        outs: [
-          {
-            address: toAddress,
-            cardinals: satoshis,
-          },
-        ],
-      })
-    ).base64;
+    try {
+      if (!address || !publicKey) throw new Error("No wallet is connected");
 
-    const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
+      // const psbtTemplate = {
+      //   // Use master node by default (BIP32 HD Wallet)
+      //   path: "/m",
+      //   format: deriveAddressFormat(address, network),
+      //   network,
+      //   pubKey: publicKey,
+      //   ins: [
+      //     {
+      //       address,
+      //     },
+      //   ],
+      //   outs: [
+      //     {
+      //       address: toAddress,
+      //       cardinals: satoshis,
+      //     },
+      //   ],
+      // };
 
-    if (wallet === Wallet.UNISAT) {
-      try {
+      // const unsignedPsbtBase64 = (
+      //   await ordit.transactions.createPsbt(psbtTemplate)
+      // ).base64;
+
+      const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
+
+      let signedPsbt = null;
+      if (wallet === Wallet.UNISAT) {
         // ordit-sdk outputs serialized psbt(s) in the form of base64/hex,
         // but expects psbt objects as an input.
         // Hence, the need to deserialize and serialize for back-and-forth actions.
-        const signedPsbt = (await ordit.unisat.signPsbt(unsignedPsbt)).psbt;
-
-        const txId = await orditWallet.relayTx(signedPsbt.hex, network);
-
-        return txId.txid[0];
-      } catch (err: any) {
-        setError(err.message);
-      }
-    } else if (wallet === Wallet.XVERSE) {
-      try {
+        signedPsbt = (await ordit.unisat.signPsbt(unsignedPsbt)).psbt;
+      } else if (wallet === Wallet.XVERSE) {
         const xverseSignPsbtOptions = {
           psbt: unsignedPsbt,
           network,
           // Is this optional? The input should already exist in the unsigned psbt
-          inputs: [{ address, signingIndexes: [0] }],
+
+          inputs: [],
         };
-        const signedPsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
+        signedPsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
 
-        if (signedPsbt) {
-          const txId = await orditWallet.relayTx(signedPsbt, network);
-          return txId.txid[0];
+        if (!signedPsbt) {
+          throw new Error("Xverse signing failed.");
         }
-
-        throw new Error("Xverse signing failed.");
-      } catch (err: any) {
-        setError(err.message);
+      } else {
+        throw new Error("No wallet selected");
       }
-    } else {
-      setError("No wallet selected");
+
+      const txId = await orditWallet.relayTx(signedPsbt.hex, network);
+      return txId.txid[0];
+    } catch (err: any) {
+      setError(err.message);
+      return null;
     }
-    return null;
   };
 
   return [send, error];

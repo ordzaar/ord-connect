@@ -65,13 +65,18 @@ export function SadoConnectProvider({
   const [address, setAddress] = useState<string | null>(null);
   const [network, setNetwork] = useState<Network>(Network.TESTNET);
   const [wallet, setWallet] = useState<Wallet | null>(null);
-  const [publicKey, setPublicKey] = useState<string>(null);
+  const [publicKey, setPublicKey] = useState<string | null>(null);
 
   useEffect(() => {
     try {
       const storedAddress = sessionStorage.getItem(ADDRESS);
       if (storedAddress) {
         setAddress(storedAddress);
+      }
+
+      const storedPublicKey = sessionStorage.getItem(PUBLIC_KEY);
+      if (storedPublicKey) {
+        setPublicKey(storedPublicKey);
       }
 
       const storedWallet = sessionStorage.getItem(WALLET);
@@ -112,7 +117,7 @@ export function SadoConnectProvider({
       if (publicKey) {
         sessionStorage.setItem(PUBLIC_KEY, publicKey);
       } else {
-        sessionStorage.removeItem(publicKey);
+        sessionStorage.removeItem(PUBLIC_KEY);
       }
     } catch (error) {
       console.error("Error saving publicKey to sessionStorage", error);

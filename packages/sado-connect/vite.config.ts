@@ -22,6 +22,7 @@ export default defineConfig({
         NodeModulesPolyfillPlugin(),
       ],
     },
+    include: [...Object.keys(packageJson.peerDependencies)],
   },
   build: {
     lib: {
@@ -32,13 +33,16 @@ export default defineConfig({
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
     },
+    commonjsOptions: {
+      include: [/node_modules/, ...Object.keys(packageJson.peerDependencies)]
+    }
   },
   plugins: [
     react(),
     dts({
       insertTypesEntry: true,
     }),
-    commonjs(),
+    // commonjs(),
     cssInjectedByJsPlugin(),
   ],
 });
