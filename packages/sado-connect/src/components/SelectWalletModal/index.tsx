@@ -49,9 +49,11 @@ export function SelectWalletModal({
       // Xverse returns a segwit and a taproot address
       // The taproot one is missing the secp256k1 Y coordinate for some reason
       // So we have to fallback to the segwit address
-      const address = xverse.find((address) => address.format === "segwit");
-      updateAddress(address.address);
-      updatePublicKey(address.pub);
+      const segwitAddress = xverse.find(
+        (address) => address.format === "segwit"
+      );
+      updateAddress(segwitAddress.address);
+      updatePublicKey(segwitAddress.pub);
       updateWallet(Wallet.XVERSE);
       closeModal();
     } catch (err: any) {
