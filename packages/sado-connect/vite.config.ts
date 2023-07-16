@@ -42,7 +42,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
     }),
-    // commonjs(),
+    commonjs(),
     cssInjectedByJsPlugin(),
   ],
 });
