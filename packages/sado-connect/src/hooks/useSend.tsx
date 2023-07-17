@@ -21,7 +21,7 @@ type SignedXversePsbt = {
   };
 };
 
-function useSend(): [SendFunction, string | null] {
+export function useSend(): [SendFunction, string | null] {
   const { wallet, network, address, publicKey } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
 
@@ -91,5 +91,3 @@ function useSend(): [SendFunction, string | null] {
 
   return [send, error];
 }
-
-export default useSend;

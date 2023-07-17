@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import useSend from "./hooks/useSend";
+import { useSend } from "./hooks/useSend";
 import { SadoConnectKit } from "./index";
 import { SadoConnectProvider } from "./providers/SadoContext";
 import "./style.css";
