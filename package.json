@@ -7,11 +7,17 @@
   "license": "MIT",
   "scripts": {
     "publish": "node ./scripts/publish.js",
-    "build": "turbo run build"
+    "build": "turbo run build",
+    "format": "prettier --write .",
+    "lint": "turbo run lint -- --fix"
   },
   "devDependencies": {
-    "husky": "8.0.3",
-    "prettier": "2.8.8",
-    "turbo": "1.9.1"
-  }
+    "@stickyjs/prettier": "^1.2.1",
+    "@stickyjs/turbo": "^1.2.1",
+    "@waveshq/standard-prettier": "^1.0.14"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  },
+  "prettier": "@waveshq/standard-prettier"
 }

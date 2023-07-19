@@ -17,7 +17,10 @@ async function main() {
 }
 
 async function publish(cwd) {
-  const cursor = spawn("npm", ["publish", "--access", "public"], { stdio: "inherit", cwd });
+  const cursor = spawn("npm", ["publish", "--access", "public"], {
+    stdio: "inherit",
+    cwd,
+  });
   return new Promise((resolve, reject) => {
     cursor.on("close", resolve);
     cursor.on("error", reject);
