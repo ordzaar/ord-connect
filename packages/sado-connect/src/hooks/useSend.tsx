@@ -30,8 +30,6 @@ export function useSend(): [SendFunction, string | null] {
       if (!address || !publicKey) throw new Error("No wallet is connected");
 
       const psbtTemplate: CreatePsbtOptions = {
-        // Use master node by default (BIP32 HD Wallet)
-        path: "",
         format: getAddressType(address, network),
         network,
         pubKey: publicKey,
