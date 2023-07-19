@@ -1,0 +1,174 @@
+# GitHub generic useful labels
+- color: c4d471
+  name: duplicate
+  description: This issue or pull request already exists
+- color: 7057ff
+  name: good first issue
+  description: Good for newcomers
+- color: ffffff
+  name: wontfix
+  description: This will not be worked on
+- color: 000000
+  name: stale
+  description: No activity for a significant amount of days
+
+# Needs
+- color: cc40d8
+  name: needs/kind
+  description: Needs kind label
+- color: cc40d8
+  name: needs/area
+  description: Needs area label(s)
+- color: cc40d8
+  name: needs/priority
+  description: Needs a priority label
+- color: cc40d8
+  name: needs/triage
+  description: Waiting for triage to be accepted
+- color: cc40d8
+  name: needs/design
+  description: Waiting for designs
+
+# Kind
+- color: e7e9eb
+  name: kind/bug
+  description: Something isn't working
+- color: e7e9eb
+  name: kind/feature
+  description: New feature request
+- color: e7e9eb
+  name: kind/question
+  description: Generic question
+- color: e7e9eb
+  name: kind/chore
+  description: Non feature change
+- color: e7e9eb
+  name: kind/fix
+  description: Fix a bug
+- color: e7e9eb
+  name: kind/docs
+  description: Non feature documentation change
+- color: e7e9eb
+  name: kind/refactor
+  description: Non feature refactor change
+- color: e7e9eb
+  name: kind/dependencies
+  description: Pull requests that update a dependency file
+
+# Area - Directory
+- color: fbca04
+  name: area/core
+- color: fbca04
+  name: area/workflow
+- color: fbca04
+  name: area/api
+- color: fbca04
+  name: area/assets
+- color: fbca04
+  name: area/contexts
+- color: fbca04
+  name: area/hooks
+- color: fbca04
+  name: area/store
+- color: fbca04
+  name: area/translations
+- color: fbca04
+  name: area/e2e
+- color: fbca04
+  name: area/ui-ux
+- color: fbca04
+  name: area/playground
+
+# Area - Contextual
+- color: fbca04
+  name: area/balance
+- color: fbca04
+  name: area/dex
+- color: fbca04
+  name: area/icx
+- color: fbca04
+  name: area/transactions
+- color: fbca04
+  name: area/wallet
+- color: fbca04
+  name: area/settings
+- color: fbca04
+  name: area/loans
+
+# Area - Website
+- color: fbca04
+  name: area/website
+- color: fbca04
+  name: area/website-api
+
+# Area - Contracts
+- color: fbca04
+  name: area/contracts
+
+# Area - Server
+- color: fbca04
+  name: area/server
+
+# Platform
+- color: 0d1d49
+  name: platform/ios
+- color: 0d1d49
+  name: platform/android
+
+# Priority
+- color: da0b0b
+  name: priority/urgent-now
+  description: Urgent fix, as fast as possible
+- color: daaa0b
+  name: priority/important-soon
+  description: Will be important soon
+- color: dad30b
+  name: priority/low
+  description: Least priority
+
+# Design
+- color: 137fdd
+  name: design/in-progress
+  description: Design in-progress
+- color: 137fdd
+  name: design/ready
+  description: Design is ready
+
+# Triage
+- color: b1f488
+  name: triage/accepted
+  description: Triage has been accepted
+
+# Bug
+- color: ffb638
+  name: bug/minor
+  description: Minor issue which is non-breaking and has a workaround
+- color: ff7a38
+  name: bug/major
+  description: Major issue which is non-breaking but no workaround
+- color: ff3a3a
+  name: bug/critical
+  description: Critical issue that affects core functionalities. Needs to be hotfix
+
+# Time Estimate
+- color: 0bdacc
+  name: T3d
+  description: Time Estimate 3 days
+- color: 0bdacc
+  name: T1d
+  description: Time Estimate 1 day
+- color: 0bdacc
+  name: T1h
+  description: Time Estimate 1 hour
+- color: 0bdacc
+  name: T2h
+  description: Time Estimate 2 hours
+- color: 0bdacc
+  name: T4h
+  description: Time Estimate 4 hours
+- color: 0bdacc
+  name: T25m
+  description: Time Estimate 25 minutes
+- color: 0bdacc
+  name: T5m
+  description: Time Estimate 5 minutes or less
