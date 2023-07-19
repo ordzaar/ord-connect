@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./style.css";
 import { useSadoContext } from "../providers/SadoContext";
 import { PreConnectButton } from "./PreConnectButton";
@@ -24,16 +23,8 @@ export function SadoConnectKit({
   customStyle,
   onViewWallet,
 }: SadoConnectKitProp) {
-  const [isOpen, setIsOpen] = useState(false);
-  const { address, network } = useSadoContext();
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  async function openModal() {
-    setIsOpen(true);
-  }
+  const { address, network, isModalOpen, openModal, closeModal } =
+    useSadoContext();
 
   return (
     <>
@@ -47,7 +38,7 @@ export function SadoConnectKit({
         />
       )}
 
-      <SelectWalletModal isOpen={isOpen} closeModal={closeModal} />
+      <SelectWalletModal isOpen={isModalOpen} closeModal={closeModal} />
     </>
   );
 }
