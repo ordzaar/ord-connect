@@ -27,11 +27,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "build:watch": "tsc && vite build --watch",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "@sadoprotocol/ordit-sdk": "^0.0.14",
+    "@sadoprotocol/ordit-sdk": "^0.0.16",
     "buffer": "^6.0.3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"

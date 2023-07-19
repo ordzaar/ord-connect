@@ -39,5 +39,5 @@ function setPackageVersions(rootDir, version) {
 }
 
 module.exports = {
-  setPackageVersions
+  setPackageVersions,
 };
