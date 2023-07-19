@@ -1,0 +1,22 @@
+name: OSS Governance
+
+on:
+  pull_request_target:
+    types: [synchronize, opened, labeled, unlabeled]
+  issues:
+    types: [opened, labeled, unlabeled]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  statuses: write
+  checks: write
+
+jobs:
+  Bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: BirthdayResearch/oss-governance-bot@37c8583c6b8596d173b68ffaed543e2485f4f193 # v3.0.0

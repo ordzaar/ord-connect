@@ -11,7 +11,7 @@ Just two simple steps:
 1.  Add dependency:
 
     ```bash
-    npm install @sadoprotocol/sado-connect
+    pnpm install @sadoprotocol/sado-connect
     ```
 
 2.  Import sado-connect into your dApp:

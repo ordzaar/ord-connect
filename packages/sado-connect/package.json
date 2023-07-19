@@ -31,7 +31,8 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "@sadoprotocol/ordit-sdk": "^0.0.13",
+    "@sadoprotocol/ordit-sdk": "^0.0.14",
+    "buffer": "^6.0.3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
