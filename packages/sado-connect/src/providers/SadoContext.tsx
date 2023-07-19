@@ -20,6 +20,9 @@ interface SadoContextI {
   updateNetwork: (network: Network) => void;
   wallet: Wallet | null;
   updateWallet: (wallet: Wallet | null) => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 const SadoContext = createContext<SadoContextI>({
@@ -31,6 +34,9 @@ const SadoContext = createContext<SadoContextI>({
   updateNetwork: () => {},
   wallet: null,
   updateWallet: () => {},
+  isModalOpen: false,
+  openModal: () => {},
+  closeModal: () => {},  
 });
 
 const ADDRESS = "address";
@@ -66,7 +72,8 @@ export function SadoConnectProvider({
   const [network, setNetwork] = useState<Network>(Network.TESTNET);
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [publicKey, setPublicKey] = useState<string | null>(null);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   useEffect(() => {
     try {
       const storedAddress = sessionStorage.getItem(ADDRESS);
@@ -122,7 +129,7 @@ export function SadoConnectProvider({
     } catch (error) {
       console.error("Error saving publicKey to sessionStorage", error);
     }
-  }, [publicKey]);
+  }, [publicKey]);  
 
   const context: SadoContextI = {
     address,
@@ -132,7 +139,10 @@ export function SadoConnectProvider({
     network,
     updateNetwork: setNetwork,
     wallet,
-    updateWallet: setWallet,
+    updateWallet: setWallet,    
+    isModalOpen,
+    openModal: () => setIsModalOpen(true),
+    closeModal: () => setIsModalOpen(false),
   };
 
   return (
