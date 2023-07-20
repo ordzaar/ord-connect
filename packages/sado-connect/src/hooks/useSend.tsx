@@ -27,6 +27,7 @@ export function useSend(): [SendFunction, string | null] {
 
   const send: SendFunction = async (toAddress, satoshis) => {
     try {
+      setError(null);
       if (!address || !publicKey) throw new Error("No wallet is connected");
 
       const psbtTemplate: CreatePsbtOptions = {
