@@ -124,18 +124,18 @@ export function SelectWalletModal({
                         </span>
                         <img src={ChevronRightIcon} alt="Chevron Right" />
                       </button>
-                      <hr className="horizontal-separator" />
-                      <button
-                        type="button"
-                        className="wallet-option-button"
-                        onClick={async () => {
-                          await onConnectXverseWallet();
-                        }}
-                      >
-                        <img src={XverseWalletIcon} alt="Xverse Wallet" />
-                        <span className="wallet-option-label">Xverse</span>
-                        <img src={ChevronRightIcon} alt="Chevron Right" />
-                      </button>
+                      {/*<hr className="horizontal-separator" />*/}
+                      {/*<button*/}
+                      {/*  type="button"*/}
+                      {/*  className="wallet-option-button"*/}
+                      {/*  onClick={async () => {*/}
+                      {/*    await onConnectXverseWallet();*/}
+                      {/*  }}*/}
+                      {/*>*/}
+                      {/*  <img src={XverseWalletIcon} alt="Xverse Wallet" />*/}
+                      {/*  <span className="wallet-option-label">Xverse</span>*/}
+                      {/*  <img src={ChevronRightIcon} alt="Chevron Right" />*/}
+                      {/*</button>*/}
                     </section>
                   ) : (
                     <>
