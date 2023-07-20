@@ -33,14 +33,14 @@
   "peerDependencies": {
     "@sadoprotocol/ordit-sdk": "^0.0.16",
     "buffer": "^6.0.3",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.2",
     "@types/node": "^20.3.1",
-    "@types/react": "^18.0.37",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
