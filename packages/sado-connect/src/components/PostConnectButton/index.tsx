@@ -75,11 +75,11 @@ export function PostConnectButton({
                 <span className="value">{TruncateMiddle(address)}</span>
               </Menu.Item>
               <hr className="horizontal-separator" />
-              <Menu.Item as="button" className="dropdown-button">
-                <span className="label">Offers</span>
-                <div className="offers">0</div>
-              </Menu.Item>
-              <hr className="horizontal-separator" />
+              {/*<Menu.Item as="button" className="dropdown-button">*/}
+              {/*  <span className="label">Offers</span>*/}
+              {/*  <div className="offers">0</div>*/}
+              {/*</Menu.Item>*/}
+              {/*<hr className="horizontal-separator" />*/}
               <Menu.Item
                 as="button"
                 className="dropdown-button"
