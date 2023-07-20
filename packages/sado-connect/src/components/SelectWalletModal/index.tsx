@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
-import XverseWalletIcon from "../../assets/xverse-wallet.svg";
+// import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useSadoContext, Wallet } from "../../providers/SadoContext";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
@@ -41,26 +41,26 @@ export function SelectWalletModal({
       console.error("Error while connecting to UniSat wallet", err);
     }
   };
-  const onConnectXverseWallet = async () => {
-    try {
-      const xverse = await ordit.xverse.getAddresses({
-        network,
-      });
-      const taprootAddress = xverse.find(
-        (address) => address.format === "taproot"
-      );
-      updateAddress(taprootAddress.address);
-      updatePublicKey(taprootAddress.pub);
-      updateWallet(Wallet.XVERSE);
-      closeModal();
-    } catch (err: any) {
-      if (err?.message === "Xverse not installed.") {
-        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
-      }
-      setErrorMessage(err.toString());
-      console.error("Error while connecting to Xverse wallet", err);
-    }
-  };
+  // const onConnectXverseWallet = async () => {
+  //   try {
+  //     const xverse = await ordit.xverse.getAddresses({
+  //       network,
+  //     });
+  //     const taprootAddress = xverse.find(
+  //       (address) => address.format === "taproot"
+  //     );
+  //     updateAddress(taprootAddress.address);
+  //     updatePublicKey(taprootAddress.pub);
+  //     updateWallet(Wallet.XVERSE);
+  //     closeModal();
+  //   } catch (err: any) {
+  //     if (err?.message === "Xverse not installed.") {
+  //       window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
+  //     }
+  //     setErrorMessage(err.toString());
+  //     console.error("Error while connecting to Xverse wallet", err);
+  //   }
+  // };
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
