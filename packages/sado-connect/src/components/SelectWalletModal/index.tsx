@@ -7,7 +7,7 @@ import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import { useSadoContext, Wallet } from "../../providers/SadoContext";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
-  XVERSE_WALLET_CHROME_EXTENSION_URL,
+  // XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
 import { ordit } from "@sadoprotocol/ordit-sdk";
 
