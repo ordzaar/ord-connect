@@ -43,6 +43,29 @@ const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
 
+// Helper function to get item from sessionStorage
+function getItemFromSessionStorage<T>(key: string): T | null {
+  try {
+    return sessionStorage.getItem(key) as T | null;
+  } catch (error) {
+    console.error(`Error retrieving ${key} from sessionStorage`, error);
+    return null;
+  }
+}
+
+// Helper function to set item to sessionStorage
+function setItemToSessionStorage(key: string, value: string | null) {
+  try {
+    if (value) {
+      sessionStorage.setItem(key, value);
+    } else {
+      sessionStorage.removeItem(key);
+    }
+  } catch (error) {
+    console.error(`Error saving ${key} to sessionStorage`, error);
+  }
+}
+
 /**
  * (Optionally) global context provider for SadoConnectKit and its consumer(s).
  *
@@ -68,68 +91,21 @@ const PUBLIC_KEY = "publicKey";
 export function SadoConnectProvider({
   children,
 }: React.PropsWithChildren<any>) {
-  const [address, setAddress] = useState<string | null>(null);
+  const [address, setAddress] = useState<string | null>(() =>
+    getItemFromSessionStorage(ADDRESS)
+  );
   const [network, setNetwork] = useState<Network>(Network.TESTNET);
-  const [wallet, setWallet] = useState<Wallet | null>(null);
-  const [publicKey, setPublicKey] = useState<string | null>(null);
+  const [wallet, setWallet] = useState<Wallet | null>(() =>
+    getItemFromSessionStorage(WALLET)
+  );
+  const [publicKey, setPublicKey] = useState<string | null>(() =>
+    getItemFromSessionStorage(PUBLIC_KEY)
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      const storedAddress = sessionStorage.getItem(ADDRESS);
-      if (storedAddress) {
-        setAddress(storedAddress);
-      }
-
-      const storedPublicKey = sessionStorage.getItem(PUBLIC_KEY);
-      if (storedPublicKey) {
-        setPublicKey(storedPublicKey);
-      }
-
-      const storedWallet = sessionStorage.getItem(WALLET);
-      if (storedWallet === Wallet.UNISAT || storedWallet === Wallet.XVERSE) {
-        setWallet(storedWallet);
-      }
-    } catch (error) {
-      console.error("Error retrieving data from sessionStorage", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      if (address) {
-        sessionStorage.setItem(ADDRESS, address);
-      } else {
-        sessionStorage.removeItem(ADDRESS);
-      }
-    } catch (error) {
-      console.error("Error saving address to sessionStorage", error);
-    }
-  }, [address]);
-
-  useEffect(() => {
-    try {
-      if (wallet) {
-        sessionStorage.setItem(WALLET, wallet);
-      } else {
-        sessionStorage.removeItem(WALLET);
-      }
-    } catch (error) {
-      console.error("Error saving wallet to sessionStorage", error);
-    }
-  }, [wallet]);
-
-  useEffect(() => {
-    try {
-      if (publicKey) {
-        sessionStorage.setItem(PUBLIC_KEY, publicKey);
-      } else {
-        sessionStorage.removeItem(PUBLIC_KEY);
-      }
-    } catch (error) {
-      console.error("Error saving publicKey to sessionStorage", error);
-    }
-  }, [publicKey]);
+  useEffect(() => setItemToSessionStorage(ADDRESS, address), [address]);
+  useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
+  useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
 
   const context: SadoContextI = {
     address,
@@ -149,6 +125,7 @@ export function SadoConnectProvider({
     <SadoContext.Provider value={context}>{children}</SadoContext.Provider>
   );
 }
+
 export function useSadoContext() {
   return useContext(SadoContext);
 }
