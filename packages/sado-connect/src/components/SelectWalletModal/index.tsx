@@ -27,6 +27,8 @@ export function SelectWalletModal({
 
   const onConnectUnisatWallet = async () => {
     try {
+      // Reset error message
+      setErrorMessage("");
       const unisat = await ordit.unisat.getAddresses(network);
       // Unisat only returns one wallet by default
       const wallet = unisat[0];
@@ -44,7 +46,7 @@ export function SelectWalletModal({
       if (err.message === "Unisat not installed.") {
         window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
       }
-      setErrorMessage(err.toString());
+      setErrorMessage(err.message ?? err.toString());
       console.error("Error while connecting to UniSat wallet", err);
     }
   };
