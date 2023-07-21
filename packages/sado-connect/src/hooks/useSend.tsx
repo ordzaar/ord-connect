@@ -12,15 +12,6 @@ type SendFunction = (
   satoshis: number
 ) => Promise<string | null>;
 
-// No choice but to typecast due to: https://github.com/sadoprotocol/ordit-sdk/issues/5
-type SignedXversePsbt = {
-  rawTxHex: string;
-  psbt: {
-    hex: string;
-    base64: string;
-  };
-};
-
 export function useSend(): [SendFunction, string | null] {
   const { wallet, network, address, publicKey } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +59,7 @@ export function useSend(): [SendFunction, string | null] {
         const signedXversePsbt = await ordit.xverse.signPsbt(
           xverseSignPsbtOptions
         );
-        signedPsbt = (signedXversePsbt as SignedXversePsbt).rawTxHex;
+        signedPsbt = signedXversePsbt.rawTxHex;
 
         if (!signedPsbt) {
           throw new Error("Xverse signing failed.");
