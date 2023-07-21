@@ -12,11 +12,13 @@ type SendFunction = (
   satoshis: number
 ) => Promise<string | null>;
 
-export function useSend(): [SendFunction, string | null] {
+export function useSend(): [SendFunction, string | null, boolean] {
   const { wallet, network, address, publicKey } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const send: SendFunction = async (toAddress, satoshis) => {
+    setLoading(true);
     try {
       setError(null);
       if (!address || !publicKey) throw new Error("No wallet is connected");
@@ -38,9 +40,6 @@ export function useSend(): [SendFunction, string | null] {
         ],
       };
 
-      // ordit-sdk outputs serialized psbt(s) in the form of base64/hex,
-      // but expects psbt objects as an input.
-      // Hence, the need to deserialize and serialize for back-and-forth actions.
       const unsignedPsbtBase64 = (
         await ordit.transactions.createPsbt(psbtTemplate)
       ).base64;
@@ -53,7 +52,6 @@ export function useSend(): [SendFunction, string | null] {
         const xverseSignPsbtOptions = {
           psbt: unsignedPsbt,
           network,
-          // Is this optional? The input should already exist in the unsigned psbt
           inputs: [],
         };
         const signedXversePsbt = await ordit.xverse.signPsbt(
@@ -72,12 +70,14 @@ export function useSend(): [SendFunction, string | null] {
         signedPsbt,
         network
       );
+      setLoading(false);
       return txId;
     } catch (err: any) {
       setError(err.message);
+      setLoading(false);
       return null;
     }
   };
 
-  return [send, error];
+  return [send, error, loading];
 }

@@ -6,17 +6,18 @@ import { SadoConnectProvider } from "./providers/SadoContext";
 import "./style.css";
 
 function SampleComponent() {
-  const [send, error] = useSend();
+  const [send, error, loading] = useSend();
   const [result, setResult] = useState("");
 
   return (
     <div>
       <span>{result && `Transaction ID: ${result}`}</span>
       <span>{error && `Error: ${error}`}</span>
+      <span>{loading && `Loading`}</span>
       <button
         onClick={async () => {
           const txId = await send(
-            "tb1qzxtxwhsqkh0yp6ne0mpefu99gn49a945m9hc28",
+            "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
             1
           );
           if (typeof txId === "string") setResult(txId);
