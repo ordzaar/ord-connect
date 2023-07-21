@@ -15,8 +15,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1(turbo@1.9.1)(typanion@3.13.0)
       '@waveshq/standard-prettier':
-        specifier: ^1.0.15
-        version: 1.0.15(@typescript-eslint/eslint-plugin@5.59.0)(@typescript-eslint/parser@5.59.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)
+        specifier: ^1.1.0
+        version: 1.1.0(@typescript-eslint/eslint-plugin@5.59.0)(@typescript-eslint/parser@5.59.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)
 
   packages/sado-connect:
     dependencies:
@@ -1079,8 +1079,8 @@ packages:
       - '@swc/helpers'
     dev: true
 
-  /@waveshq/standard-prettier@1.0.15(@typescript-eslint/eslint-plugin@5.59.0)(@typescript-eslint/parser@5.59.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2):
-    resolution: {integrity: sha512-2xsvMk3Rxxp8eriynMjuxknt+yTTXGfJXTea1SFjIaWcshWYI1osNQXzW8c1NbdvXU8RUXqWSUwUMWSVvFWnHw==}
+  /@waveshq/standard-prettier@1.1.0(@typescript-eslint/eslint-plugin@5.59.0)(@typescript-eslint/parser@5.59.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2):
+    resolution: {integrity: sha512-5PTIHrx9vWp+HVgQfH3r2fSGLYUESp7z3JXVxjchBqQ93Ti9KB5Jf1ebQw3wna96DwqoNIfHrb+y8aBvBNoZiQ==}
     dependencies:
       eslint: 8.45.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)(eslint@8.45.0)

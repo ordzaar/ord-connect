@@ -14,7 +14,7 @@
   "devDependencies": {
     "@stickyjs/prettier": "^1.2.1",
     "@stickyjs/turbo": "^1.2.1",
-    "@waveshq/standard-prettier": "^1.0.15"
+    "@waveshq/standard-prettier": "^1.1.0"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
