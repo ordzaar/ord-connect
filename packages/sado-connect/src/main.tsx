@@ -10,10 +10,6 @@ function SampleComponent() {
   const [result, setResult] = useState("");
   const { address } = useSadoContext();
 
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
-
   return (
     <div>
       <span>{address && `Connected Address: ${address}`}</span>
