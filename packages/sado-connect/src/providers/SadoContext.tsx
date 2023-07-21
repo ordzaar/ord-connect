@@ -108,7 +108,7 @@ export function SadoConnectProvider({
     getItemFromSessionStorage(PUBLIC_KEY)
   );
 
-  const [format, setFormat] = useState<Format | null>(() =>
+  const [format, setFormat] = useState<AddressFormats | null>(() =>
     getItemFromSessionStorage(FORMAT)
   );
 
