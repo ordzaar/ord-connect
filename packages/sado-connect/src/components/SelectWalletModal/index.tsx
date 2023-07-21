@@ -28,9 +28,16 @@ export function SelectWalletModal({
   const onConnectUnisatWallet = async () => {
     try {
       const unisat = await ordit.unisat.getAddresses(network);
-      // Unisat only returns one address by default
-      updateAddress(unisat[0].address);
-      updatePublicKey(unisat[0].pub);
+      // Unisat only returns one wallet by default
+      const wallet = unisat[0];
+      const supportedFormats = ["bech32", "taproot"];
+      if (!supportedFormats.includes(wallet.format)) {
+        throw Error(
+          "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported."
+        );
+      }
+      updateAddress(wallet.address);
+      updatePublicKey(wallet.pub);
       updateWallet(Wallet.UNISAT);
       closeModal();
     } catch (err: any) {
