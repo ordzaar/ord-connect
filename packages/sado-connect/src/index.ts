@@ -3,4 +3,5 @@ export type { SadoConnectKitProp } from "./components/SadoConnectKit";
 export { SelectWalletModal } from "./components/SelectWalletModal";
 export { SadoConnectProvider, useSadoContext } from "./providers/SadoContext";
 export { useSend } from "./hooks/useSend";
+export { useBalance } from "./hooks/useBalance";
 import "./components/style.css";
