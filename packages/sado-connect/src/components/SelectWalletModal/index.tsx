@@ -20,13 +20,15 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress, network, updateWallet, updatePublicKey } =
+  const { updateAddress, network, updateWallet, updatePublicKey, openModal } =
     useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
 
   const onConnectUnisatWallet = async () => {
     try {
+      window.unisat.removeListener("accountsChanged", onConnectUnisatWallet);
+      console.log("onConnectUnisatWallet triggered");
       // Reset error message
       setErrorMessage("");
       const unisat = await ordit.unisat.getAddresses(network);
@@ -34,13 +36,16 @@ export function SelectWalletModal({
       const wallet = unisat[0];
       const supportedFormats = ["bech32", "taproot"];
       if (!supportedFormats.includes(wallet.format)) {
+        openModal();
         throw Error(
-          "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported."
+          "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported. Switch to a supported address and connect again."
         );
       }
       updateAddress(wallet.address);
       updatePublicKey(wallet.pub);
       updateWallet(Wallet.UNISAT);
+
+      window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
       closeModal();
     } catch (err: any) {
       if (err.message === "Unisat not installed.") {
