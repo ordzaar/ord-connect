@@ -10,6 +10,8 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
   const getBalance = async (): Promise<number> => {
     setLoading(true);
     try {
+      setError(null);
+      if (!format || !publicKey) throw new Error("No wallet is connected");
       const walletWithBalances = await ordit.wallet.getWalletWithBalances({
         pubKey: publicKey,
         network,
