@@ -9,7 +9,7 @@ import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   // XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
-import { ordit } from "@sadoprotocol/ordit-sdk";
+import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -20,8 +20,14 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress, network, updateWallet, updatePublicKey, openModal } =
-    useSadoContext();
+  const {
+    updateAddress,
+    network,
+    updateWallet,
+    updatePublicKey,
+    openModal,
+    updateFormat,
+  } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
 
@@ -44,6 +50,7 @@ export function SelectWalletModal({
       updateAddress(wallet.address);
       updatePublicKey(wallet.pub);
       updateWallet(Wallet.UNISAT);
+      updateFormat(wallet.format as AddressFormats);
 
       window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
       closeModal();

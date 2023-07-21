@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { AddressFormats } from "@sadoprotocol/ordit-sdk";
 import { createContext, useContext, useState, useEffect } from "react";
 
 export enum Network {
@@ -23,6 +24,8 @@ interface SadoContextI {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+  format: AddressFormats;
+  updateFormat: (format: AddressFormats | null) => void;
 }
 
 const SadoContext = createContext<SadoContextI>({
@@ -37,11 +40,14 @@ const SadoContext = createContext<SadoContextI>({
   isModalOpen: false,
   openModal: () => {},
   closeModal: () => {},
+  format: null,
+  updateFormat: () => {},
 });
 
 const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
+const FORMAT = "format";
 
 // Helper function to get item from sessionStorage
 function getItemFromSessionStorage<T>(key: string): T | null {
@@ -101,11 +107,17 @@ export function SadoConnectProvider({
   const [publicKey, setPublicKey] = useState<string | null>(() =>
     getItemFromSessionStorage(PUBLIC_KEY)
   );
+
+  const [format, setFormat] = useState<Format | null>(() =>
+    getItemFromSessionStorage(FORMAT)
+  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => setItemToSessionStorage(ADDRESS, address), [address]);
   useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
   useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
+  useEffect(() => setItemToSessionStorage(FORMAT, format), [format]);
 
   const context: SadoContextI = {
     address,
@@ -119,6 +131,8 @@ export function SadoConnectProvider({
     isModalOpen,
     openModal: () => setIsModalOpen(true),
     closeModal: () => setIsModalOpen(false),
+    format,
+    updateFormat: setFormat,
   };
 
   return (
