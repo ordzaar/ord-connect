@@ -1,4 +1,6 @@
 type Unisat = {
+  addListener: (eventName: string, callback: (arg: string) => void) => void;
+  removeListener: (eventName: string, callback: (arg: string) => void) => void;
   getNetwork: () => Promise<UnisatNetwork>;
   switchNetwork: (targetNetwork: UnisatNetwork) => Promise<void>;
   requestAccounts: () => Promise<string[]>;

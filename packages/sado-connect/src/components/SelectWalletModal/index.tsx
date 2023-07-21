@@ -9,7 +9,7 @@ import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   // XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
-import { ordit } from "@sadoprotocol/ordit-sdk";
+import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -20,24 +20,45 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
 }: SelectWalletModalProp) {
-  const { updateAddress, network, updateWallet, updatePublicKey } =
-    useSadoContext();
+  const {
+    updateAddress,
+    network,
+    updateWallet,
+    updatePublicKey,
+    openModal,
+    updateFormat,
+  } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
 
   const onConnectUnisatWallet = async () => {
     try {
+      window.unisat.removeListener("accountsChanged", onConnectUnisatWallet);
+      console.log("onConnectUnisatWallet triggered");
+      // Reset error message
+      setErrorMessage("");
       const unisat = await ordit.unisat.getAddresses(network);
-      // Unisat only returns one address by default
-      updateAddress(unisat[0].address);
-      updatePublicKey(unisat[0].pub);
+      // Unisat only returns one wallet by default
+      const wallet = unisat[0];
+      const supportedFormats = ["bech32", "taproot"];
+      if (!supportedFormats.includes(wallet.format)) {
+        openModal();
+        throw Error(
+          "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported. Switch to a supported address and connect again."
+        );
+      }
+      updateAddress(wallet.address);
+      updatePublicKey(wallet.pub);
       updateWallet(Wallet.UNISAT);
+      updateFormat(wallet.format as AddressFormats);
+
+      window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
       closeModal();
     } catch (err: any) {
       if (err.message === "Unisat not installed.") {
         window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
       }
-      setErrorMessage(err.toString());
+      setErrorMessage(err.message ?? err.toString());
       console.error("Error while connecting to UniSat wallet", err);
     }
   };
