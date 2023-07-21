@@ -34,7 +34,10 @@ export function SelectWalletModal({
   const onConnectUnisatWallet = async () => {
     try {
       window.unisat.removeListener("accountsChanged", onConnectUnisatWallet);
-      console.log("onConnectUnisatWallet triggered");
+    } catch (err: any) {
+      // This will fail on first run, handle it silently
+    }
+    try {
       // Reset error message
       setErrorMessage("");
       const unisat = await ordit.unisat.getAddresses(network);
