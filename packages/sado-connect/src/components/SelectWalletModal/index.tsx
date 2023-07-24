@@ -41,6 +41,9 @@ export function SelectWalletModal({
       // Reset error message
       setErrorMessage("");
       const unisat = await ordit.unisat.getAddresses(network);
+
+      if (unisat.length < 1)
+        throw Error("Unisat is not responding. Please reload your browser.");
       // Unisat only returns one wallet by default
       const wallet = unisat[0];
       const supportedFormats = ["bech32", "taproot"];
