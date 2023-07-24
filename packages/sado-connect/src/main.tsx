@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
@@ -9,8 +9,8 @@ import "./style.css";
 function SampleComponent() {
   const [send, error, loading] = useSend();
   const [getBalance] = useBalance();
-  const [result, setResult] = useState("");
-  const [balance, setBalance] = useState(0);
+  const [result, setResult] = React.useState("");
+  const [balance, setBalance] = React.useState(0);
 
   const { address } = useSadoContext();
 
@@ -46,7 +46,7 @@ function SampleComponent() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <SadoConnectProvider>
+    <SadoConnectProvider initialNetwork={"mainnet"}>
       <SampleComponent />
       <SadoConnectKit />
     </SadoConnectProvider>

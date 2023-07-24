@@ -92,15 +92,19 @@ function setItemToSessionStorage(key: string, value: string | null) {
  * }
  *
  * @param {React.PropsWithChildren<any>} props - Props object.
+ * @param {string} [props.initialNetwork] - Initialize the internal context network state on mount.
  * @returns {JSX.Element} Provider component for SadoConnect.
  */
 export function SadoConnectProvider({
   children,
+  initialNetwork,
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<string | null>(() =>
     getItemFromSessionStorage(ADDRESS)
   );
-  const [network, setNetwork] = useState<Network>(Network.TESTNET);
+  const [network, setNetwork] = useState<Network>(
+    initialNetwork ?? Network.TESTNET
+  );
   const [wallet, setWallet] = useState<Wallet | null>(() =>
     getItemFromSessionStorage(WALLET)
   );
