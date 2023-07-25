@@ -9,15 +9,16 @@ import { Psbt } from "bitcoinjs-lib";
 
 type SendFunction = (
   address: string,
-  satoshis: number
+  satoshis: number,
+  feeRate?: number
 ) => Promise<string | null>;
 
 export function useSend(): [SendFunction, string | null, boolean] {
-  const { wallet, network, address, publicKey } = useSadoContext();
+  const { wallet, network, address, publicKey, safeMode } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const send: SendFunction = async (toAddress, satoshis) => {
+  const safeSend: SendFunction = async (toAddress, satoshis) => {
     setLoading(true);
     try {
       setError(null);
@@ -79,5 +80,31 @@ export function useSend(): [SendFunction, string | null, boolean] {
     }
   };
 
-  return [send, error, loading];
+  const unsafeSend: SendFunction = async (toAddress, satoshis, feeRate) => {
+    setLoading(true);
+    try {
+      setError(null);
+      if (!address || !publicKey) throw new Error("No wallet is connected");
+
+      let txId;
+      if (wallet === Wallet.UNISAT) {
+        txId = await window.unisat.sendBitcoin(toAddress, satoshis, {
+          feeRate,
+        });
+      } else if (wallet === Wallet.XVERSE) {
+        // TO-DO
+      } else {
+        throw new Error("No wallet selected");
+      }
+
+      setLoading(false);
+      return txId;
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+      return null;
+    }
+  };
+
+  return [safeMode ? safeSend : unsafeSend, error, loading];
 }
