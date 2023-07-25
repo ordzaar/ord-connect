@@ -26,6 +26,8 @@ interface SadoContextI {
   closeModal: () => void;
   format: AddressFormats;
   updateFormat: (format: AddressFormats | null) => void;
+  safeMode: boolean;
+  updateSafeMode: (safeMode: boolean) => void;
 }
 
 const SadoContext = createContext<SadoContextI>({
@@ -42,12 +44,16 @@ const SadoContext = createContext<SadoContextI>({
   closeModal: () => {},
   format: null,
   updateFormat: () => {},
+  safeMode: null,
+  updateSafeMode: () => {},
 });
 
 const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
 const FORMAT = "format";
+const SAFE_MODE = "safeMode";
+const NETWORK = "network";
 
 // Helper function to get item from sessionStorage
 function getItemFromSessionStorage<T>(key: string): T | null {
@@ -93,18 +99,25 @@ function setItemToSessionStorage(key: string, value: string | null) {
  *
  * @param {React.PropsWithChildren<any>} props - Props object.
  * @param {string} [props.initialNetwork] - Initialize the internal context network state on mount.
+ *  * @param {string} [props.initialSafeMode] - Initialize the internal context safeMode state on mount.
  * @returns {JSX.Element} Provider component for SadoConnect.
  */
 export function SadoConnectProvider({
   children,
   initialNetwork,
+  initialSafeMode,
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<string | null>(() =>
     getItemFromSessionStorage(ADDRESS)
   );
   const [network, setNetwork] = useState<Network>(
-    initialNetwork ?? Network.TESTNET
+    initialNetwork ?? getItemFromSessionStorage(NETWORK) ?? Network.TESTNET
   );
+
+  const [safeMode, setSafeMode] = useState<boolean>(
+    initialSafeMode ?? Boolean(getItemFromSessionStorage(SAFE_MODE)) ?? true
+  );
+
   const [wallet, setWallet] = useState<Wallet | null>(() =>
     getItemFromSessionStorage(WALLET)
   );
@@ -122,6 +135,11 @@ export function SadoConnectProvider({
   useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
   useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
   useEffect(() => setItemToSessionStorage(FORMAT, format), [format]);
+  useEffect(() => setItemToSessionStorage(NETWORK, network), [network]);
+  useEffect(
+    () => setItemToSessionStorage(SAFE_MODE, safeMode.toString()),
+    [safeMode]
+  );
 
   const context: SadoContextI = {
     address,
@@ -137,6 +155,8 @@ export function SadoConnectProvider({
     closeModal: () => setIsModalOpen(false),
     format,
     updateFormat: setFormat,
+    safeMode,
+    updateSafeMode: setSafeMode,
   };
 
   return (
