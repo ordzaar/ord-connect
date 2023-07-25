@@ -27,6 +27,7 @@ export function SelectWalletModal({
     updatePublicKey,
     openModal,
     updateFormat,
+    safeToSpend,
   } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
@@ -47,7 +48,7 @@ export function SelectWalletModal({
       // Unisat only returns one wallet by default
       const wallet = unisat[0];
       const supportedFormats = ["bech32", "taproot"];
-      if (!supportedFormats.includes(wallet.format)) {
+      if (safeToSpend && !supportedFormats.includes(wallet.format)) {
         openModal();
         throw Error(
           "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported. Switch to a supported address and connect again."
