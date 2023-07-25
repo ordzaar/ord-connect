@@ -46,7 +46,7 @@ function SampleComponent() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <SadoConnectProvider initialNetwork={"mainnet"}>
+    <SadoConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
       <SampleComponent />
       <SadoConnectKit />
     </SadoConnectProvider>
