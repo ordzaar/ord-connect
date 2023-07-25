@@ -16,6 +16,17 @@ interface SelectWalletModalProp {
   closeModal: () => void;
 }
 
+function promiseWithTimeout(promise, ms, message) {
+  const timeout = new Promise((_, reject) => {
+    const id = setTimeout(() => {
+      clearTimeout(id);
+      reject(message);
+    }, ms);
+  });
+
+  return Promise.race([promise, timeout]);
+}
+
 export function SelectWalletModal({
   isOpen,
   closeModal,
@@ -41,10 +52,12 @@ export function SelectWalletModal({
     try {
       // Reset error message
       setErrorMessage("");
-      const unisat = await ordit.unisat.getAddresses(network);
+      const unisat = await promiseWithTimeout(
+        ordit.unisat.getAddresses(network),
+        1000,
+        "Unisat is not responding. Please reload your browser."
+      );
 
-      if (unisat.length < 1)
-        throw Error("Unisat is not responding. Please reload your browser.");
       // Unisat only returns one wallet by default
       const wallet = unisat[0];
       const supportedFormats = ["bech32", "taproot"];
