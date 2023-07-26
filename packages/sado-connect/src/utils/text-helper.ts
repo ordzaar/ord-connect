@@ -11,3 +11,7 @@ export function TruncateMiddle(
   const back = value.slice(value.length - backStringToKeep);
   return `${front}...${back}`;
 }
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
