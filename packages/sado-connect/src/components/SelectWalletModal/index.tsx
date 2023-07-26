@@ -10,21 +10,12 @@ import {
   // XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
 import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
+import { capitalizeFirstLetter } from "../../utils/text-helper";
+import { unresponsiveExtensionHandler } from "../../utils/promise-with-timeout";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
-}
-
-function promiseWithTimeout(promise, ms, message) {
-  const timeout = new Promise((_, reject) => {
-    const id = setTimeout(() => {
-      clearTimeout(id);
-      reject(message);
-    }, ms);
-  });
-
-  return Promise.race([promise, timeout]);
 }
 
 export function SelectWalletModal({
@@ -52,15 +43,14 @@ export function SelectWalletModal({
     try {
       // Reset error message
       setErrorMessage("");
-      const unisat = await promiseWithTimeout(
+      const unisat = await unresponsiveExtensionHandler(
         ordit.unisat.getAddresses(network),
-        1000,
-        "Unisat is not responding. Please reload your browser."
+        Wallet.UNISAT
       );
 
       // Unisat only returns one wallet by default
       const wallet = unisat[0];
-      const supportedFormats = ["bech32", "taproot"];
+      const supportedFormats = ["segwit", "taproot"];
       if (safeMode && !supportedFormats.includes(wallet.format)) {
         openModal();
         throw Error(

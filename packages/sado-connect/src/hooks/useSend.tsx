@@ -6,6 +6,7 @@ import {
   ordit,
 } from "@sadoprotocol/ordit-sdk";
 import { Psbt } from "bitcoinjs-lib";
+import { unresponsiveExtensionHandler } from "../utils/promise-with-timeout";
 
 type SendFunction = (
   address: string,
@@ -47,7 +48,10 @@ export function useSend(): [SendFunction, string | null, boolean] {
       const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
       let signedPsbt = null;
       if (wallet === Wallet.UNISAT) {
-        const signedUnisatPsbt = await ordit.unisat.signPsbt(unsignedPsbt);
+        const signedUnisatPsbt = await unresponsiveExtensionHandler(
+          ordit.unisat.signPsbt(unsignedPsbt),
+          Wallet.UNISAT
+        );
         signedPsbt = signedUnisatPsbt.rawTxHex;
       } else if (wallet === Wallet.XVERSE) {
         const xverseSignPsbtOptions = {
@@ -88,9 +92,12 @@ export function useSend(): [SendFunction, string | null, boolean] {
 
       let txId;
       if (wallet === Wallet.UNISAT) {
-        txId = await window.unisat.sendBitcoin(toAddress, satoshis, {
-          feeRate,
-        });
+        txId = await unresponsiveExtensionHandler(
+          window.unisat.sendBitcoin(toAddress, satoshis, {
+            feeRate,
+          }),
+          Wallet.UNISAT
+        );
       } else if (wallet === Wallet.XVERSE) {
         // TO-DO
       } else {

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { useSadoContext } from "../providers/SadoContext";
+import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { addressNameToType, ordit } from "@sadoprotocol/ordit-sdk";
+import { unresponsiveExtensionHandler } from "../utils/promise-with-timeout";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
-  const { network, publicKey, format } = useSadoContext();
+  const { network, publicKey, format, safeMode } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getBalance = async (): Promise<number> => {
+  const getSafeBalance = async (): Promise<number> => {
     setLoading(true);
     try {
       setError(null);
@@ -38,5 +39,24 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
     }
   };
 
-  return [getBalance, error, loading];
+  const getNativeBalance = async (): Promise<number> => {
+    setLoading(true);
+    try {
+      setError(null);
+      if (!format || !publicKey) throw new Error("No wallet is connected");
+
+      const unisatBalance = await unresponsiveExtensionHandler(
+        window.unisat.getBalance(),
+        Wallet.UNISAT
+      );
+
+      return unisatBalance.confirmed;
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+      return 0; // Returning 0 as default value in case of an error
+    }
+  };
+
+  return [safeMode ? getSafeBalance : getNativeBalance, error, loading];
 }
