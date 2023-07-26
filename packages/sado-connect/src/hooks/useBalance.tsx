@@ -44,7 +44,7 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       setError(null);
       if (!format || !publicKey) throw new Error("No wallet is connected");
 
-      const unisatBalance = window.unisat.getBalance();
+      const unisatBalance = await window.unisat.getBalance();
       setLoading(false);
       return unisatBalance.confirmed;
     } catch (err: any) {
