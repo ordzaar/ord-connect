@@ -10,8 +10,6 @@ import {
   // XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
 import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
-import { capitalizeFirstLetter } from "../../utils/text-helper";
-import { unresponsiveExtensionHandler } from "../../utils/promise-with-timeout";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -43,10 +41,7 @@ export function SelectWalletModal({
     try {
       // Reset error message
       setErrorMessage("");
-      const unisat = await unresponsiveExtensionHandler(
-        ordit.unisat.getAddresses(network),
-        Wallet.UNISAT
-      );
+      const unisat = await ordit.unisat.getAddresses(network);
 
       // Unisat only returns one wallet by default
       const wallet = unisat[0];
