@@ -12,5 +12,11 @@ export function promiseWithTimeout(promise, ms, message) {
 }
 
 export function unresponsiveExtensionHandler(promise, wallet) {
-    return promiseWithTimeout(promise, 5000, `No response from ${capitalizeFirstLetter(wallet)}. If you don't see a pop-up, you may need to reload your browser.`)
+  return promiseWithTimeout(
+    promise,
+    5000,
+    `No response from ${capitalizeFirstLetter(
+      wallet
+    )}. If you don't see a pop-up, you may need to reload your browser.`
+  );
 }

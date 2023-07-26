@@ -12,7 +12,11 @@ type Unisat = {
     satoshis: number,
     options: { feeRate: number }
   ) => Promise<string>;
-  getBalance: () => Promise<{confirmed: number, total: number, unconfirmed: number}>;
+  getBalance: () => Promise<{
+    confirmed: number;
+    total: number;
+    unconfirmed: number;
+  }>;
 };
 
 declare interface Window {
