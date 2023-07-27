@@ -18,13 +18,14 @@ export function useSend(): [SendFunction, string | null, boolean] {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const safeSend: SendFunction = async (toAddress, satoshis) => {
+  const safeSend: SendFunction = async (toAddress, satoshis, feeRate) => {
     setLoading(true);
     try {
       setError(null);
       if (!address || !publicKey) throw new Error("No wallet is connected");
 
       const psbtTemplate: CreatePsbtOptions = {
+        satsPerByte: feeRate,
         format: getAddressType(address, network),
         network,
         pubKey: publicKey,
