@@ -50,8 +50,8 @@ export function useSend(): [SendFunction, string | null, boolean] {
       const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
       let signedPsbt = null;
       if (wallet === Wallet.UNISAT) {
-        const signedUnisatPsbt = await ordit.unisat.signPsbt(unsignedPsbt),
-          signedPsbt = signedUnisatPsbt.rawTxHex;
+        const signedUnisatPsbt = await ordit.unisat.signPsbt(unsignedPsbt);
+        signedPsbt = signedUnisatPsbt.rawTxHex;
       } else if (wallet === Wallet.XVERSE) {
         const xverseSignPsbtOptions = {
           psbt: unsignedPsbt,
