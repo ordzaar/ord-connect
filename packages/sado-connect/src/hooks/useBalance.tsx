@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { addressNameToType, ordit } from "@sadoprotocol/ordit-sdk";
-import { balance } from "sats-connect";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
   const { network, publicKey, format, safeMode, wallet } = useSadoContext();
