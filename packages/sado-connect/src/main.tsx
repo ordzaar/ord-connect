@@ -25,7 +25,7 @@ function SampleComponent() {
         onClick={async () => {
           const txId = await send(
             "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
-            1,
+            1500,
             3
           );
           if (typeof txId === "string") setResult(txId);
@@ -47,7 +47,7 @@ function SampleComponent() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <SadoConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
+    <SadoConnectProvider initialNetwork={"testnet"} initialSafeMode={false}>
       <SampleComponent />
       <SadoConnectKit />
     </SadoConnectProvider>

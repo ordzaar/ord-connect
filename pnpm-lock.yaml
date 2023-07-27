@@ -41,6 +41,9 @@ importers:
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
+      sats-connect:
+        specifier: ^0.5.0
+        version: 0.5.0
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^25.0.2
@@ -3588,6 +3591,14 @@ packages:
 
   /sats-connect@0.2.0:
     resolution: {integrity: sha512-PEeqgPmAASPwGnBRmKYAmOey2HRbzW733EOVia067MoDAoai+/Buzx1NzaJ5FXZzpzHbG2YFQDp+43vkFWTQxw==}
+    dependencies:
+      jsontokens: 4.0.1
+      process: 0.11.10
+      util: 0.12.5
+    dev: false
+
+  /sats-connect@0.5.0:
+    resolution: {integrity: sha512-GDhKmkpKyi7jgonC/CZbXWKOddb9XJ7oC87T0fogv5+fcyBa7eIFyEQwY518XkeMdNjLIxioU4EQORm8NTYhaQ==}
     dependencies:
       jsontokens: 4.0.1
       process: 0.11.10

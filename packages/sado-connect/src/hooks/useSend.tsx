@@ -5,7 +5,9 @@ import {
   getAddressType,
   ordit,
 } from "@sadoprotocol/ordit-sdk";
+import { sendBtcTransaction } from "sats-connect";
 import { Psbt } from "bitcoinjs-lib";
+import { capitalizeFirstLetter } from "../utils/text-helper";
 
 type SendFunction = (
   address: string,
@@ -93,7 +95,23 @@ export function useSend(): [SendFunction, string | null, boolean] {
           feeRate,
         });
       } else if (wallet === Wallet.XVERSE) {
-        // TO-DO
+        const payload = {
+          network: {
+            type: capitalizeFirstLetter(network) as "Mainnet" | "Testnet",
+          },
+          recipients: [{ address: toAddress, amountSats: satoshis as any }],
+          senderAddress: address,
+        };
+
+        const xverseOptions = {
+          payload,
+          onCancel: () => {
+            throw Error("User rejected the request.");
+          },
+          onFinish: (xverseTxId) => (txId = xverseTxId),
+        };
+
+        await sendBtcTransaction(xverseOptions);
       } else {
         throw new Error("No wallet selected");
       }
