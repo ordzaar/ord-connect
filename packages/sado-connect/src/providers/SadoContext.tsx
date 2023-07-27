@@ -12,6 +12,13 @@ export enum Wallet {
   XVERSE = "xverse",
 }
 
+// TO-DO: Support unsafe psbt
+export enum SafeMode {
+  InscriptionAwareOnly,
+  InscriptionAndOrdinalAware,
+  NoSafety,
+}
+
 interface SadoContextI {
   address: string | null;
   updateAddress: (address: string | null) => void;
