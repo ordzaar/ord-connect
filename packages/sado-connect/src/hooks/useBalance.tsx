@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useSadoContext } from "../providers/SadoContext";
+import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { addressNameToType, ordit } from "@sadoprotocol/ordit-sdk";
+import { balance } from "sats-connect";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
-  const { network, publicKey, format, safeMode } = useSadoContext();
+  const { network, publicKey, format, safeMode, wallet } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -44,9 +45,15 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       setError(null);
       if (!format || !publicKey) throw new Error("No wallet is connected");
 
-      const unisatBalance = await window.unisat.getBalance();
-      setLoading(false);
-      return unisatBalance.confirmed;
+      if (wallet === Wallet.UNISAT) {
+        const unisatBalance = await window.unisat.getBalance();
+        setLoading(false);
+        return unisatBalance.confirmed;
+      } else if (wallet === Wallet.XVERSE) {
+        throw Error(
+          "Xverse does not support returning a balance. Turn on safeMode."
+        );
+      }
     } catch (err: any) {
       setError(err.message);
       setLoading(false);
