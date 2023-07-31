@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
@@ -28,6 +28,10 @@ export function SelectWalletModal({
     openModal,
     updateFormat,
     safeMode,
+    wallet,
+    format,
+    address,
+    publicKey,
   } = useSadoContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
@@ -44,18 +48,18 @@ export function SelectWalletModal({
       const unisat = await ordit.unisat.getAddresses(network);
 
       // Unisat only returns one wallet by default
-      const wallet = unisat[0];
+      const unisatWallet = unisat[0];
       const supportedFormats = ["segwit", "taproot"];
-      if (safeMode && !supportedFormats.includes(wallet.format)) {
+      if (safeMode && !supportedFormats.includes(unisatWallet.format)) {
         openModal();
         throw Error(
           "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported. Switch to a supported address and connect again."
         );
       }
-      updateAddress(wallet.address);
-      updatePublicKey(wallet.pub);
+      updateAddress(unisatWallet.address);
+      updatePublicKey(unisatWallet.pub);
       updateWallet(Wallet.UNISAT);
-      updateFormat(wallet.format as AddressFormats);
+      updateFormat(unisatWallet.format as AddressFormats);
 
       window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
       closeModal();
@@ -87,6 +91,13 @@ export function SelectWalletModal({
       console.error("Error while connecting to Xverse wallet", err);
     }
   };
+
+  // Reconnect address change listener if there there is already a connected wallet
+  useEffect(() => {
+    if (address && publicKey && wallet && format) {
+      onConnectUnisatWallet();
+    }
+  }, []);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
