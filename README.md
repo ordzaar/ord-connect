@@ -2,7 +2,16 @@
 
 ## Introduction
 
-**sado-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app).
+<img src="preview.png" alt="Preview" width="605" height="350/>
+
+**sado-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
+
+## Wallet Feature Support
+
+| Wallet | Ordinal-safety | Inscription-safety |
+| ------ | -------------- | ------------------ |
+| Unisat | ✅             | ✅                 |
+| Xverse | Coming soon    | ✅                 |
 
 ## Quick Start
 
@@ -18,12 +27,10 @@ Just two simple steps:
 
     ```javascript
     import { SadoConnectProvider, SadoConnectKit } from "@sadoprotocol/sado-connect";
-    // Styling will be directly embedded in the near future
-    import "../../node_modules/@sadoprotocol/sado-connect/dist/style.css";
 
     export default function YourReactComponent() {
       return (
-        <SadoConnectProvider>
+        <SadoConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
           <SadoConnectKit />
         </SadoConnectProvider>
       );
@@ -51,6 +58,8 @@ cd packages/sado-connect
 pnpm install
 pnpm dev
 ```
+
+The sample playground component is located at `packages/sado-connect/src/main.tsx`.
 
 Changes made to the code will be reflected immediately.
 
