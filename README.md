@@ -2,7 +2,7 @@
 
 ## Introduction
 
-<img src="preview.png" alt="Preview" width="605" height="350/>
+<img src="preview.png" alt="Preview" width="605" height="350"/>
 
 **sado-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
 
