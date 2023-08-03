@@ -4,8 +4,6 @@ import { resolve } from "path";
 import dts from "vite-plugin-dts";
 import * as packageJson from "./package.json";
 import commonjs from "@rollup/plugin-commonjs";
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
-import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 // https://vitejs.dev/config/
@@ -15,12 +13,7 @@ export default defineConfig({
       // Node.js global to browser globalThis
       define: {
         global: "globalThis",
-      },
-      // Enable esbuild polyfill plugins
-      plugins: [
-        NodeGlobalsPolyfillPlugin({ buffer: true }),
-        NodeModulesPolyfillPlugin(),
-      ],
+      },      
     },
     include: [...Object.keys(packageJson.peerDependencies)],
   },
