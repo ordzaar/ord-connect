@@ -25,9 +25,7 @@ export function SelectWalletModal({
     network,
     updateWallet,
     updatePublicKey,
-    openModal,
     updateFormat,
-    safeMode,
     wallet,
     format,
     address,
@@ -49,13 +47,6 @@ export function SelectWalletModal({
 
       // Unisat only returns one wallet by default
       const unisatWallet = unisat[0];
-      const supportedFormats = ["segwit", "taproot"];
-      if (safeMode && !supportedFormats.includes(unisatWallet.format)) {
-        openModal();
-        throw Error(
-          "Only Native Segwit (P2WPKH) and Taproot (P2TR) addresses are supported. Switch to a supported address and connect again."
-        );
-      }
       updateAddress(unisatWallet.address);
       updatePublicKey(unisatWallet.pub);
       updateWallet(Wallet.UNISAT);
@@ -76,12 +67,11 @@ export function SelectWalletModal({
       const xverse = await ordit.xverse.getAddresses({
         network,
       });
-      const taprootAddress = xverse.find(
-        (address) => address.format === "nested-segwit"
-      );
-      updateAddress(taprootAddress.address);
-      updatePublicKey(taprootAddress.pub);
+      const xverseWallet = xverse[0];
+      updateAddress(xverseWallet.address);
+      updatePublicKey(xverseWallet.pub);
       updateWallet(Wallet.XVERSE);
+      updateFormat(xverseWallet.format as AddressFormats);
       closeModal();
     } catch (err: any) {
       if (err?.message === "Xverse not installed.") {
@@ -94,7 +84,7 @@ export function SelectWalletModal({
 
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
-    if (address && publicKey && wallet && format) {
+    if (wallet === Wallet.UNISAT && address && publicKey && format) {
       onConnectUnisatWallet();
     }
   }, []);
@@ -162,19 +152,17 @@ export function SelectWalletModal({
                         <img src={ChevronRightIcon} alt="Chevron Right" />
                       </button>
                       <hr className="horizontal-separator" />
-                      {!safeMode && (
-                        <button
-                          type="button"
-                          className="wallet-option-button"
-                          onClick={async () => {
-                            await onConnectXverseWallet();
-                          }}
-                        >
-                          <img src={XverseWalletIcon} alt="Xverse Wallet" />
-                          <span className="wallet-option-label">Xverse</span>
-                          <img src={ChevronRightIcon} alt="Chevron Right" />
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        className="wallet-option-button"
+                        onClick={async () => {
+                          await onConnectXverseWallet();
+                        }}
+                      >
+                        <img src={XverseWalletIcon} alt="Xverse Wallet" />
+                        <span className="wallet-option-label">Xverse</span>
+                        <img src={ChevronRightIcon} alt="Chevron Right" />
+                      </button>
                     </section>
                   ) : (
                     <>
