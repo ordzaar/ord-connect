@@ -11,7 +11,7 @@
 | Wallet | Ordinal-safety | Inscription-safety |
 | ------ | -------------- | ------------------ |
 | Unisat | ✅             | ✅                 |
-| Xverse | Coming soon    | ✅                 |
+| Xverse | ✅             | ✅                 |
 
 ## Quick Start
 
