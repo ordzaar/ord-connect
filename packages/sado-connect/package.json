@@ -31,11 +31,11 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "@sadoprotocol/ordit-sdk": "^0.0.30",
-    "sats-connect": "^0.5.0",
+    "@sadoprotocol/ordit-sdk": "^0.0.31",
     "buffer": "^6.0.3",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sats-connect": "^0.5.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.2",
@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
-    "@sadoprotocol/ordit-sdk": "^0.0.30",
+    "@sadoprotocol/ordit-sdk": "^0.0.31",
     "bitcoinjs-lib": "^6.1.3",
     "boring-avatars": "^1.10.1",
     "buffer": "^6.0.3",

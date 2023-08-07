@@ -13,7 +13,7 @@ export default defineConfig({
       // Node.js global to browser globalThis
       define: {
         global: "globalThis",
-      },      
+      },
     },
     include: [...Object.keys(packageJson.peerDependencies)],
   },
