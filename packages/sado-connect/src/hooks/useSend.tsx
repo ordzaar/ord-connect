@@ -42,6 +42,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
             cardinals: satoshis,
           },
         ],
+        enableRBF: true,
       };
 
       const unsignedPsbtBase64 = (
