@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useSadoContext, Wallet } from "../providers/SadoContext";
-import {
-  CreatePsbtOptions,
-  getAddressType,
-  ordit,
-} from "@sadoprotocol/ordit-sdk";
+import { CreatePsbtOptions, ordit } from "@sadoprotocol/ordit-sdk";
 import { sendBtcTransaction } from "sats-connect";
 import { Psbt } from "bitcoinjs-lib";
 import { capitalizeFirstLetter } from "../utils/text-helper";
@@ -28,15 +24,10 @@ export function useSend(): [SendFunction, string | null, boolean] {
 
       const psbtTemplate: CreatePsbtOptions = {
         satsPerByte: feeRate,
-        format: getAddressType(address, network),
         network,
         pubKey: publicKey,
-        ins: [
-          {
-            address,
-          },
-        ],
-        outs: [
+        address,
+        outputs: [
           {
             address: toAddress,
             cardinals: satoshis,
