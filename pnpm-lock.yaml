@@ -15,8 +15,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1(turbo@1.9.1)(typanion@3.13.0)
       '@waveshq/standard-prettier':
-        specifier: ^1.2.6
-        version: 1.2.6(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)
+        specifier: ^1.4.0
+        version: 1.4.0(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)
 
   packages/sado-connect:
     dependencies:
@@ -345,7 +345,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.45.0
-      eslint-visitor-keys: 3.4.1
+      eslint-visitor-keys: 3.4.2
     dev: true
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.46.0):
@@ -355,7 +355,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.46.0
-      eslint-visitor-keys: 3.4.1
+      eslint-visitor-keys: 3.4.2
     dev: true
 
   /@eslint-community/regexpp@4.5.1:
@@ -1085,8 +1085,8 @@ packages:
       - '@swc/helpers'
     dev: true
 
-  /@waveshq/standard-prettier@1.2.6(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2):
-    resolution: {integrity: sha512-aAnbxCsLSl+NzfJxdjwR5p6oo4kBlDE/v4AnXF7i18SwDAj6DKQEo0Qp1IaD642iJ0JXT3T8Kix9dJFL9xbNNg==}
+  /@waveshq/standard-prettier@1.4.0(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2):
+    resolution: {integrity: sha512-htVVvwKQ0b+Iyj8gexzQkTkwb9JyLWl6z3G/5A2F/tthnNkQlUQIP8YCigqyqTLP820dHK1p0t4Bzw6jwnyNCA==}
     dependencies:
       eslint: 8.46.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.27.5)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.32.2)(eslint@8.46.0)
@@ -2234,7 +2234,7 @@ packages:
     dependencies:
       acorn: 8.9.0
       acorn-jsx: 5.3.2(acorn@8.9.0)
-      eslint-visitor-keys: 3.4.1
+      eslint-visitor-keys: 3.4.2
     dev: true
 
   /esquery@1.5.0:
