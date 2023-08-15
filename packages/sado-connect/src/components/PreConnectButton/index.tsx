@@ -12,6 +12,7 @@ export function PreConnectButton({
     <button
       type="button"
       onClick={openModal}
+      data-testid="connect-wallet-button"
       className={`sado-connect-wallet-button ${customStyle}`}
     >
       <span></span>
