@@ -4,11 +4,11 @@ import { ordit } from "@sadoprotocol/ordit-sdk";
 import { Psbt } from "bitcoinjs-lib";
 
 interface SignedPsbt {
-  rawTxHex: string,
+  rawTxHex: string;
   psbt: {
-    hex: string,
-    base64: string
-  }
+    hex: string;
+    base64: string;
+  };
 }
 
 export function useSign(): [
@@ -31,16 +31,14 @@ export function useSign(): [
       let signedPsbt: SignedPsbt;
 
       if (wallet === Wallet.UNISAT) {
-        signedPsbt = await ordit.unisat.signPsbt(unsignedPsbt);        
+        signedPsbt = await ordit.unisat.signPsbt(unsignedPsbt);
       } else if (wallet === Wallet.XVERSE) {
         const xverseSignPsbtOptions = {
           psbt: unsignedPsbt,
           network,
           inputs: [],
         };
-        signedPsbt = await ordit.xverse.signPsbt(
-          xverseSignPsbtOptions
-        );        
+        signedPsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
       } else {
         throw new Error("No wallet selected");
       }
