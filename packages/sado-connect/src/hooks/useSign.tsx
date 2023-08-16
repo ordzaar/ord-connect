@@ -11,8 +11,13 @@ interface SignedPsbt {
   };
 }
 
+interface SignOptions {
+  finalize?: boolean;
+  extractTx?: boolean;
+}
+
 export function useSign(): [
-  (unsignedPsbtBase64: string) => Promise<SignedPsbt>,
+  (unsignedPsbtBase64: string, options: SignOptions) => Promise<SignedPsbt>,
   string | null,
   boolean
 ] {
@@ -20,7 +25,10 @@ export function useSign(): [
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const sign = async (unsignedPsbtBase64: string): Promise<SignedPsbt> => {
+  const sign = async (
+    unsignedPsbtBase64: string,
+    options: SignOptions
+  ): Promise<SignedPsbt> => {
     setLoading(true);
     try {
       setError(null);
@@ -31,7 +39,7 @@ export function useSign(): [
       let signedPsbt: SignedPsbt;
 
       if (wallet === Wallet.UNISAT) {
-        signedPsbt = await ordit.unisat.signPsbt(unsignedPsbt);
+        signedPsbt = await ordit.unisat.signPsbt(unsignedPsbt, options);
       } else if (wallet === Wallet.XVERSE) {
         const xverseSignPsbtOptions = {
           psbt: unsignedPsbt,

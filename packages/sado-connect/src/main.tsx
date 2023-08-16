@@ -45,7 +45,8 @@ function SampleComponent() {
       <button
         onClick={async () => {
           const signed = await sign(
-            "cHNidP8BAOwCAAAABGfgUXKNJK+kZbVZrXNL2f3cwQMckXYiYLGRyYfslcqiAQAAAAD9////0apYlECeWk3SJkG5Jbuu4Eka/wxSPbtd7bKsKzkdVtoAAAAAAP3///9v0E+Jtq2ArOI2wSTYi3gDHjddyx4GhvZuMNFQ5lTU8wAAAAAA/f///7e2GgiSx8OGF/FH60TqPZDiHuBrS6s6t8vN94fuH3KuAAAAAAD9////AgEAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchLXaOgAAAAAABYAFEEC3jaGG8z3cQmhGaUJ8SLs43ISAAAAAAABAR+aZegAAAAAABYAFEEC3jaGG8z3cQmhGaUJ8SLs43ISAAEBH9wFAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAQEfAQAAAAAAAAAWABRBAt42hhvM93EJoRmlCfEi7ONyEgABAR8BAAAAAAAAABYAFEEC3jaGG8z3cQmhGaUJ8SLs43ISAAAA"
+            "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
+            { extractTx: false }
           );
           console.log(signed);
         }}
