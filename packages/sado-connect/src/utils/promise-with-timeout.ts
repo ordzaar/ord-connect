@@ -16,7 +16,7 @@ export function unresponsiveExtensionHandler(promise, wallet) {
     promise,
     5000,
     `No response from ${capitalizeFirstLetter(
-      wallet
-    )}. If you don't see a pop-up, you may need to reload your browser.`
+      wallet,
+    )}. If you don't see a pop-up, you may need to reload your browser.`,
   );
 }

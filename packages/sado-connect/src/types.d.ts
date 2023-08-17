@@ -10,7 +10,7 @@ type Unisat = {
   sendBitcoin: (
     address: string,
     satoshis: number,
-    options: { feeRate?: number }
+    options: { feeRate?: number },
   ) => Promise<string>;
   getBalance: () => Promise<{
     confirmed: number;

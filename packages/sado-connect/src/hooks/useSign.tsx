@@ -19,7 +19,7 @@ interface SignOptions {
 export function useSign(): [
   (unsignedPsbtBase64: string, options: SignOptions) => Promise<SignedPsbt>,
   string | null,
-  boolean
+  boolean,
 ] {
   const { network, publicKey, format, wallet } = useSadoContext();
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export function useSign(): [
 
   const sign = async (
     unsignedPsbtBase64: string,
-    options: SignOptions
+    options: SignOptions,
   ): Promise<SignedPsbt> => {
     setLoading(true);
     try {

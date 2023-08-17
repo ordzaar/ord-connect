@@ -12,9 +12,9 @@
     "lint": "turbo run lint -- --fix"
   },
   "devDependencies": {
-    "@stickyjs/prettier": "^1.2.1",
-    "@stickyjs/turbo": "^1.2.1",
-    "@waveshq/standard-prettier": "^1.4.0"
+    "@stickyjs/prettier": "^1.2.8",
+    "@stickyjs/turbo": "^1.2.8",
+    "@waveshq/standard-prettier": "^1.6.1"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"

@@ -27,7 +27,7 @@ function SampleComponent() {
           const txId = await send(
             "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
             1,
-            2
+            2,
           );
           if (typeof txId === "string") setResult(txId);
         }}
@@ -46,7 +46,7 @@ function SampleComponent() {
         onClick={async () => {
           const signed = await sign(
             "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
-            { extractTx: false }
+            { extractTx: false },
           );
           console.log(signed);
         }}
@@ -63,5 +63,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <SampleComponent />
       <SadoConnectKit />
     </SadoConnectProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

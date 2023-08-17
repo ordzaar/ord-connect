@@ -118,25 +118,25 @@ export function SadoConnectProvider({
   initialSafeMode,
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<string | null>(() =>
-    getItemFromSessionStorage(ADDRESS)
+    getItemFromSessionStorage(ADDRESS),
   );
   const [network, setNetwork] = useState<Network>(
-    initialNetwork ?? getItemFromSessionStorage(NETWORK) ?? Network.TESTNET
+    initialNetwork ?? getItemFromSessionStorage(NETWORK) ?? Network.TESTNET,
   );
 
   const [safeMode, setSafeMode] = useState<boolean>(
-    initialSafeMode ?? Boolean(getItemFromSessionStorage(SAFE_MODE)) ?? true
+    initialSafeMode ?? Boolean(getItemFromSessionStorage(SAFE_MODE)) ?? true,
   );
 
   const [wallet, setWallet] = useState<Wallet | null>(() =>
-    getItemFromSessionStorage(WALLET)
+    getItemFromSessionStorage(WALLET),
   );
   const [publicKey, setPublicKey] = useState<string | null>(() =>
-    getItemFromSessionStorage(PUBLIC_KEY)
+    getItemFromSessionStorage(PUBLIC_KEY),
   );
 
   const [format, setFormat] = useState<AddressFormats | null>(() =>
-    getItemFromSessionStorage(FORMAT)
+    getItemFromSessionStorage(FORMAT),
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -148,7 +148,7 @@ export function SadoConnectProvider({
   useEffect(() => setItemToSessionStorage(NETWORK, network), [network]);
   useEffect(
     () => setItemToSessionStorage(SAFE_MODE, safeMode.toString()),
-    [safeMode]
+    [safeMode],
   );
 
   const context: SadoContextI = {

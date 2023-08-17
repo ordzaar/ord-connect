@@ -8,7 +8,7 @@ import { capitalizeFirstLetter } from "../utils/text-helper";
 type SendFunction = (
   address: string,
   satoshis: number,
-  feeRate?: number
+  feeRate?: number,
 ) => Promise<string | null>;
 
 export function useSend(): [SendFunction, string | null, boolean] {
@@ -51,7 +51,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
           inputs: [],
         };
         const signedXversePsbt = await ordit.xverse.signPsbt(
-          xverseSignPsbtOptions
+          xverseSignPsbtOptions,
         );
         signedPsbt = signedXversePsbt.rawTxHex;
 
@@ -64,7 +64,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
 
       const txId = await ordit.transactions.relayTransaction(
         signedPsbt,
-        network
+        network,
       );
       setLoading(false);
       return txId;

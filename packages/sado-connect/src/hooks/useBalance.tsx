@@ -19,14 +19,14 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       });
 
       const currentWallet = walletWithBalances.addresses.find(
-        (w) => w.format === format
+        (w) => w.format === format,
       );
 
       const total_cardinals_available = (currentWallet as any).unspents.reduce(
         (total: number, spendable: { safeToSpend: boolean; sats: number }) => {
           return spendable.safeToSpend ? total + spendable.sats : total;
         },
-        0
+        0,
       );
 
       setLoading(false);
@@ -50,7 +50,7 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
         return unisatBalance.confirmed;
       } else if (wallet === Wallet.XVERSE) {
         throw Error(
-          "Xverse does not support returning a balance. Turn on safeMode."
+          "Xverse does not support returning a balance. Turn on safeMode.",
         );
       }
     } catch (err: any) {
