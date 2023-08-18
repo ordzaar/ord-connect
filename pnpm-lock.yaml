@@ -40,8 +40,8 @@ importers:
         version: 0.5.0
     devDependencies:
       '@rollup/plugin-commonjs':
-        specifier: ^25.0.2
-        version: 25.0.2
+        specifier: ^25.0.4
+        version: 25.0.4
       '@types/node':
         specifier: ^20.3.1
         version: 20.3.1
@@ -505,8 +505,8 @@ packages:
       tslib: 2.6.0
     dev: true
 
-  /@rollup/plugin-commonjs@25.0.2:
-    resolution: {integrity: sha512-NGTwaJxIO0klMs+WSFFtBP7b9TdTJ3K76HZkewT8/+yHzMiUGVQgaPtLQxNVYIgT5F7lxkEyVID+yS3K7bhCow==}
+  /@rollup/plugin-commonjs@25.0.4:
+    resolution: {integrity: sha512-L92Vz9WUZXDnlQQl3EwbypJR4+DM2EbsO+/KOcEkP4Mc6Ct453EeDB2uH9lgRwj4w5yflgNpq9pHOiY8aoUXBQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.68.0||^3.0.0
