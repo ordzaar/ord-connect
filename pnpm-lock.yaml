@@ -24,8 +24,8 @@ importers:
         specifier: ^1.7.15
         version: 1.7.15(react-dom@18.2.0)(react@18.2.0)
       '@sadoprotocol/ordit-sdk':
-        specifier: ^0.0.37
-        version: 0.0.37
+        specifier: ^0.0.38
+        version: 0.0.38
       bitcoinjs-lib:
         specifier: ^6.1.3
         version: 6.1.3
@@ -570,8 +570,8 @@ packages:
       string-argv: 0.3.2
     dev: true
 
-  /@sadoprotocol/ordit-sdk@0.0.37:
-    resolution: {integrity: sha512-KcMXl7KVGobMUDE6l1Ir6imhJNsMMXe3gwxym1pWxd8tpaS23H3osso+heyXpAdZP4Ku+fKCAhanckbAvH95sw==}
+  /@sadoprotocol/ordit-sdk@0.0.38:
+    resolution: {integrity: sha512-VHZmDnJ1mPD1NZglB+kquhJS/BpaBsLLcBkU2b0GyxwaM9QkWrURWYTbc9Qv4/xWkXSQJjLm1zx+XpK8ov1Jlg==}
     dependencies:
       '@bitcoinerlab/secp256k1': 1.0.2
       bip32: 4.0.0
