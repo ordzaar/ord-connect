@@ -1,5 +1,11 @@
 import { AddressFormats } from "@sadoprotocol/ordit-sdk";
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
 import { Buffer } from "buffer";
 
 globalThis.Buffer = Buffer;
