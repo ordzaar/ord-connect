@@ -7,7 +7,7 @@ module.exports = {
     "../../node_modules/@waveshq/standard-web-linter",
   ],
   parser: "@typescript-eslint/parser",
-  parserOptions: { ecmaVersion: "latest", sourceType: "module" },
+  parserOptions: { project: ["./tsconfig.json"] },
   plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": "warn",

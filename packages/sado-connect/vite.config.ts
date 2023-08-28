@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { resolve } from "path";
 import dts from "vite-plugin-dts";
 import * as packageJson from "./package.json";
@@ -37,5 +38,11 @@ export default defineConfig({
     }),
     commonjs(),
     cssInjectedByJsPlugin(),
+    nodePolyfills({
+      // Whether to polyfill specific globals.
+      globals: {
+        Buffer: true, // can also be 'build', 'dev', or false
+      },
+    }),
   ],
 });
