@@ -5,7 +5,6 @@ import { PostConnectButton } from "./PostConnectButton";
 import { SelectWalletModal } from "./SelectWalletModal";
 
 export interface SadoConnectKitProp {
-  customLabel?: string;
   customStyle?: string;
   onViewWallet?: () => void;
 }

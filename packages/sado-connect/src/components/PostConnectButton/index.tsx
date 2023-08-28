@@ -1,8 +1,8 @@
-import { TruncateMiddle } from "../../utils/text-helper";
-import ChevronDownIcon from "../../assets/chevron-down.svg";
 import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import ChevronDownIcon from "../../assets/chevron-down.svg";
+import { TruncateMiddle } from "../../utils/text-helper";
 import LogoutIcon from "../../assets/logout.svg";
 import { useSadoContext } from "../../providers/SadoContext";
 
@@ -42,7 +42,7 @@ export function PostConnectButton({
             <section className="address-container">
               <p className="address">{TruncateMiddle(address)}</p>
               <section className="network-container">
-                <div className="status-indicator"></div>
+                <div className="status-indicator" />
                 <p className="network">
                   {network === "mainnet" ? "MainNet" : "TestNet"}
                 </p>
@@ -53,6 +53,7 @@ export function PostConnectButton({
               className={`dropdown-button ${
                 open ? "close-dropdown-button" : "expand-dropdown-button"
               }`}
+              alt="sado connect dropdown"
             />
           </Menu.Button>
 
@@ -75,18 +76,18 @@ export function PostConnectButton({
                 <span className="value">{TruncateMiddle(address)}</span>
               </Menu.Item>
               <hr className="horizontal-separator" />
-              {/*<Menu.Item as="button" className="dropdown-button">*/}
-              {/*  <span className="label">Offers</span>*/}
-              {/*  <div className="offers">0</div>*/}
-              {/*</Menu.Item>*/}
-              {/*<hr className="horizontal-separator" />*/}
+              {/* <Menu.Item as="button" className="dropdown-button"> */}
+              {/*  <span className="label">Offers</span> */}
+              {/*  <div className="offers">0</div> */}
+              {/* </Menu.Item> */}
+              {/* <hr className="horizontal-separator" /> */}
               <Menu.Item
                 as="button"
                 className="dropdown-button"
                 onClick={onDisconnectWallet}
               >
                 <span className="label">Disconnect wallet</span>
-                <img src={LogoutIcon} className="logout-icon" />
+                <img src={LogoutIcon} className="logout-icon" alt="logout" />
               </Menu.Item>
             </Menu.Items>
           </Transition>

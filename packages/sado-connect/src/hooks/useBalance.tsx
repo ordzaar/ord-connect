@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { addressNameToType, ordit } from "@sadoprotocol/ordit-sdk";
+import { useSadoContext, Wallet } from "../providers/SadoContext";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
   const { network, publicKey, format, safeMode, wallet } = useSadoContext();
@@ -11,7 +11,9 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
     setLoading(true);
     try {
       setError(null);
-      if (!format || !publicKey) throw new Error("No wallet is connected");
+      if (!format || !publicKey) {
+        throw new Error("No wallet is connected");
+      }
       const walletWithBalances = await ordit.wallet.getWalletWithBalances({
         pubKey: publicKey,
         network,
@@ -22,15 +24,14 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
         (w) => w.format === format,
       );
 
-      const total_cardinals_available = (currentWallet as any).unspents.reduce(
-        (total: number, spendable: { safeToSpend: boolean; sats: number }) => {
-          return spendable.safeToSpend ? total + spendable.sats : total;
-        },
+      const totalCardinalsAvailable = (currentWallet as any).unspents.reduce(
+        (total: number, spendable: { safeToSpend: boolean; sats: number }) =>
+          spendable.safeToSpend ? total + spendable.sats : total,
         0,
       );
 
       setLoading(false);
-      return total_cardinals_available as number;
+      return totalCardinalsAvailable as number;
     } catch (err: any) {
       setError(err.message);
       setLoading(false);
@@ -42,17 +43,21 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
     setLoading(true);
     try {
       setError(null);
-      if (!format || !publicKey) throw new Error("No wallet is connected");
+      if (!format || !publicKey) {
+        throw new Error("No wallet is connected");
+      }
 
       if (wallet === Wallet.UNISAT) {
         const unisatBalance = await window.unisat.getBalance();
         setLoading(false);
         return unisatBalance.confirmed;
-      } else if (wallet === Wallet.XVERSE) {
+      }
+      if (wallet === Wallet.XVERSE) {
         throw Error(
           "Xverse does not support returning a balance. Turn on safeMode.",
         );
       }
+      return 0;
     } catch (err: any) {
       setError(err.message);
       setLoading(false);

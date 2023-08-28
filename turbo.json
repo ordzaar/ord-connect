@@ -4,6 +4,9 @@
     "build": {
       "outputs": ["dist/**"]
     },
+    "dev": {
+      "cache": false
+    },
     "lint": {},
     "format": {}
   }
