@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { AddressFormats } from "@sadoprotocol/ordit-sdk";
 import { createContext, useContext, useState, useEffect } from "react";
-
 import { Buffer } from "buffer";
+
 globalThis.Buffer = Buffer;
 
 export enum Network {

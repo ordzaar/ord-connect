@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { CreatePsbtOptions, ordit } from "@sadoprotocol/ordit-sdk";
 import { sendBtcTransaction } from "sats-connect";
 import { Psbt } from "bitcoinjs-lib";
+import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { capitalizeFirstLetter } from "../utils/text-helper";
+import signPsbt from "../lib/signPsbt";
 
 type SendFunction = (
   address: string,
@@ -20,7 +21,9 @@ export function useSend(): [SendFunction, string | null, boolean] {
     setLoading(true);
     try {
       setError(null);
-      if (!address || !publicKey) throw new Error("No wallet is connected");
+      if (!address || !publicKey) {
+        throw new Error("No wallet is connected");
+      }
 
       const psbtTemplate: CreatePsbtOptions = {
         satsPerByte: feeRate,
@@ -36,34 +39,16 @@ export function useSend(): [SendFunction, string | null, boolean] {
         enableRBF: true,
       };
 
-      const unsignedPsbtBase64 = (
-        await ordit.transactions.createPsbt(psbtTemplate)
-      ).base64;
-      const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
-      let signedPsbt = null;
-      if (wallet === Wallet.UNISAT) {
-        const signedUnisatPsbt = await ordit.unisat.signPsbt(unsignedPsbt);
-        signedPsbt = signedUnisatPsbt.rawTxHex;
-      } else if (wallet === Wallet.XVERSE) {
-        const xverseSignPsbtOptions = {
-          psbt: unsignedPsbt,
-          network,
-          inputs: [],
-        };
-        const signedXversePsbt = await ordit.xverse.signPsbt(
-          xverseSignPsbtOptions,
-        );
-        signedPsbt = signedXversePsbt.rawTxHex;
-
-        if (!signedPsbt) {
-          throw new Error("Xverse signing failed.");
-        }
-      } else {
-        throw new Error("No wallet selected");
-      }
+      const createPsbtRes = await ordit.transactions.createPsbt(psbtTemplate);
+      const unsignedPsbt = Psbt.fromBase64(createPsbtRes.base64);
+      const signedPsbt = await signPsbt({
+        wallet,
+        network,
+        psbt: unsignedPsbt,
+      });
 
       const txId = await ordit.transactions.relayTransaction(
-        signedPsbt,
+        signedPsbt.rawTxHex,
         network,
       );
       setLoading(false);
@@ -79,7 +64,9 @@ export function useSend(): [SendFunction, string | null, boolean] {
     setLoading(true);
     try {
       setError(null);
-      if (!address || !publicKey) throw new Error("No wallet is connected");
+      if (!address || !publicKey) {
+        throw new Error("No wallet is connected");
+      }
 
       let txId;
       if (wallet === Wallet.UNISAT) {
@@ -100,6 +87,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
           onCancel: () => {
             throw Error("User rejected the request.");
           },
+          // eslint-disable-next-line no-return-assign
           onFinish: (xverseTxId) => (txId = xverseTxId),
         };
 
