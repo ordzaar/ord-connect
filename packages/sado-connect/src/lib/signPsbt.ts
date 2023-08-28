@@ -35,7 +35,9 @@ export default async function signPsbt({
   psbt,
   options,
 }: SignPsbtParams): Promise<SignPsbtReturn> {
-  const { finalize, extractTx } = options;
+  const finalize = options?.finalize ?? true;
+  const extractTx = options?.extractTx ?? true;
+
   if (wallet === Wallet.UNISAT) {
     const signedUnisatPsbt = await ordit.unisat.signPsbt(psbt, {
       finalize,
