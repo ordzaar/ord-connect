@@ -6,9 +6,6 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { Buffer } from "buffer";
-
-globalThis.Buffer = Buffer;
 
 export enum Network {
   MAINNET = "mainnet",
