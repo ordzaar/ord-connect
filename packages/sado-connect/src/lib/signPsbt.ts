@@ -14,7 +14,7 @@ interface SignPsbtParams {
   options?: SignPsbtOptionsParams;
 }
 
-interface SingPsbtReturn {
+interface SignPsbtReturn {
   rawTxHex: string | null;
   psbt: {
     hex: string;
@@ -34,7 +34,7 @@ export default async function signPsbt({
   network,
   psbt,
   options,
-}: SignPsbtParams): Promise<SingPsbtReturn> {
+}: SignPsbtParams): Promise<SignPsbtReturn> {
   const { finalize, extractTx } = options;
   if (wallet === Wallet.UNISAT) {
     const signedUnisatPsbt = await ordit.unisat.signPsbt(psbt, {
