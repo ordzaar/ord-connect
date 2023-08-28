@@ -62,5 +62,13 @@
     "boring-avatars": "^1.10.1",
     "buffer": "^6.0.3",
     "sats-connect": "^0.5.0"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write --ignore-unknown"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }

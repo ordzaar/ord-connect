@@ -53,7 +53,8 @@ export function PostConnectButton({
               className={`dropdown-button ${
                 open ? "close-dropdown-button" : "expand-dropdown-button"
               }`}
-             alt="sado connect dropdown"/>
+              alt="sado connect dropdown"
+            />
           </Menu.Button>
 
           <Transition
@@ -86,7 +87,7 @@ export function PostConnectButton({
                 onClick={onDisconnectWallet}
               >
                 <span className="label">Disconnect wallet</span>
-                <img src={LogoutIcon} className="logout-icon"  alt="logout"/>
+                <img src={LogoutIcon} className="logout-icon" alt="logout" />
               </Menu.Item>
             </Menu.Items>
           </Transition>
