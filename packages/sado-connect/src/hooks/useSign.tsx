@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useSadoContext, Wallet } from "../providers/SadoContext";
 import { ordit } from "@sadoprotocol/ordit-sdk";
 import { Psbt } from "bitcoinjs-lib";
+import { useSadoContext, Wallet } from "../providers/SadoContext";
 
 interface SignedPsbt {
   rawTxHex: string;
@@ -32,7 +32,9 @@ export function useSign(): [
     setLoading(true);
     try {
       setError(null);
-      if (!format || !publicKey) throw new Error("No wallet is connected");
+      if (!format || !publicKey) {
+        throw new Error("No wallet is connected");
+      }
 
       const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
 
@@ -58,6 +60,7 @@ export function useSign(): [
     } catch (err: any) {
       setError(err.message);
       setLoading(false);
+      throw new Error(err);
     }
   };
 

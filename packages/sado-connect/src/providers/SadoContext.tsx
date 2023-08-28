@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { AddressFormats } from "@sadoprotocol/ordit-sdk";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import { Buffer } from "buffer";
 
 globalThis.Buffer = Buffer;
@@ -151,23 +150,26 @@ export function SadoConnectProvider({
     [safeMode],
   );
 
-  const context: SadoContextI = {
-    address,
-    updateAddress: setAddress,
-    publicKey,
-    updatePublicKey: setPublicKey,
-    network,
-    updateNetwork: setNetwork,
-    wallet,
-    updateWallet: setWallet,
-    isModalOpen,
-    openModal: () => setIsModalOpen(true),
-    closeModal: () => setIsModalOpen(false),
-    format,
-    updateFormat: setFormat,
-    safeMode,
-    updateSafeMode: setSafeMode,
-  };
+  const context: SadoContextI = useMemo(
+    () => ({
+      address,
+      updateAddress: setAddress,
+      publicKey,
+      updatePublicKey: setPublicKey,
+      network,
+      updateNetwork: setNetwork,
+      wallet,
+      updateWallet: setWallet,
+      isModalOpen,
+      openModal: () => setIsModalOpen(true),
+      closeModal: () => setIsModalOpen(false),
+      format,
+      updateFormat: setFormat,
+      safeMode,
+      updateSafeMode: setSafeMode,
+    }),
+    [address, publicKey, network, isModalOpen, format, safeMode],
+  );
 
   return (
     <SadoContext.Provider value={context}>{children}</SadoContext.Provider>

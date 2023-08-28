@@ -1,4 +1,4 @@
-import { SadoConnectKitProp } from "../SadoConnectKit";
+import type { SadoConnectKitProp } from "../SadoConnectKit";
 
 interface PreConnectButtonProp extends SadoConnectKitProp {
   openModal: () => void;
@@ -15,7 +15,7 @@ export function PreConnectButton({
       data-testid="connect-wallet-button"
       className={`sado-connect-wallet-button ${customStyle}`}
     >
-      <span></span>
+      <span />
     </button>
   );
 }

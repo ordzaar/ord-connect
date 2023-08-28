@@ -18,6 +18,5 @@
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
-  },
-  "prettier": "@waveshq/standard-prettier"
+  }
 }

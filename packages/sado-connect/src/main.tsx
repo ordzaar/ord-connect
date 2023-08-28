@@ -23,26 +23,33 @@ function SampleComponent() {
       <span>{error && `Error: ${error}`}</span>
       <span>{loading && `Loading`}</span>
       <button
+        type="button"
         onClick={async () => {
           const txId = await send(
             "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
             1,
             2,
           );
-          if (typeof txId === "string") setResult(txId);
+          if (typeof txId === "string") {
+            setResult(txId);
+          }
         }}
       >
         Send money
       </button>
       <button
+        type="button"
         onClick={async () => {
           const walletBalance = await getBalance();
-          if (typeof walletBalance === "number") setBalance(walletBalance);
+          if (typeof walletBalance === "number") {
+            setBalance(walletBalance);
+          }
         }}
       >
         Check balance
       </button>
       <button
+        type="button"
         onClick={async () => {
           const signed = await sign(
             "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
@@ -59,7 +66,7 @@ function SampleComponent() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <SadoConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
+    <SadoConnectProvider initialNetwork="testnet" initialSafeMode>
       <SampleComponent />
       <SadoConnectKit />
     </SadoConnectProvider>
