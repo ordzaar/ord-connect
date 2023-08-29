@@ -18,7 +18,7 @@ function SampleComponent() {
   return (
     <div>
       <span>{balance > 0 && `Wallet Balance: ${balance}`}</span>
-      <span>{address && `Connected Address: ${address}`}</span>
+      <span>{address && `Connected Address: ${address.ordinals}`}</span>
       <span>{result && `Transaction ID: ${result}`}</span>
       <span>{error && `Error: ${error}`}</span>
       <span>{loading && `Loading`}</span>
