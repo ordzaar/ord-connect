@@ -76,23 +76,24 @@ export function SelectWalletModal({
       const xverse = await ordit.xverse.getAddresses({
         network,
       });
-      // Taproot = BTC
-      // Nested Segwit = Ordinals / Inscriptions
+      // Nested Segwit = BTC
+      // Taproot = Ordinals / Inscriptions
       const nestedSegwit = xverse.find((a) => a.format === "nested-segwit");
       const taproot = xverse.find((a) => a.format === "taproot");
-      if (!nestedSegwit || !taproot)
-        {throw Error(
+      if (!nestedSegwit || !taproot) {
+        throw Error(
           "Xverse extension is misbehaving. You may need to backup and restore your wallet.",
-        );}
+        );
+      }
       updateAddress({
-        ordinals: nestedSegwit.address,
-        payments: taproot.address,
+        ordinals: taproot.address,
+        payments: nestedSegwit.address,
       });
-      updatePublicKey({ ordinals: nestedSegwit.pub, payments: taproot.pub });
+      updatePublicKey({ ordinals: taproot.pub, payments: nestedSegwit.pub });
       updateWallet(Wallet.XVERSE);
       updateFormat({
-        ordinals: nestedSegwit.format as AddressFormats,
-        payments: taproot.format as AddressFormats,
+        ordinals: taproot.format as AddressFormats,
+        payments: nestedSegwit.format as AddressFormats,
       });
       closeModal();
     } catch (err: any) {
