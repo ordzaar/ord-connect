@@ -31,7 +31,7 @@ export function SadoConnectKit({
         <PreConnectButton openModal={openModal} customStyle={customStyle} />
       ) : (
         <PostConnectButton
-          address={address}
+          address={address.ordinals}
           network={network}
           onViewWallet={onViewWallet}
         />
