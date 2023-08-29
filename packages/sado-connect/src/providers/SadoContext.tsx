@@ -31,6 +31,8 @@ interface SadoContextI {
   updateAddressAlt: (addressAlt: string | null) => void;
   publicKey: string | null;
   updatePublicKey: (publicKey: string | null) => void;
+  publicKeyAlt: string | null;
+  updatePublicKeyAlt: (publicKeyAlt: string | null) => void;
   network: Network;
   updateNetwork: (network: Network) => void;
   wallet: Wallet | null;
@@ -51,6 +53,8 @@ const SadoContext = createContext<SadoContextI>({
   updateAddressAlt: () => {},
   publicKey: null,
   updatePublicKey: () => {},
+  publicKeyAlt: null,
+  updatePublicKeyAlt: () => {},
   network: Network.TESTNET,
   updateNetwork: () => {},
   wallet: null,
@@ -68,6 +72,7 @@ const ADDRESS = "address";
 const ADDRESS_ALT = "addressAlt";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
+const PUBLIC_KEY_ALT = "publicKeyAlt";
 const FORMAT = "format";
 const SAFE_MODE = "safeMode";
 const NETWORK = "network";
@@ -147,6 +152,10 @@ export function SadoConnectProvider({
     getItemFromSessionStorage(PUBLIC_KEY),
   );
 
+  const [publicKeyAlt, setPublicKeyAlt] = useState<string | null>(() =>
+    getItemFromSessionStorage(PUBLIC_KEY_ALT),
+  );
+
   const [format, setFormat] = useState<AddressFormats | null>(() =>
     getItemFromSessionStorage(FORMAT),
   );
@@ -160,6 +169,10 @@ export function SadoConnectProvider({
   );
   useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
   useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
+  useEffect(
+    () => setItemToSessionStorage(PUBLIC_KEY_ALT, publicKeyAlt),
+    [publicKeyAlt],
+  );
   useEffect(() => setItemToSessionStorage(FORMAT, format), [format]);
   useEffect(() => setItemToSessionStorage(NETWORK, network), [network]);
   useEffect(
@@ -175,6 +188,8 @@ export function SadoConnectProvider({
       updateAddressAlt: setAddressAlt,
       publicKey,
       updatePublicKey: setPublicKey,
+      publicKeyAlt,
+      updatePublicKeyAlt: setPublicKeyAlt,
       network,
       updateNetwork: setNetwork,
       wallet,
@@ -187,7 +202,16 @@ export function SadoConnectProvider({
       safeMode,
       updateSafeMode: setSafeMode,
     }),
-    [address, addressAlt, publicKey, network, isModalOpen, format, safeMode],
+    [
+      address,
+      addressAlt,
+      publicKey,
+      publicKeyAlt,
+      network,
+      isModalOpen,
+      format,
+      safeMode,
+    ],
   );
 
   return (
