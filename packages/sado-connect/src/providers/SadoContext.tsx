@@ -26,7 +26,9 @@ export enum SafeMode {
 
 interface SadoContextI {
   address: string | null;
+  addressAlt: string | null;
   updateAddress: (address: string | null) => void;
+  updateAddressAlt: (addressAlt: string | null) => void;
   publicKey: string | null;
   updatePublicKey: (publicKey: string | null) => void;
   network: Network;
@@ -45,6 +47,8 @@ interface SadoContextI {
 const SadoContext = createContext<SadoContextI>({
   address: null,
   updateAddress: () => {},
+  addressAlt: null,
+  updateAddressAlt: () => {},
   publicKey: null,
   updatePublicKey: () => {},
   network: Network.TESTNET,
@@ -61,6 +65,7 @@ const SadoContext = createContext<SadoContextI>({
 });
 
 const ADDRESS = "address";
+const ADDRESS_ALT = "addressAlt";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
 const FORMAT = "format";
@@ -122,6 +127,11 @@ export function SadoConnectProvider({
   const [address, setAddress] = useState<string | null>(() =>
     getItemFromSessionStorage(ADDRESS),
   );
+
+  const [addressAlt, setAddressAlt] = useState<string | null>(() =>
+    getItemFromSessionStorage(ADDRESS_ALT),
+  );
+
   const [network, setNetwork] = useState<Network>(
     initialNetwork ?? getItemFromSessionStorage(NETWORK) ?? Network.TESTNET,
   );
@@ -144,6 +154,10 @@ export function SadoConnectProvider({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => setItemToSessionStorage(ADDRESS, address), [address]);
+  useEffect(
+    () => setItemToSessionStorage(ADDRESS_ALT, addressAlt),
+    [addressAlt],
+  );
   useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
   useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
   useEffect(() => setItemToSessionStorage(FORMAT, format), [format]);
@@ -157,6 +171,8 @@ export function SadoConnectProvider({
     () => ({
       address,
       updateAddress: setAddress,
+      addressAlt,
+      updateAddressAlt: setAddressAlt,
       publicKey,
       updatePublicKey: setPublicKey,
       network,
@@ -171,7 +187,7 @@ export function SadoConnectProvider({
       safeMode,
       updateSafeMode: setSafeMode,
     }),
-    [address, publicKey, network, isModalOpen, format, safeMode],
+    [address, addressAlt, publicKey, network, isModalOpen, format, safeMode],
   );
 
   return (
