@@ -47,10 +47,19 @@ export function SelectWalletModal({
 
       // Unisat only returns one wallet by default
       const unisatWallet = unisat[0];
-      updateAddress(unisatWallet.address);
-      updatePublicKey(unisatWallet.pub);
+      updateAddress({
+        ordinals: unisatWallet.address,
+        payments: unisatWallet.address,
+      });
+      updatePublicKey({
+        ordinals: unisatWallet.pub,
+        payments: unisatWallet.pub,
+      });
       updateWallet(Wallet.UNISAT);
-      updateFormat(unisatWallet.format as AddressFormats);
+      updateFormat({
+        ordinals: unisatWallet.format as AddressFormats,
+        payments: unisatWallet.format as AddressFormats,
+      });
 
       window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
       closeModal();
@@ -67,11 +76,24 @@ export function SelectWalletModal({
       const xverse = await ordit.xverse.getAddresses({
         network,
       });
-      const xverseWallet = xverse.find((a) => a.format === "nested-segwit");
-      updateAddress(xverseWallet.address);
-      updatePublicKey(xverseWallet.pub);
+      // Taproot = BTC
+      // Nested Segwit = Ordinals / Inscriptions
+      const nestedSegwit = xverse.find((a) => a.format === "nested-segwit");
+      const taproot = xverse.find((a) => a.format === "taproot");
+      if (!nestedSegwit || !taproot)
+        {throw Error(
+          "Xverse extension is misbehaving. You may need to backup and restore your wallet.",
+        );}
+      updateAddress({
+        ordinals: nestedSegwit.address,
+        payments: taproot.address,
+      });
+      updatePublicKey({ ordinals: nestedSegwit.pub, payments: taproot.pub });
       updateWallet(Wallet.XVERSE);
-      updateFormat(xverseWallet.format as AddressFormats);
+      updateFormat({
+        ordinals: nestedSegwit.format as AddressFormats,
+        payments: taproot.format as AddressFormats,
+      });
       closeModal();
     } catch (err: any) {
       if (err?.message === "Xverse not installed.") {
