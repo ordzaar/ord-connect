@@ -78,7 +78,7 @@ const NETWORK = "network";
 // Helper function to get item from sessionStorage
 function getItemFromSessionStorage<T>(key: string): T | null {
   try {
-    return sessionStorage.getItem(key) as T | null;
+    return JSON.parse(sessionStorage.getItem(key)) as T | null;
   } catch (error) {
     console.error(`Error retrieving ${key} from sessionStorage`, error);
     return null;
@@ -92,7 +92,7 @@ function setItemToSessionStorage(
 ) {
   try {
     if (value) {
-      sessionStorage.setItem(key, value.toString());
+      sessionStorage.setItem(key, JSON.stringify(value));
     } else {
       sessionStorage.removeItem(key);
     }
@@ -131,7 +131,7 @@ export function SadoConnectProvider({
   initialSafeMode,
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<BiAddressString>(() =>
-    JSON.parse(getItemFromSessionStorage(ADDRESS)),
+    getItemFromSessionStorage(ADDRESS),
   );
 
   const [network, setNetwork] = useState<Network>(
@@ -146,11 +146,11 @@ export function SadoConnectProvider({
     getItemFromSessionStorage(WALLET),
   );
   const [publicKey, setPublicKey] = useState<BiAddressString>(() =>
-    JSON.parse(getItemFromSessionStorage(PUBLIC_KEY)),
+    getItemFromSessionStorage(PUBLIC_KEY),
   );
 
   const [format, setFormat] = useState<BiAddressFormat>(() =>
-    JSON.parse(getItemFromSessionStorage(FORMAT)),
+    getItemFromSessionStorage(FORMAT),
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
