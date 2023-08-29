@@ -28,8 +28,8 @@ export function useSend(): [SendFunction, string | null, boolean] {
       const psbtTemplate: CreatePsbtOptions = {
         satsPerByte: feeRate,
         network,
-        pubKey: publicKey,
-        address,
+        pubKey: publicKey.payments,
+        address: address.payments,
         outputs: [
           {
             address: toAddress,
@@ -79,7 +79,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
             type: capitalizeFirstLetter(network) as "Mainnet" | "Testnet",
           },
           recipients: [{ address: toAddress, amountSats: satoshis as any }],
-          senderAddress: address,
+          senderAddress: address.payments,
         };
 
         const xverseOptions = {
