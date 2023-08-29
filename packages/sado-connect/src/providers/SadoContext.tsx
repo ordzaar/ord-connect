@@ -24,15 +24,19 @@ export enum SafeMode {
   NoSafety,
 }
 
+interface BiAddress<T> {
+  payments: T | null;
+  ordinals: T | null;
+}
+
+type BiAddressString = BiAddress<string>;
+type BiAddressFormat = BiAddress<AddressFormats>;
+
 interface SadoContextI {
-  address: string | null;
-  addressAlt: string | null;
-  updateAddress: (address: string | null) => void;
-  updateAddressAlt: (addressAlt: string | null) => void;
-  publicKey: string | null;
-  updatePublicKey: (publicKey: string | null) => void;
-  publicKeyAlt: string | null;
-  updatePublicKeyAlt: (publicKeyAlt: string | null) => void;
+  address: BiAddressString;
+  updateAddress: (address: BiAddressString) => void;
+  publicKey: BiAddressString;
+  updatePublicKey: (publicKey: BiAddressString) => void;
   network: Network;
   updateNetwork: (network: Network) => void;
   wallet: Wallet | null;
@@ -40,8 +44,8 @@ interface SadoContextI {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-  format: AddressFormats;
-  updateFormat: (format: AddressFormats | null) => void;
+  format: BiAddressFormat;
+  updateFormat: (format: BiAddressFormat) => void;
   safeMode: boolean;
   updateSafeMode: (safeMode: boolean) => void;
 }
@@ -49,12 +53,8 @@ interface SadoContextI {
 const SadoContext = createContext<SadoContextI>({
   address: null,
   updateAddress: () => {},
-  addressAlt: null,
-  updateAddressAlt: () => {},
   publicKey: null,
   updatePublicKey: () => {},
-  publicKeyAlt: null,
-  updatePublicKeyAlt: () => {},
   network: Network.TESTNET,
   updateNetwork: () => {},
   wallet: null,
@@ -69,10 +69,8 @@ const SadoContext = createContext<SadoContextI>({
 });
 
 const ADDRESS = "address";
-const ADDRESS_ALT = "addressAlt";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
-const PUBLIC_KEY_ALT = "publicKeyAlt";
 const FORMAT = "format";
 const SAFE_MODE = "safeMode";
 const NETWORK = "network";
@@ -88,10 +86,13 @@ function getItemFromSessionStorage<T>(key: string): T | null {
 }
 
 // Helper function to set item to sessionStorage
-function setItemToSessionStorage(key: string, value: string | null) {
+function setItemToSessionStorage(
+  key: string,
+  value: string | null | BiAddress<any>,
+) {
   try {
     if (value) {
-      sessionStorage.setItem(key, value);
+      sessionStorage.setItem(key, value.toString());
     } else {
       sessionStorage.removeItem(key);
     }
@@ -129,12 +130,8 @@ export function SadoConnectProvider({
   initialNetwork,
   initialSafeMode,
 }: React.PropsWithChildren<any>) {
-  const [address, setAddress] = useState<string | null>(() =>
-    getItemFromSessionStorage(ADDRESS),
-  );
-
-  const [addressAlt, setAddressAlt] = useState<string | null>(() =>
-    getItemFromSessionStorage(ADDRESS_ALT),
+  const [address, setAddress] = useState<BiAddressString>(() =>
+    JSON.parse(getItemFromSessionStorage(ADDRESS)),
   );
 
   const [network, setNetwork] = useState<Network>(
@@ -148,31 +145,19 @@ export function SadoConnectProvider({
   const [wallet, setWallet] = useState<Wallet | null>(() =>
     getItemFromSessionStorage(WALLET),
   );
-  const [publicKey, setPublicKey] = useState<string | null>(() =>
-    getItemFromSessionStorage(PUBLIC_KEY),
+  const [publicKey, setPublicKey] = useState<BiAddressString>(() =>
+    JSON.parse(getItemFromSessionStorage(PUBLIC_KEY)),
   );
 
-  const [publicKeyAlt, setPublicKeyAlt] = useState<string | null>(() =>
-    getItemFromSessionStorage(PUBLIC_KEY_ALT),
-  );
-
-  const [format, setFormat] = useState<AddressFormats | null>(() =>
-    getItemFromSessionStorage(FORMAT),
+  const [format, setFormat] = useState<BiAddressFormat>(() =>
+    JSON.parse(getItemFromSessionStorage(FORMAT)),
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => setItemToSessionStorage(ADDRESS, address), [address]);
-  useEffect(
-    () => setItemToSessionStorage(ADDRESS_ALT, addressAlt),
-    [addressAlt],
-  );
   useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
   useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
-  useEffect(
-    () => setItemToSessionStorage(PUBLIC_KEY_ALT, publicKeyAlt),
-    [publicKeyAlt],
-  );
   useEffect(() => setItemToSessionStorage(FORMAT, format), [format]);
   useEffect(() => setItemToSessionStorage(NETWORK, network), [network]);
   useEffect(
@@ -184,12 +169,8 @@ export function SadoConnectProvider({
     () => ({
       address,
       updateAddress: setAddress,
-      addressAlt,
-      updateAddressAlt: setAddressAlt,
       publicKey,
       updatePublicKey: setPublicKey,
-      publicKeyAlt,
-      updatePublicKeyAlt: setPublicKeyAlt,
       network,
       updateNetwork: setNetwork,
       wallet,
@@ -202,16 +183,7 @@ export function SadoConnectProvider({
       safeMode,
       updateSafeMode: setSafeMode,
     }),
-    [
-      address,
-      addressAlt,
-      publicKey,
-      publicKeyAlt,
-      network,
-      isModalOpen,
-      format,
-      safeMode,
-    ],
+    [address, publicKey, network, isModalOpen, format, safeMode],
   );
 
   return (
