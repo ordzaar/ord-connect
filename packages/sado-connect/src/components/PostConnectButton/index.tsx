@@ -17,8 +17,7 @@ export function PostConnectButton({
   network,
   onViewWallet,
 }: PostConnectButtonProp) {
-  const { updateAddress, updateWallet, updatePublicKey, disconnectWallet } =
-    useSadoContext();
+  const { disconnectWallet } = useSadoContext();
 
   return (
     <Menu

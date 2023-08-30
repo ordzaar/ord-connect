@@ -45,8 +45,9 @@ export function SelectWalletModal({
       setErrorMessage("");
       const unisat = await ordit.unisat.getAddresses(network);
 
-      if (!unisat || unisat.length < 1)
-        {throw Error("Unisat via Ordit returned no addresses.");}
+      if (!unisat || unisat.length < 1) {
+        throw Error("Unisat via Ordit returned no addresses.");
+      }
 
       // Unisat only returns one wallet by default
       const unisatWallet = unisat[0];
@@ -81,8 +82,9 @@ export function SelectWalletModal({
       });
       // Nested Segwit = BTC
       // Taproot = Ordinals / Inscriptions
-      if (!xverse || xverse.length < 1)
-        {throw Error("Xverse via Ordit returned no addresses.");}
+      if (!xverse || xverse.length < 1) {
+        throw Error("Xverse via Ordit returned no addresses.");
+      }
 
       const nestedSegwit = xverse.find((a) => a.format === "nested-segwit");
       const taproot = xverse.find((a) => a.format === "taproot");
