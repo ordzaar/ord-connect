@@ -55,15 +55,15 @@ export default async function signPsbt({
     };
   }
   if (wallet === Wallet.XVERSE) {
+    const getAllInputIndices = () =>
+      psbt.data.inputs.map((value, index) => index);
     const xverseSignPsbtOptions = {
       psbt,
       network,
       inputs: [
         {
           address,
-          signingIndexes:
-            options?.signingIndexes ??
-            psbt.data.inputs.map((value, index) => index), // If signingIndexes is not provided, just sign everything
+          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
         },
       ],
       finalize,

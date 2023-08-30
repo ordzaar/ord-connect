@@ -92,7 +92,7 @@ export function SelectWalletModal({
       if (xverse.some((x) => x.format === "unknown")) {
         // xverse = xverse.map(x => ({...x, format: getAddressFormat(x.address, network).format}))
         throw Error(
-          "Xverse extension is misbehaving. Try to switch networks in your wallet.",
+          "Xverse extension is misbehaving. Try to toggle between your networks. E.g. Switch to Mainnet then to Testnet or vice-versa.",
         );
       }
 
