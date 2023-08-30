@@ -32,6 +32,11 @@ interface BiAddress<T> {
 type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormats>;
 
+const EmptyBiAddressObject: BiAddress<null> = {
+  payments: null,
+  ordinals: null,
+};
+
 interface SadoContextI {
   address: BiAddressString;
   updateAddress: (address: BiAddressString) => void;
@@ -51,9 +56,9 @@ interface SadoContextI {
 }
 
 const SadoContext = createContext<SadoContextI>({
-  address: null,
+  address: EmptyBiAddressObject,
   updateAddress: () => {},
-  publicKey: null,
+  publicKey: EmptyBiAddressObject,
   updatePublicKey: () => {},
   network: Network.TESTNET,
   updateNetwork: () => {},
@@ -62,7 +67,7 @@ const SadoContext = createContext<SadoContextI>({
   isModalOpen: false,
   openModal: () => {},
   closeModal: () => {},
-  format: null,
+  format: EmptyBiAddressObject,
   updateFormat: () => {},
   safeMode: null,
   updateSafeMode: () => {},
