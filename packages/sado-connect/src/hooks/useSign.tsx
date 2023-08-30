@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Psbt } from "bitcoinjs-lib";
 import { useSadoContext } from "../providers/SadoContext";
-import signPsbt from "../lib/signPsbt";
+import signPsbt, { SignPsbtOptionsParams } from "../lib/signPsbt";
 
 interface SignedPsbt {
   rawTxHex: string;
@@ -11,16 +11,11 @@ interface SignedPsbt {
   };
 }
 
-interface SignOptions {
-  finalize?: boolean;
-  extractTx?: boolean;
-}
-
 export function useSign(): [
   (
     address: string,
     unsignedPsbtBase64: string,
-    options: SignOptions,
+    options: SignPsbtOptionsParams,
   ) => Promise<SignedPsbt>,
   string | null,
   boolean,
@@ -32,7 +27,7 @@ export function useSign(): [
   const sign = async (
     address: string,
     unsignedPsbtBase64: string,
-    options: SignOptions,
+    options: SignPsbtOptionsParams,
   ): Promise<SignedPsbt> => {
     setLoading(true);
     try {
