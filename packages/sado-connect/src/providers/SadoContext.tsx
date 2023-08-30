@@ -32,7 +32,7 @@ interface BiAddress<T> {
 type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormats>;
 
-const EmptyBiAddressObject: BiAddress<null> = {
+const emptyBiAddressObject: BiAddress<null> = {
   payments: null,
   ordinals: null,
 };
@@ -53,12 +53,13 @@ interface SadoContextI {
   updateFormat: (format: BiAddressFormat) => void;
   safeMode: boolean;
   updateSafeMode: (safeMode: boolean) => void;
+  disconnectWallet: () => void;
 }
 
 const SadoContext = createContext<SadoContextI>({
-  address: EmptyBiAddressObject,
+  address: emptyBiAddressObject,
   updateAddress: () => {},
-  publicKey: EmptyBiAddressObject,
+  publicKey: emptyBiAddressObject,
   updatePublicKey: () => {},
   network: Network.TESTNET,
   updateNetwork: () => {},
@@ -67,10 +68,11 @@ const SadoContext = createContext<SadoContextI>({
   isModalOpen: false,
   openModal: () => {},
   closeModal: () => {},
-  format: EmptyBiAddressObject,
+  format: emptyBiAddressObject,
   updateFormat: () => {},
   safeMode: null,
   updateSafeMode: () => {},
+  disconnectWallet: () => {},
 });
 
 const ADDRESS = "address";
@@ -135,8 +137,8 @@ export function SadoConnectProvider({
   initialNetwork,
   initialSafeMode,
 }: React.PropsWithChildren<any>) {
-  const [address, setAddress] = useState<BiAddressString>(() =>
-    getItemFromSessionStorage(ADDRESS),
+  const [address, setAddress] = useState<BiAddressString>(
+    () => getItemFromSessionStorage(ADDRESS) ?? emptyBiAddressObject,
   );
 
   const [network, setNetwork] = useState<Network>(
@@ -150,12 +152,12 @@ export function SadoConnectProvider({
   const [wallet, setWallet] = useState<Wallet | null>(() =>
     getItemFromSessionStorage(WALLET),
   );
-  const [publicKey, setPublicKey] = useState<BiAddressString>(() =>
-    getItemFromSessionStorage(PUBLIC_KEY),
+  const [publicKey, setPublicKey] = useState<BiAddressString>(
+    () => getItemFromSessionStorage(PUBLIC_KEY) ?? emptyBiAddressObject,
   );
 
-  const [format, setFormat] = useState<BiAddressFormat>(() =>
-    getItemFromSessionStorage(FORMAT),
+  const [format, setFormat] = useState<BiAddressFormat>(
+    () => getItemFromSessionStorage(FORMAT) ?? emptyBiAddressObject,
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -169,6 +171,13 @@ export function SadoConnectProvider({
     () => setItemToSessionStorage(SAFE_MODE, safeMode.toString()),
     [safeMode],
   );
+
+  function disconnectWallet() {
+    setAddress(emptyBiAddressObject);
+    setPublicKey(emptyBiAddressObject);
+    setFormat(emptyBiAddressObject);
+    setWallet(null);
+  }
 
   const context: SadoContextI = useMemo(
     () => ({
@@ -187,6 +196,7 @@ export function SadoConnectProvider({
       updateFormat: setFormat,
       safeMode,
       updateSafeMode: setSafeMode,
+      disconnectWallet,
     }),
     [address, publicKey, network, isModalOpen, format, safeMode],
   );

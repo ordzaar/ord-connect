@@ -27,7 +27,7 @@ export function SadoConnectKit({
 
   return (
     <>
-      {address?.ordinals === null ? (
+      {address.ordinals === null ? (
         <PreConnectButton openModal={openModal} customStyle={customStyle} />
       ) : (
         <PostConnectButton

@@ -42,6 +42,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
       const createPsbtRes = await ordit.transactions.createPsbt(psbtTemplate);
       const unsignedPsbt = Psbt.fromBase64(createPsbtRes.base64);
       const signedPsbt = await signPsbt({
+        address: address.payments,
         wallet,
         network,
         psbt: unsignedPsbt,

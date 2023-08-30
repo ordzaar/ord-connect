@@ -8,6 +8,7 @@ interface SignPsbtOptionsParams {
 }
 
 interface SignPsbtParams {
+  address: string;
   wallet: Wallet;
   network: Network;
   psbt: Psbt;
@@ -30,6 +31,7 @@ interface SignPsbtReturn {
  * @param options
  */
 export default async function signPsbt({
+  address,
   wallet,
   network,
   psbt,
@@ -52,10 +54,19 @@ export default async function signPsbt({
     };
   }
   if (wallet === Wallet.XVERSE) {
+    const psbtInputs = psbt.data.inputs;
+    const signingIndexes = psbtInputs.map((value, index) => index);
     const xverseSignPsbtOptions = {
       psbt,
       network,
-      inputs: [],
+      inputs: [
+        {
+          address,
+          signingIndexes,
+        },
+      ],
+      finalize,
+      extractTx,
     };
     const signedXversePsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
     return {
