@@ -86,13 +86,19 @@ export function SelectWalletModal({
         throw Error("Xverse via Ordit returned no addresses.");
       }
 
-      const nestedSegwit = xverse.find((a) => a.format === "nested-segwit");
-      const taproot = xverse.find((a) => a.format === "taproot");
-      if (!nestedSegwit || !taproot) {
+      // Xverse's address format resolution may fail
+      // While we can resolve it via ordit-sdk, it is most likely a broken state with Xverse (it's set to Testnet, but returns Mainnet addresses/public keys)
+      // So, just throw an error
+      if (xverse.some((x) => x.format === "unknown")) {
+        // xverse = xverse.map(x => ({...x, format: getAddressFormat(x.address, network).format}))
         throw Error(
-          "Xverse extension is misbehaving. You may need to backup and restore your wallet.",
+          "Xverse extension is misbehaving. Try to switch networks in your wallet.",
         );
       }
+
+      const nestedSegwit = xverse.find((a) => a.format === "nested-segwit");
+      const taproot = xverse.find((a) => a.format === "taproot");
+
       updateAddress({
         ordinals: taproot.address,
         payments: nestedSegwit.address,

@@ -5,6 +5,7 @@ import { Network, Wallet } from "../providers/SadoContext";
 interface SignPsbtOptionsParams {
   finalize?: boolean;
   extractTx?: boolean;
+  signingIndexes?: number[];
 }
 
 interface SignPsbtParams {
@@ -26,7 +27,7 @@ interface SignPsbtReturn {
 /**
  * @description accept wallet type and calls the right ordit function to sign the psbt.
  * @param wallet
- * @param network
+ * @param network``
  * @param psbt
  * @param options
  */
@@ -54,15 +55,15 @@ export default async function signPsbt({
     };
   }
   if (wallet === Wallet.XVERSE) {
-    const psbtInputs = psbt.data.inputs;
-    const signingIndexes = psbtInputs.map((value, index) => index);
     const xverseSignPsbtOptions = {
       psbt,
       network,
       inputs: [
         {
           address,
-          signingIndexes,
+          signingIndexes:
+            options?.signingIndexes ??
+            psbt.data.inputs.map((value, index) => index), // If signingIndexes is not provided, just sign everything
         },
       ],
       finalize,

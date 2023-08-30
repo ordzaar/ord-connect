@@ -52,6 +52,7 @@ function SampleComponent() {
         type="button"
         onClick={async () => {
           const signed = await sign(
+            address.payments,
             "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
             { extractTx: false },
           );
