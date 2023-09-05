@@ -69,7 +69,11 @@ export function SelectWalletModal({
       closeModal();
     } catch (err: any) {
       if (err.message === "Unisat not installed.") {
-        window.open(UNISAT_WALLET_CHROME_EXTENSION_URL);
+        window.open(
+          UNISAT_WALLET_CHROME_EXTENSION_URL,
+          "_blank",
+          "noopener,noreferrer",
+        );
       }
       setErrorMessage(err.message ?? err.toString());
       console.error("Error while connecting to UniSat wallet", err);
@@ -112,7 +116,11 @@ export function SelectWalletModal({
       closeModal();
     } catch (err: any) {
       if (err?.message === "Xverse not installed.") {
-        window.open(XVERSE_WALLET_CHROME_EXTENSION_URL);
+        window.open(
+          XVERSE_WALLET_CHROME_EXTENSION_URL,
+          "_blank",
+          "noopener,noreferrer",
+        );
       }
       setErrorMessage(err.toString());
       console.error("Error while connecting to Xverse wallet", err);
