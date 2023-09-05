@@ -7,3 +7,5 @@ export { SadoConnectProvider, useSadoContext } from "./providers/SadoContext";
 export { useSend } from "./hooks/useSend";
 export { useBalance } from "./hooks/useBalance";
 export { useSign } from "./hooks/useSign";
+export { emptyBiAddressObject } from "./providers/SadoContext";
+export type { BiAddress } from "./providers/SadoContext";

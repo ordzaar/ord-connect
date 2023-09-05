@@ -2,12 +2,14 @@ import { Psbt } from "bitcoinjs-lib";
 import { ordit } from "@sadoprotocol/ordit-sdk";
 import { Network, Wallet } from "../providers/SadoContext";
 
-interface SignPsbtOptionsParams {
+export interface SignPsbtOptionsParams {
   finalize?: boolean;
   extractTx?: boolean;
+  signingIndexes?: number[];
 }
 
 interface SignPsbtParams {
+  address: string;
   wallet: Wallet;
   network: Network;
   psbt: Psbt;
@@ -30,6 +32,7 @@ interface SignPsbtReturn {
  * @param options
  */
 export default async function signPsbt({
+  address,
   wallet,
   network,
   psbt,
@@ -52,10 +55,19 @@ export default async function signPsbt({
     };
   }
   if (wallet === Wallet.XVERSE) {
+    const getAllInputIndices = () =>
+      psbt.data.inputs.map((value, index) => index);
     const xverseSignPsbtOptions = {
       psbt,
       network,
-      inputs: [],
+      inputs: [
+        {
+          address,
+          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+        },
+      ],
+      finalize,
+      extractTx,
     };
     const signedXversePsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
     return {

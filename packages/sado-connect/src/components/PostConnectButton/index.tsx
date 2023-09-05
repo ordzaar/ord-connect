@@ -17,12 +17,7 @@ export function PostConnectButton({
   network,
   onViewWallet,
 }: PostConnectButtonProp) {
-  const { updateAddress, updateWallet, updatePublicKey } = useSadoContext();
-  const onDisconnectWallet = () => {
-    updateAddress(null);
-    updateWallet(null);
-    updatePublicKey(null);
-  };
+  const { disconnectWallet } = useSadoContext();
 
   return (
     <Menu
@@ -84,7 +79,7 @@ export function PostConnectButton({
               <Menu.Item
                 as="button"
                 className="dropdown-button"
-                onClick={onDisconnectWallet}
+                onClick={disconnectWallet}
               >
                 <span className="label">Disconnect wallet</span>
                 <img src={LogoutIcon} className="logout-icon" alt="logout" />

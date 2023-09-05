@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ordit } from "@sadoprotocol/ordit-sdk";
 import { Psbt } from "bitcoinjs-lib";
-import { useSadoContext, Wallet } from "../providers/SadoContext";
+import { useSadoContext } from "../providers/SadoContext";
+import signPsbt, { SignPsbtOptionsParams } from "../lib/signPsbt";
 
 interface SignedPsbt {
   rawTxHex: string;
@@ -11,13 +11,12 @@ interface SignedPsbt {
   };
 }
 
-interface SignOptions {
-  finalize?: boolean;
-  extractTx?: boolean;
-}
-
 export function useSign(): [
-  (unsignedPsbtBase64: string, options: SignOptions) => Promise<SignedPsbt>,
+  (
+    address: string,
+    unsignedPsbtBase64: string,
+    options: SignPsbtOptionsParams,
+  ) => Promise<SignedPsbt>,
   string | null,
   boolean,
 ] {
@@ -26,8 +25,9 @@ export function useSign(): [
   const [loading, setLoading] = useState<boolean>(false);
 
   const sign = async (
+    address: string,
     unsignedPsbtBase64: string,
-    options: SignOptions,
+    options: SignPsbtOptionsParams,
   ): Promise<SignedPsbt> => {
     setLoading(true);
     try {
@@ -38,23 +38,18 @@ export function useSign(): [
 
       const unsignedPsbt = Psbt.fromBase64(unsignedPsbtBase64);
 
-      let signedPsbt: SignedPsbt;
+      const signedPsbt = await signPsbt({
+        address,
+        wallet,
+        network,
+        psbt: unsignedPsbt,
+        options,
+      });
 
-      if (wallet === Wallet.UNISAT) {
-        signedPsbt = await ordit.unisat.signPsbt(unsignedPsbt, options);
-      } else if (wallet === Wallet.XVERSE) {
-        const xverseSignPsbtOptions = {
-          psbt: unsignedPsbt,
-          network,
-          inputs: [],
-        };
-        signedPsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
-      } else {
-        throw new Error("No wallet selected");
-      }
       if (!signedPsbt || !signedPsbt.rawTxHex) {
         throw new Error("Signing failed.");
       }
+
       setLoading(false);
       return signedPsbt;
     } catch (err: any) {

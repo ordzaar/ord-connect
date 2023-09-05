@@ -15,13 +15,13 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
         throw new Error("No wallet is connected");
       }
       const walletWithBalances = await ordit.wallet.getWalletWithBalances({
-        pubKey: publicKey,
+        pubKey: publicKey.payments,
         network,
-        format: addressNameToType[format],
+        format: addressNameToType[format.payments],
       });
 
       const currentWallet = walletWithBalances.addresses.find(
-        (w) => w.format === format,
+        (w) => w.format === format.payments,
       );
 
       const totalCardinalsAvailable = (currentWallet as any).unspents.reduce(

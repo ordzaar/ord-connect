@@ -27,14 +27,14 @@ export function SadoConnectKit({
 
   return (
     <>
-      {address === null ? (
-        <PreConnectButton openModal={openModal} customStyle={customStyle} />
-      ) : (
+      {address?.ordinals ? (
         <PostConnectButton
-          address={address}
+          address={address.ordinals}
           network={network}
           onViewWallet={onViewWallet}
         />
+      ) : (
+        <PreConnectButton openModal={openModal} customStyle={customStyle} />
       )}
 
       <SelectWalletModal isOpen={isModalOpen} closeModal={closeModal} />
