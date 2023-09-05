@@ -24,7 +24,7 @@ export enum SafeMode {
   NoSafety,
 }
 
-interface BiAddress<T> {
+export interface BiAddress<T> {
   payments: T | null;
   ordinals: T | null;
 }
@@ -32,7 +32,7 @@ interface BiAddress<T> {
 type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormats>;
 
-const emptyBiAddressObject: BiAddress<null> = {
+export const emptyBiAddressObject: BiAddress<null> = {
   payments: null,
   ordinals: null,
 };
