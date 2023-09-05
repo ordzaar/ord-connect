@@ -27,7 +27,7 @@ interface SignPsbtReturn {
 /**
  * @description accept wallet type and calls the right ordit function to sign the psbt.
  * @param wallet
- * @param network``
+ * @param network
  * @param psbt
  * @param options
  */
