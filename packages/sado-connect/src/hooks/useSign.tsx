@@ -1,22 +1,17 @@
 import { useState } from "react";
 import { Psbt } from "bitcoinjs-lib";
 import { useSadoContext } from "../providers/SadoContext";
-import signPsbt, { SignPsbtOptionsParams } from "../lib/signPsbt";
-
-interface SignedPsbt {
-  rawTxHex: string;
-  psbt: {
-    hex: string;
-    base64: string;
-  };
-}
+import signPsbt, {
+  SerializedPsbt,
+  SignPsbtOptionsParams,
+} from "../lib/signPsbt";
 
 export function useSign(): [
   (
     address: string,
     unsignedPsbtBase64: string,
     options: SignPsbtOptionsParams,
-  ) => Promise<SignedPsbt>,
+  ) => Promise<SerializedPsbt>,
   string | null,
   boolean,
 ] {
@@ -28,7 +23,7 @@ export function useSign(): [
     address: string,
     unsignedPsbtBase64: string,
     options: SignPsbtOptionsParams,
-  ): Promise<SignedPsbt> => {
+  ): Promise<SerializedPsbt> => {
     setLoading(true);
     try {
       setError(null);
@@ -46,7 +41,7 @@ export function useSign(): [
         options,
       });
 
-      if (!signedPsbt || !signedPsbt.rawTxHex) {
+      if (!signedPsbt || !signedPsbt.hex) {
         throw new Error("Signing failed.");
       }
 

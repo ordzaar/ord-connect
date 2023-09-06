@@ -16,12 +16,9 @@ interface SignPsbtParams {
   options?: SignPsbtOptionsParams;
 }
 
-interface SignPsbtReturn {
-  rawTxHex: string | null;
-  psbt: {
-    hex: string;
-    base64: string;
-  };
+export interface SerializedPsbt {
+  hex: string;
+  base64: string;
 }
 
 /**
@@ -37,7 +34,7 @@ export default async function signPsbt({
   network,
   psbt,
   options,
-}: SignPsbtParams): Promise<SignPsbtReturn> {
+}: SignPsbtParams): Promise<SerializedPsbt> {
   const finalize = options?.finalize ?? true;
   const extractTx = options?.extractTx ?? true;
 
@@ -46,13 +43,7 @@ export default async function signPsbt({
       finalize,
       extractTx,
     });
-    return {
-      rawTxHex: signedUnisatPsbt.rawTxHex,
-      psbt: {
-        hex: signedUnisatPsbt.psbt.hex,
-        base64: signedUnisatPsbt.psbt.base64,
-      },
-    };
+    return signedUnisatPsbt;
   }
   if (wallet === Wallet.XVERSE) {
     const getAllInputIndices = () =>
@@ -70,13 +61,7 @@ export default async function signPsbt({
       extractTx,
     };
     const signedXversePsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
-    return {
-      rawTxHex: signedXversePsbt.rawTxHex,
-      psbt: {
-        hex: signedXversePsbt.psbt.hex,
-        base64: signedXversePsbt.psbt.base64,
-      },
-    };
+    return signedXversePsbt;
   }
   // else throw error
   throw new Error("Invalid wallet selected");

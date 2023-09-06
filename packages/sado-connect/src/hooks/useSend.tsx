@@ -49,7 +49,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
       });
 
       const txId = await ordit.transactions.relayTransaction(
-        signedPsbt.rawTxHex,
+        signedPsbt.hex,
         network,
       );
       setLoading(false);
