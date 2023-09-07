@@ -191,9 +191,7 @@ export function SelectWalletModal({
                         }}
                       >
                         <img src={UnisatWalletIcon} alt="Unisat Wallet" />
-                        <span className="wallet-option-label">
-                          Unisat wallet
-                        </span>
+                        <span className="wallet-option-label">Unisat</span>
                         <img src={ChevronRightIcon} alt="Chevron Right" />
                       </button>
                       <hr className="horizontal-separator" />
