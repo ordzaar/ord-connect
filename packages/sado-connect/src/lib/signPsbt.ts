@@ -6,6 +6,7 @@ export interface SignPsbtOptionsParams {
   finalize?: boolean;
   extractTx?: boolean;
   signingIndexes?: number[];
+  sigHash?: number;
 }
 
 interface SignPsbtParams {
@@ -45,6 +46,7 @@ export default async function signPsbt({
     });
     return signedUnisatPsbt;
   }
+
   if (wallet === Wallet.XVERSE) {
     const getAllInputIndices = () =>
       psbt.data.inputs.map((value, index) => index);
@@ -55,6 +57,7 @@ export default async function signPsbt({
         {
           address,
           signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+          sigHash: options?.sigHash,
         },
       ],
       finalize,
