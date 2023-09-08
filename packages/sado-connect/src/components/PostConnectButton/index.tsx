@@ -4,7 +4,9 @@ import { Fragment } from "react";
 import ChevronDownIcon from "../../assets/chevron-down.svg";
 import { TruncateMiddle } from "../../utils/text-helper";
 import LogoutIcon from "../../assets/logout.svg";
-import { useSadoContext } from "../../providers/SadoContext";
+import { Wallet, useSadoContext } from "../../providers/SadoContext";
+import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
+import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 
 interface PostConnectButtonProp {
   address: string;
@@ -17,7 +19,7 @@ export function PostConnectButton({
   network,
   onViewWallet,
 }: PostConnectButtonProp) {
-  const { disconnectWallet } = useSadoContext();
+  const { disconnectWallet, wallet } = useSadoContext();
 
   return (
     <Menu
@@ -27,12 +29,20 @@ export function PostConnectButton({
       {({ open }) => (
         <>
           <Menu.Button className="sado-wallet-connected-button">
-            <Avatar
-              size={28}
-              variant="beam"
-              name={address}
-              colors={["#1C2DCB", "#F226B8"]}
-            />
+            <div className="wallet-identifier-container">
+              <Avatar
+                size={28}
+                variant="beam"
+                name={address}
+                colors={["#1C2DCB", "#F226B8"]}
+              />
+              <img
+                src={
+                  wallet === Wallet.XVERSE ? XverseWalletIcon : UnisatWalletIcon
+                }
+                alt={`${wallet} is connected`}
+              />
+            </div>
 
             <section className="address-container">
               <p className="address">{TruncateMiddle(address)}</p>

@@ -123,6 +123,31 @@
   cursor: pointer;
 }
 
+.waiting-cursor {
+  cursor: wait !important;
+}
+
+.xverse-icon {
+  width: 30px;
+  padding: 5px;
+}
+
+.wallet-identifier-container {
+  position: relative;
+  display: inline-block;
+}
+
+.wallet-identifier-container img {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  width: 7px;
+  border-radius: 50%;
+  background-color: black;
+  object-fit: cover;
+  padding: 3px;
+}
+
 .sado-connect-wallet-modal .wallet-option-button:hover {
   background: rgba(255, 255, 255, 0.1);
 }

@@ -2,7 +2,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
 import CloseModalIcon from "../../assets/close-modal.svg";
-import ChevronRightIcon from "../../assets/chevron-right.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useSadoContext, Wallet } from "../../providers/SadoContext";
@@ -10,6 +9,7 @@ import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
+import { WalletButton } from "./WalletButton";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
@@ -67,6 +67,7 @@ export function SelectWalletModal({
 
       window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
       closeModal();
+      return true;
     } catch (err: any) {
       if (err.message === "Unisat not installed.") {
         window.open(
@@ -77,10 +78,12 @@ export function SelectWalletModal({
       }
       setErrorMessage(err.message ?? err.toString());
       console.error("Error while connecting to UniSat wallet", err);
+      return false;
     }
   };
   const onConnectXverseWallet = async () => {
     try {
+      setErrorMessage("");
       const xverse = await ordit.xverse.getAddresses({
         network,
       });
@@ -114,6 +117,7 @@ export function SelectWalletModal({
         payments: nestedSegwit.format as AddressFormats,
       });
       closeModal();
+      return true;
     } catch (err: any) {
       if (err?.message === "Xverse not installed.") {
         window.open(
@@ -124,6 +128,7 @@ export function SelectWalletModal({
       }
       setErrorMessage(err.toString());
       console.error("Error while connecting to Xverse wallet", err);
+      return false;
     }
   };
 
@@ -183,29 +188,20 @@ export function SelectWalletModal({
                 <section className="panel-content-container">
                   {isChromium ? (
                     <section className="panel-content-inner-container">
-                      <button
-                        type="button"
-                        className="wallet-option-button"
-                        onClick={async () => {
-                          await onConnectUnisatWallet();
-                        }}
-                      >
-                        <img src={UnisatWalletIcon} alt="Unisat Wallet" />
-                        <span className="wallet-option-label">Unisat</span>
-                        <img src={ChevronRightIcon} alt="Chevron Right" />
-                      </button>
+                      <WalletButton
+                        name="Unisat"
+                        onConnect={onConnectUnisatWallet}
+                        icon={UnisatWalletIcon}
+                        setErrorMessage={setErrorMessage}
+                      />
                       <hr className="horizontal-separator" />
-                      <button
-                        type="button"
-                        className="wallet-option-button"
-                        onClick={async () => {
-                          await onConnectXverseWallet();
-                        }}
-                      >
-                        <img src={XverseWalletIcon} alt="Xverse Wallet" />
-                        <span className="wallet-option-label">Xverse</span>
-                        <img src={ChevronRightIcon} alt="Chevron Right" />
-                      </button>
+                      <WalletButton
+                        name="Xverse"
+                        imageClassOverride="xverse-icon"
+                        onConnect={onConnectXverseWallet}
+                        icon={XverseWalletIcon}
+                        setErrorMessage={setErrorMessage}
+                      />
                     </section>
                   ) : (
                     <Dialog.Description className="unsupported-browser-message">
