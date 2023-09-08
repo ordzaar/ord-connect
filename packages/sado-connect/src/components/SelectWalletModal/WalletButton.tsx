@@ -6,7 +6,6 @@ interface WalletButtonProp {
   name: string;
   onConnect: () => Promise<boolean>;
   icon: string;
-  imageClassOverride?: string;
   setErrorMessage: (msg: string) => void;
 }
 
@@ -14,7 +13,6 @@ export function WalletButton({
   name,
   onConnect,
   icon,
-  imageClassOverride,
   setErrorMessage,
 }: WalletButtonProp) {
   const [loading, setLoading] = useState(false);
@@ -35,11 +33,7 @@ export function WalletButton({
         }
       }}
     >
-      <img
-        src={icon}
-        className={imageClassOverride}
-        alt={`Connect ${name} Wallet`}
-      />
+      <img width={40} src={icon} alt={`Connect ${name} Wallet`} />
       <span className="wallet-option-label">{name}</span>
       {loading ? (
         <img

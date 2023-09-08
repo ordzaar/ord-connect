@@ -197,7 +197,6 @@ export function SelectWalletModal({
                       <hr className="horizontal-separator" />
                       <WalletButton
                         name="Xverse"
-                        imageClassOverride="xverse-icon"
                         onConnect={onConnectXverseWallet}
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
