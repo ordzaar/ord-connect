@@ -75,6 +75,7 @@ const SadoContext = createContext<SadoContextI>({
   disconnectWallet: () => {},
 });
 
+const KEY_PREFIX = "sado-connect";
 const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
@@ -83,7 +84,8 @@ const SAFE_MODE = "safeMode";
 const NETWORK = "network";
 
 // Helper function to get item from localStorage
-function getItemFromLocalStorage<T>(key: string): T | null {
+function getItemFromLocalStorage<T>(_key: string): T | null {
+  const key = `${KEY_PREFIX}_${_key}`;
   try {
     return JSON.parse(localStorage.getItem(key)) as T | null;
   } catch (error) {
@@ -94,9 +96,10 @@ function getItemFromLocalStorage<T>(key: string): T | null {
 
 // Helper function to set item to localStorage
 function setItemToLocalStorage(
-  key: string,
+  _key: string,
   value: string | null | BiAddress<any>,
 ) {
+  const key = `${KEY_PREFIX}_${_key}`;
   try {
     if (value) {
       localStorage.setItem(key, JSON.stringify(value));
