@@ -82,29 +82,29 @@ const FORMAT = "format";
 const SAFE_MODE = "safeMode";
 const NETWORK = "network";
 
-// Helper function to get item from sessionStorage
-function getItemFromSessionStorage<T>(key: string): T | null {
+// Helper function to get item from localStorage
+function getItemFromLocalStorage<T>(key: string): T | null {
   try {
-    return JSON.parse(sessionStorage.getItem(key)) as T | null;
+    return JSON.parse(localStorage.getItem(key)) as T | null;
   } catch (error) {
-    console.error(`Error retrieving ${key} from sessionStorage`, error);
+    console.error(`Error retrieving ${key} from localStorage`, error);
     return null;
   }
 }
 
-// Helper function to set item to sessionStorage
-function setItemToSessionStorage(
+// Helper function to set item to localStorage
+function setItemToLocalStorage(
   key: string,
   value: string | null | BiAddress<any>,
 ) {
   try {
     if (value) {
-      sessionStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(key, JSON.stringify(value));
     } else {
-      sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
     }
   } catch (error) {
-    console.error(`Error saving ${key} to sessionStorage`, error);
+    console.error(`Error saving ${key} to localStorage`, error);
   }
 }
 
@@ -138,37 +138,37 @@ export function SadoConnectProvider({
   initialSafeMode,
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<BiAddressString>(
-    () => getItemFromSessionStorage(ADDRESS) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(ADDRESS) ?? emptyBiAddressObject,
   );
 
   const [network, setNetwork] = useState<Network>(
-    initialNetwork ?? getItemFromSessionStorage(NETWORK) ?? Network.TESTNET,
+    initialNetwork ?? getItemFromLocalStorage(NETWORK) ?? Network.TESTNET,
   );
 
   const [safeMode, setSafeMode] = useState<boolean>(
-    initialSafeMode ?? Boolean(getItemFromSessionStorage(SAFE_MODE)) ?? true,
+    initialSafeMode ?? Boolean(getItemFromLocalStorage(SAFE_MODE)) ?? true,
   );
 
   const [wallet, setWallet] = useState<Wallet | null>(() =>
-    getItemFromSessionStorage(WALLET),
+    getItemFromLocalStorage(WALLET),
   );
   const [publicKey, setPublicKey] = useState<BiAddressString>(
-    () => getItemFromSessionStorage(PUBLIC_KEY) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(PUBLIC_KEY) ?? emptyBiAddressObject,
   );
 
   const [format, setFormat] = useState<BiAddressFormat>(
-    () => getItemFromSessionStorage(FORMAT) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(FORMAT) ?? emptyBiAddressObject,
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => setItemToSessionStorage(ADDRESS, address), [address]);
-  useEffect(() => setItemToSessionStorage(WALLET, wallet), [wallet]);
-  useEffect(() => setItemToSessionStorage(PUBLIC_KEY, publicKey), [publicKey]);
-  useEffect(() => setItemToSessionStorage(FORMAT, format), [format]);
-  useEffect(() => setItemToSessionStorage(NETWORK, network), [network]);
+  useEffect(() => setItemToLocalStorage(ADDRESS, address), [address]);
+  useEffect(() => setItemToLocalStorage(WALLET, wallet), [wallet]);
+  useEffect(() => setItemToLocalStorage(PUBLIC_KEY, publicKey), [publicKey]);
+  useEffect(() => setItemToLocalStorage(FORMAT, format), [format]);
+  useEffect(() => setItemToLocalStorage(NETWORK, network), [network]);
   useEffect(
-    () => setItemToSessionStorage(SAFE_MODE, safeMode.toString()),
+    () => setItemToLocalStorage(SAFE_MODE, safeMode.toString()),
     [safeMode],
   );
 
