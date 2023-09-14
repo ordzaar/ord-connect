@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CreatePsbtOptions, ordit } from "@sadoprotocol/ordit-sdk";
 import { sendBtcTransaction } from "sats-connect";
 import { Psbt } from "bitcoinjs-lib";
-import { useSadoContext, Wallet } from "../providers/SadoContext";
+import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 import { capitalizeFirstLetter } from "../utils/text-helper";
 import signPsbt from "../lib/signPsbt";
 
@@ -13,7 +13,7 @@ type SendFunction = (
 ) => Promise<string | null>;
 
 export function useSend(): [SendFunction, string | null, boolean] {
-  const { wallet, network, address, publicKey, safeMode } = useSadoContext();
+  const { wallet, network, address, publicKey, safeMode } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

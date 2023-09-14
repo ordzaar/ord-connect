@@ -4,7 +4,7 @@ import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useSadoContext, Wallet } from "../../providers/SadoContext";
+import { useOrdContext, Wallet } from "../../providers/OrdContext.tsx";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
@@ -30,7 +30,7 @@ export function SelectWalletModal({
     format,
     address,
     publicKey,
-  } = useSadoContext();
+  } = useOrdContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isChromium = window.chrome;
 
@@ -143,7 +143,7 @@ export function SelectWalletModal({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="sado-connect-wallet-modal"
+        className="ord-connect-wallet-modal"
         onClose={closeModal}
       >
         <Transition.Child

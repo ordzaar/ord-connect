@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Psbt } from "bitcoinjs-lib";
-import { useSadoContext } from "../providers/SadoContext";
+import { useOrdContext } from "../providers/OrdContext.tsx";
 import signPsbt, {
   SerializedPsbt,
   SignPsbtOptionsParams,
@@ -15,7 +15,7 @@ export function useSign(): [
   string | null,
   boolean,
 ] {
-  const { network, publicKey, format, wallet } = useSadoContext();
+  const { network, publicKey, format, wallet } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

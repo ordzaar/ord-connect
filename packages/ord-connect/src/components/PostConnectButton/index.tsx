@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import ChevronDownIcon from "../../assets/chevron-down.svg";
 import { TruncateMiddle } from "../../utils/text-helper";
 import LogoutIcon from "../../assets/logout.svg";
-import { Wallet, useSadoContext } from "../../providers/SadoContext";
+import { Wallet, useOrdContext } from "../../providers/OrdContext.tsx";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 
@@ -19,16 +19,16 @@ export function PostConnectButton({
   network,
   onViewWallet,
 }: PostConnectButtonProp) {
-  const { disconnectWallet, wallet } = useSadoContext();
+  const { disconnectWallet, wallet } = useOrdContext();
 
   return (
     <Menu
       as="section"
-      className="sado-wallet-connected-container relative inline-block text-left"
+      className="ord-wallet-connected-container relative inline-block text-left"
     >
       {({ open }) => (
         <>
-          <Menu.Button className="sado-wallet-connected-button">
+          <Menu.Button className="ord-wallet-connected-button">
             <div className="wallet-identifier-container">
               <Avatar
                 size={28}
@@ -58,7 +58,7 @@ export function PostConnectButton({
               className={`dropdown-button ${
                 open ? "close-dropdown-button" : "expand-dropdown-button"
               }`}
-              alt="sado connect dropdown"
+              alt="ord connect dropdown"
             />
           </Menu.Button>
 
@@ -71,7 +71,7 @@ export function PostConnectButton({
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="sado-wallet-connection-dropdown">
+            <Menu.Items className="ord-wallet-connection-dropdown">
               <Menu.Item
                 as="button"
                 className="dropdown-button"

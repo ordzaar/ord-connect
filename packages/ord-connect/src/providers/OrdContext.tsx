@@ -37,7 +37,7 @@ export const emptyBiAddressObject: BiAddress<null> = {
   ordinals: null,
 };
 
-interface SadoContextI {
+interface OrdContextI {
   address: BiAddressString;
   updateAddress: (address: BiAddressString) => void;
   publicKey: BiAddressString;
@@ -56,7 +56,7 @@ interface SadoContextI {
   disconnectWallet: () => void;
 }
 
-const SadoContext = createContext<SadoContextI>({
+const OrdContext = createContext<OrdContextI>({
   address: emptyBiAddressObject,
   updateAddress: () => {},
   publicKey: emptyBiAddressObject,
@@ -75,7 +75,7 @@ const SadoContext = createContext<SadoContextI>({
   disconnectWallet: () => {},
 });
 
-const KEY_PREFIX = "sado-connect";
+const KEY_PREFIX = "ord-connect";
 const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
@@ -112,30 +112,30 @@ function setItemToLocalStorage(
 }
 
 /**
- * (Optionally) global context provider for SadoConnectKit and its consumer(s).
+ * (Optionally) global context provider for OrdConnectKit and its consumer(s).
  *
  * @component
  * @example
  * // Usage:
- * // Wrap your application with the SadoConnectProvider to access the SadoContext.
+ * // Wrap your application with the OrdConnectProvider to access the OrdContext.
  * // The provider manages the state and provides it to the child components.
  *
- * import { SadoConnectProvider } from "./SadoConnectProvider";
+ * import { OrdConnectProvider } from "./OrdConnectProvider";
  *
  * function App() {
  *   return (
- *     <SadoConnectProvider>
+ *     <OrdConnectProvider>
  *       <YourAppContent />
- *     </SadoConnectProvider>
+ *     </OrdConnectProvider>
  *   );
  * }
  *
  * @param {React.PropsWithChildren<any>} props - Props object.
  * @param {string} [props.initialNetwork] - Initialize the internal context network state on mount.
  *  * @param {string} [props.initialSafeMode] - Initialize the internal context safeMode state on mount.
- * @returns {JSX.Element} Provider component for SadoConnect.
+ * @returns {JSX.Element} Provider component for OrdConnect.
  */
-export function SadoConnectProvider({
+export function OrdConnectProvider({
   children,
   initialNetwork,
   initialSafeMode,
@@ -182,7 +182,7 @@ export function SadoConnectProvider({
     setWallet(null);
   }
 
-  const context: SadoContextI = useMemo(
+  const context: OrdContextI = useMemo(
     () => ({
       address,
       updateAddress: setAddress,
@@ -204,11 +204,9 @@ export function SadoConnectProvider({
     [address, publicKey, network, isModalOpen, format, safeMode],
   );
 
-  return (
-    <SadoContext.Provider value={context}>{children}</SadoContext.Provider>
-  );
+  return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;
 }
 
-export function useSadoContext() {
-  return useContext(SadoContext);
+export function useOrdContext() {
+  return useContext(OrdContext);
 }

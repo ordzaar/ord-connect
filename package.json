@@ -1,9 +1,9 @@
 {
-  "name": "@sadoprotocol/sado-connect-monorepo",
+  "name": "@ordzaar/ord-connect",
   "version": "0.0.0",
   "private": true,
-  "repository": "https://github.com/sadoprotocol/sado-connect",
-  "bugs": "https://github.com/sadoprotocol/sado-connect/issues",
+  "repository": "https://github.com/ordzaar/ord-connect",
+  "bugs": "https://github.com/ordzaar/ord-connect/issues",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@stickyjs/prettier": "^1.3.3",
     "@stickyjs/turbo": "^1.3.3",
-    "@waveshq/standard-web-linter": "^2.6.0",
+    "@waveshq/standard-web-linter": "^2.6.1",
     "husky": "^8.0.3"
   },
   "lint-staged": {

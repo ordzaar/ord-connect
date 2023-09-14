@@ -1,9 +1,9 @@
 {
-  "name": "@sadoprotocol/sado-connect",
+  "name": "@ordzaar/ord-connect",
   "version": "0.0.0",
   "description": "React component library for Bitcoin Ordinals and Sado Protocol Connections",
-  "repository": "https://github.com/sadoprotocol/sado-connect",
-  "bugs": "https://github.com/sadoprotocol/sado-connect/issues",
+  "repository": "https://github.com/ordzaar/ord-connect",
+  "bugs": "https://github.com/ordzaar/ord-connect/issues",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -11,12 +11,12 @@
     "index.d.ts"
   ],
   "types": "./index.d.ts",
-  "main": "./dist/sado-connect.umd.cjs",
-  "module": "./dist/sado-connect.js",
+  "main": "./dist/ord-connect.umd.cjs",
+  "module": "./dist/ord-connect.js",
   "exports": {
     ".": {
-      "import": "./dist/sado-connect.js",
-      "require": "./dist/sado-connect.umd.cjs"
+      "import": "./dist/ord-connect.js",
+      "require": "./dist/ord-connect.umd.cjs"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",

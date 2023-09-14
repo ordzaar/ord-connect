@@ -1,6 +1,6 @@
 import { Psbt } from "bitcoinjs-lib";
 import { ordit } from "@sadoprotocol/ordit-sdk";
-import { Network, Wallet } from "../providers/SadoContext";
+import { Network, Wallet } from "../providers/OrdContext.tsx";
 
 export interface SignPsbtOptionsParams {
   finalize?: boolean;

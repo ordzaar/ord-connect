@@ -1,10 +1,10 @@
-# sado-connect
+# ord-connect
 
 <img src="preview.png" alt="Preview" width="605" height="350"/>
 
 ## Introduction
 
-**sado-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
+**ord-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
 
 ## Wallet Feature Support
 
@@ -20,19 +20,19 @@ Just two simple steps:
 1.  Add dependency:
 
     ```bash
-    pnpm install @sadoprotocol/sado-connect
+    pnpm install @ordzaar/ord-connect
     ```
 
-2.  Import sado-connect into your dApp:
+2.  Import ord-connect into your dApp:
 
     ```javascript
-    import { SadoConnectProvider, SadoConnectKit } from "@sadoprotocol/sado-connect";
+    import { OrdConnectProvider, OrdConnectKit } from "@ordzaar/ord-connect";
 
     export default function YourReactComponent() {
       return (
-        <SadoConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
-          <SadoConnectKit />
-        </SadoConnectProvider>
+        <OrdConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
+          <OrdConnectKit />
+        </OrdConnectProvider>
       );
     }
     ```
@@ -51,15 +51,15 @@ npm install -g pnpm
 
 ### Development
 
-To develop sado-connect, navigate to the sado-connect directory, install the necessary packages and serve the project:
+To develop ord-connect, navigate to the ord-connect directory, install the necessary packages and serve the project:
 
 ```bash
-cd packages/sado-connect
+cd packages/ord-connect
 pnpm install
 pnpm dev
 ```
 
-The sample playground component is located at `packages/sado-connect/src/main.tsx`.
+The sample playground component is located at `packages/ord-connect/src/main.tsx`.
 
 Changes made to the code will be reflected immediately.
 
@@ -70,7 +70,7 @@ For inter-repo local testing:
 1. Link the global package to the local project:
 
    ```bash
-   pnpm link packages/sado-connect --global
+   pnpm link packages/ord-connect --global
    ```
 
 2. `cd` to any repo of your choosing (e.g., ordzaar).
