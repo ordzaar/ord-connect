@@ -1,29 +1,29 @@
 import "./style.css";
-import { useSadoContext } from "../providers/SadoContext";
+import { useOrdContext } from "../providers/OrdContext.tsx";
 import { PreConnectButton } from "./PreConnectButton";
 import { PostConnectButton } from "./PostConnectButton";
 import { SelectWalletModal } from "./SelectWalletModal";
 
-export interface SadoConnectKitProp {
+export interface OrdConnectKitProp {
   customStyle?: string;
   onViewWallet?: () => void;
 }
 
 /**
- * Parent React component for SadoConnectKit, in the form of a button.
+ * Parent React component for OrdConnectKit, in the form of a button.
  *
  * @component
- * @param {Object} props - Props for the SadoConnectKit component.
+ * @param {Object} props - Props for the OrdConnectKit component.
  * @param {string} [props.customStyle] - Custom CSS style for the button.
  * @param {Function} [props.onViewWallet] - Callback function to handle viewing wallet.
- * @returns {JSX.Element} SadoConnectKit React component.
+ * @returns {JSX.Element} OrdConnectKit React component.
  */
-export function SadoConnectKit({
+export function OrdConnectKit({
   customStyle,
   onViewWallet,
-}: SadoConnectKitProp) {
+}: OrdConnectKitProp) {
   const { address, network, isModalOpen, openModal, closeModal } =
-    useSadoContext();
+    useOrdContext();
 
   return (
     <>

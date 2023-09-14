@@ -1,6 +1,6 @@
-import type { SadoConnectKitProp } from "../SadoConnectKit";
+import type { OrdConnectKitProp } from "../OrdConnectKit.tsx";
 
-interface PreConnectButtonProp extends SadoConnectKitProp {
+interface PreConnectButtonProp extends OrdConnectKitProp {
   openModal: () => void;
 }
 
@@ -13,7 +13,7 @@ export function PreConnectButton({
       type="button"
       onClick={openModal}
       data-testid="connect-wallet-button"
-      className={`sado-connect-wallet-button ${customStyle}`}
+      className={`ord-connect-wallet-button ${customStyle}`}
     >
       <span />
     </button>

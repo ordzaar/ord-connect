@@ -15,13 +15,13 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3(turbo@1.10.13)(typanion@3.14.0)
       '@waveshq/standard-web-linter':
-        specifier: ^2.6.0
-        version: 2.6.0(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^2.6.1
+        version: 2.6.1(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(react-dom@18.2.0)(react@18.2.0)
       husky:
         specifier: ^8.0.3
         version: 8.0.3
 
-  packages/sado-connect:
+  packages/ord-connect:
     dependencies:
       '@headlessui/react':
         specifier: ^1.7.17
@@ -1063,8 +1063,8 @@ packages:
       - '@swc/helpers'
     dev: true
 
-  /@waveshq/standard-web-linter@2.6.0(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-TrXMZqxRUpciLTFQEXE1yO615H/sBzdyJ5nhno+2JMrjSVVioU2tpyWfwZqCyyyR8Bd1AK48vV9fNgeGxIzQIQ==}
+  /@waveshq/standard-web-linter@2.6.1(@typescript-eslint/eslint-plugin@5.62.0)(@typescript-eslint/parser@5.62.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-hxGcRu1BQIMtmEiowQUaueDG5gWE5GwU1+4/h+KelzukRP9b5YhEq9bBCYe7ObFr0a+fHXBeFlLl/z8L3mX1+A==}
     dependencies:
       eslint: 8.49.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.28.1)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@8.49.0)

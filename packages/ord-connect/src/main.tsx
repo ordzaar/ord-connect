@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
-import { SadoConnectKit, useSign } from "./index";
-import { SadoConnectProvider, useSadoContext } from "./providers/SadoContext";
+import { OrdConnectKit, useSign } from "./index";
+import { OrdConnectProvider, useOrdContext } from "./providers/OrdContext.tsx";
 import "./style.css";
 
 function SampleComponent() {
@@ -13,7 +13,7 @@ function SampleComponent() {
   const [result, setResult] = React.useState("");
   const [balance, setBalance] = React.useState(0);
 
-  const { address } = useSadoContext();
+  const { address } = useOrdContext();
 
   return (
     <div>
@@ -67,9 +67,9 @@ function SampleComponent() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <SadoConnectProvider initialNetwork="testnet" initialSafeMode>
+    <OrdConnectProvider initialNetwork="testnet" initialSafeMode>
       <SampleComponent />
-      <SadoConnectKit />
-    </SadoConnectProvider>
+      <OrdConnectKit />
+    </OrdConnectProvider>
   </React.StrictMode>,
 );

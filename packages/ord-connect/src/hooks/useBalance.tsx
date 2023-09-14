@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { addressNameToType, ordit } from "@sadoprotocol/ordit-sdk";
-import { useSadoContext, Wallet } from "../providers/SadoContext";
+import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
-  const { network, publicKey, format, safeMode, wallet } = useSadoContext();
+  const { network, publicKey, format, safeMode, wallet } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

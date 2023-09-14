@@ -21,8 +21,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "sado-connect",
-      fileName: "sado-connect",
+      name: "ord-connect",
+      fileName: "ord-connect",
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
