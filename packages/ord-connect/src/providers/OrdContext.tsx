@@ -204,9 +204,7 @@ export function OrdConnectProvider({
     [address, publicKey, network, isModalOpen, format, safeMode],
   );
 
-  return (
-    <OrdContext.Provider value={context}>{children}</OrdContext.Provider>
-  );
+  return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;
 }
 
 export function useOrdContext() {
