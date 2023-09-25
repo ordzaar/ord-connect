@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { addressNameToType, ordit } from "@sadoprotocol/ordit-sdk";
+import {
+  addressNameToType,
+  OrditApi,
+  getAddressesFromPublicKey,
+} from "@sadoprotocol/ordit-sdk";
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
@@ -14,17 +18,19 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       if (!format || !publicKey) {
         throw new Error("No wallet is connected");
       }
-      const walletWithBalances = await ordit.wallet.getWalletWithBalances({
-        pubKey: publicKey.payments,
+      const { address } = getAddressesFromPublicKey(
+        publicKey.payments,
         network,
-        format: addressNameToType[format.payments],
+        addressNameToType[format.payments],
+      )[0];
+      const { spendableUTXOs } = await OrditApi.fetchUnspentUTXOs({
+        address,
+        network,
+        sort: "desc",
+        type: "spendable",
       });
 
-      const currentWallet = walletWithBalances.addresses.find(
-        (w) => w.format === format.payments,
-      );
-
-      const totalCardinalsAvailable = (currentWallet as any).unspents.reduce(
+      const totalCardinalsAvailable = spendableUTXOs.reduce(
         (total: number, spendable: { safeToSpend: boolean; sats: number }) =>
           spendable.safeToSpend ? total + spendable.sats : total,
         0,
