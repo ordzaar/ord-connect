@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { CreatePsbtOptions, ordit } from "@sadoprotocol/ordit-sdk";
+import { ordit, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
 import { sendBtcTransaction } from "sats-connect";
-import { Psbt } from "bitcoinjs-lib";
+
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 import { capitalizeFirstLetter } from "../utils/text-helper";
 import signPsbt from "../lib/signPsbt";
@@ -25,27 +25,25 @@ export function useSend(): [SendFunction, string | null, boolean] {
         throw new Error("No wallet is connected");
       }
 
-      const psbtTemplate: CreatePsbtOptions = {
-        satsPerByte: feeRate,
-        network,
-        pubKey: publicKey.payments,
+      const psbtBuilder = new PSBTBuilder({
         address: address.payments,
+        feeRate,
+        network,
+        publicKey: publicKey.payments,
         outputs: [
           {
             address: toAddress,
-            cardinals: satoshis,
+            value: satoshis,
           },
         ],
-        enableRBF: true,
-      };
+      });
+      await psbtBuilder.prepare();
 
-      const createPsbtRes = await ordit.transactions.createPsbt(psbtTemplate);
-      const unsignedPsbt = Psbt.fromBase64(createPsbtRes.base64);
       const signedPsbt = await signPsbt({
         address: address.payments,
         wallet,
         network,
-        psbt: unsignedPsbt,
+        psbt: psbtBuilder.toPSBT(),
       });
 
       const txId = await ordit.transactions.relayTransaction(
