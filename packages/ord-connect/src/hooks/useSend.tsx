@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ordit, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
+import { PSBTBuilder, JsonRpcDatasource } from "@sadoprotocol/ordit-sdk";
 import { sendBtcTransaction } from "sats-connect";
 
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
@@ -16,6 +16,8 @@ export function useSend(): [SendFunction, string | null, boolean] {
   const { wallet, network, address, publicKey, safeMode } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const datasource = new JsonRpcDatasource({ network });
 
   const safeSend: SendFunction = async (toAddress, satoshis, feeRate) => {
     setLoading(true);
@@ -46,10 +48,8 @@ export function useSend(): [SendFunction, string | null, boolean] {
         psbt: psbtBuilder.toPSBT(),
       });
 
-      const txId = await ordit.transactions.relayTransaction(
-        signedPsbt.hex,
-        network,
-      );
+      const txId = await datasource.relay({ hex: signedPsbt.hex });
+
       setLoading(false);
       return txId;
     } catch (err: any) {
