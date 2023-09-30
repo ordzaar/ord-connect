@@ -1,8 +1,8 @@
 import { useState } from "react";
 import {
   addressNameToType,
-  OrditApi,
   getAddressesFromPublicKey,
+  JsonRpcDatasource,
 } from "@sadoprotocol/ordit-sdk";
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 
@@ -10,6 +10,8 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
   const { network, publicKey, format, safeMode, wallet } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const datasource = new JsonRpcDatasource({ network });
 
   const getSafeBalance = async (): Promise<number> => {
     setLoading(true);
@@ -23,11 +25,11 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
         network,
         addressNameToType[format.payments],
       )[0];
-      const { spendableUTXOs } = await OrditApi.fetchUnspentUTXOs({
+
+      const { spendableUTXOs } = await datasource.getUnspents({
         address,
-        network,
-        sort: "desc",
         type: "spendable",
+        decodeMetadata: false,
       });
 
       const totalCardinalsAvailable = spendableUTXOs.reduce(
