@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { PSBTBuilder, JsonRpcDatasource } from "@sadoprotocol/ordit-sdk";
+import { PSBTBuilder } from "@sadoprotocol/ordit-sdk";
 import { sendBtcTransaction } from "sats-connect";
 
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 import { capitalizeFirstLetter } from "../utils/text-helper";
 import signPsbt from "../lib/signPsbt";
+import CustomJsonRpcDatasource from "../lib/CustomJsonRPCDatasource";
 
 type SendFunction = (
   address: string,
@@ -17,7 +18,8 @@ export function useSend(): [SendFunction, string | null, boolean] {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const datasource = new JsonRpcDatasource({ network });
+  // TODO: revert quick fix to relay with old v2
+  const datasource = new CustomJsonRpcDatasource({ network });
 
   const safeSend: SendFunction = async (toAddress, satoshis, feeRate) => {
     setLoading(true);
