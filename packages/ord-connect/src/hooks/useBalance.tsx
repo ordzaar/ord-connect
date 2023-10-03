@@ -29,7 +29,6 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       const { spendableUTXOs } = await datasource.getUnspents({
         address,
         type: "spendable",
-        decodeMetadata: false,
       });
 
       const totalCardinalsAvailable = spendableUTXOs.reduce(
