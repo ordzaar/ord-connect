@@ -61,6 +61,9 @@ export default class CustomJsonRpcDatasource extends JsonRpcDatasource {
   }
 
   override async relay({ hex, maxFeeRate }: RelayOptions) {
+    if (this.network === "mainnet") {
+      return super.relay({ hex, maxFeeRate });
+    }
     if (!hex) {
       throw new Error("Invalid request");
     }
