@@ -35,7 +35,7 @@ export function SelectWalletModal({
     publicKey,
   } = useOrdContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const supportedDevice = !disableMobile || !isMobileDevice();
+  const isSupportedDevice = !disableMobile || !isMobileDevice();
 
   const onConnectUnisatWallet = async () => {
     try {
@@ -175,7 +175,7 @@ export function SelectWalletModal({
               <Dialog.Panel className="panel">
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
-                    {supportedDevice
+                    {isSupportedDevice
                       ? "Choose wallet to connect"
                       : "Unsupported device"}
                   </Dialog.Title>
@@ -189,7 +189,7 @@ export function SelectWalletModal({
                 </section>
 
                 <section className="panel-content-container">
-                  {supportedDevice ? (
+                  {isSupportedDevice ? (
                     <section className="panel-content-inner-container">
                       <WalletButton
                         name="Unisat"
