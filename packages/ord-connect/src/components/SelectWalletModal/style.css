@@ -152,23 +152,42 @@
 }
 
 .ord-connect-wallet-modal .wallet-option-button:first-child {
-  padding: 32px 32px 24px;
+  padding: 24px 24px 16px;
   border: 0px;
   margin-bottom: 0px;
-  border-radius: 20px 20px 20px 20px;
+  border-radius: 20px 20px 0px 0px;
 }
 
 .ord-connect-wallet-modal .wallet-option-button:nth-of-type(2) {
   border: 0px;
-  padding: 24px 32px 32px;
+  padding: 16px 24px 24px;
   margin-bottom: 0px;
   border-radius: 0px 0px 20px 20px;
 }
 
-.ord-connect-wallet-modal .wallet-option-label {
-  margin-left: 16px;
+.ord-connect-wallet-modal .wallet-option {
   flex-grow: 1;
+  margin-left: 16px;
   text-align: left;
+}
+.ord-connect-wallet-modal .wallet-option-label {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.ord-connect-wallet-modal .wallet-option-info {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #8c8c8c;
+}
+
+@media (min-width: 768px) {
+  .ord-connect-wallet-modal .wallet-option-info {
+    display: none;
+  }
 }
 
 .ord-connect-wallet-modal .horizontal-separator {
@@ -182,4 +201,13 @@
   color: #e54545;
   font-size: 14px;
   line-height: 20px;
+}
+
+.chveron-btn {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0.3;
+}
+
+.chveron-btn:hover {
+  opacity: 1;
 }

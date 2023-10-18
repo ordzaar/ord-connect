@@ -193,6 +193,7 @@ export function SelectWalletModal({
                     <section className="panel-content-inner-container">
                       <WalletButton
                         name="Unisat"
+                        info="Coming soon on mobile browsing"
                         onConnect={onConnectUnisatWallet}
                         icon={UnisatWalletIcon}
                         setErrorMessage={setErrorMessage}
@@ -200,6 +201,7 @@ export function SelectWalletModal({
                       <hr className="horizontal-separator" />
                       <WalletButton
                         name="Xverse"
+                        info="Available on Xverse app"
                         onConnect={onConnectXverseWallet}
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}

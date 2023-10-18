@@ -4,6 +4,7 @@ import LoadingIcon from "../../assets/loading.svg";
 
 interface WalletButtonProp {
   name: string;
+  info: string;
   onConnect: () => Promise<boolean>;
   icon: string;
   setErrorMessage: (msg: string) => void;
@@ -11,6 +12,7 @@ interface WalletButtonProp {
 
 export function WalletButton({
   name,
+  info,
   onConnect,
   icon,
   setErrorMessage,
@@ -34,7 +36,10 @@ export function WalletButton({
       }}
     >
       <img width={40} src={icon} alt={`Connect ${name} Wallet`} />
-      <span className="wallet-option-label">{name}</span>
+      <div className="wallet-option">
+        <span className="wallet-option-label">{name}</span>
+        <span className="wallet-option-info">{info}</span>
+      </div>
       {loading ? (
         <img
           src={LoadingIcon}
@@ -42,7 +47,11 @@ export function WalletButton({
           alt={`${name} wallet extension is loading`}
         />
       ) : (
-        <img src={ChevronRightIcon} alt="Chevron Right" />
+        <img
+          src={ChevronRightIcon}
+          alt="Chevron Right"
+          className="chveron-btn"
+        />
       )}
     </button>
   );
