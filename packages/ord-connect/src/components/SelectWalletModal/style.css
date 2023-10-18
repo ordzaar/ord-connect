@@ -87,6 +87,7 @@
 }
 
 .ord-connect-wallet-modal .close-button {
+  display: inline-flex;
   background: transparent;
   border: 0px;
   cursor: pointer;
