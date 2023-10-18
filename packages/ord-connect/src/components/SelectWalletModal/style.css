@@ -206,12 +206,3 @@
   font-size: 14px;
   line-height: 20px;
 }
-
-.chveron-btn {
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0.3;
-}
-
-.chveron-btn:hover {
-  opacity: 1;
-}
