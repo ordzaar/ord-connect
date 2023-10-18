@@ -142,13 +142,17 @@
   object-fit: cover;
 }
 
-.ord-connect-wallet-modal .wallet-option-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.ord-connect-wallet-modal .wallet-option-button {
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
-.ord-connect-wallet-modal .wallet-option-button:active {
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0.7;
+.panel-content-inner-container:hover .wallet-option-button {
+  opacity: 0.35;
+}
+
+.ord-connect-wallet-modal .wallet-option-button:hover {
+  opacity: 1;
 }
 
 .ord-connect-wallet-modal .wallet-option-button:first-child {
