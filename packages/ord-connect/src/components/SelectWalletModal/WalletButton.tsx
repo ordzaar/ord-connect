@@ -35,7 +35,7 @@ export function WalletButton({
         }
       }}
     >
-      <img width={40} src={icon} alt={`Connect ${name} Wallet`} />
+      <img width={32} src={icon} alt={`Connect ${name} Wallet`} />
       <div className="wallet-option">
         <span className="wallet-option-label">{name}</span>
         <span className="wallet-option-info">{info}</span>
@@ -43,13 +43,15 @@ export function WalletButton({
       {loading ? (
         <img
           src={LoadingIcon}
-          width={40}
+          width={30}
           alt={`${name} wallet extension is loading`}
         />
       ) : (
         <img
           src={ChevronRightIcon}
           alt="Chevron Right"
+          width={20}
+          height={20}
           className="chveron-btn"
         />
       )}

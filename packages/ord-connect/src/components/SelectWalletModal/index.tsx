@@ -192,7 +192,7 @@ export function SelectWalletModal({
                   {isSupportedDevice ? (
                     <section className="panel-content-inner-container">
                       <WalletButton
-                        name="Unisat"
+                        name="Unisat Wallet"
                         info="Coming soon on mobile browsing"
                         onConnect={onConnectUnisatWallet}
                         icon={UnisatWalletIcon}
