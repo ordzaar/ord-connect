@@ -8,6 +8,7 @@ interface WalletButtonProp {
   onConnect: () => Promise<boolean>;
   icon: string;
   setErrorMessage: (msg: string) => void;
+  isDisabled?: boolean;
 }
 
 export function WalletButton({
@@ -16,6 +17,7 @@ export function WalletButton({
   onConnect,
   icon,
   setErrorMessage,
+  isDisabled,
 }: WalletButtonProp) {
   const [loading, setLoading] = useState(false);
   return (
@@ -34,6 +36,7 @@ export function WalletButton({
           setLoading(false);
         }
       }}
+      disabled={isDisabled}
     >
       <img width={32} src={icon} alt={`Connect ${name} Wallet`} />
       <div className="wallet-option">
