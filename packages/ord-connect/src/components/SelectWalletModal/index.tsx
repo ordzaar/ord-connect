@@ -198,6 +198,7 @@ export function SelectWalletModal({
                         icon={UnisatWalletIcon}
                         setErrorMessage={setErrorMessage}
                         isDisabled={isMobileDevice()}
+                        isMobileDevice={isMobileDevice()}
                       />
                       <hr className="horizontal-separator" />
                       <WalletButton
@@ -206,6 +207,7 @@ export function SelectWalletModal({
                         onConnect={onConnectXverseWallet}
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
+                        isMobileDevice={isMobileDevice()}
                       />
                     </section>
                   ) : (

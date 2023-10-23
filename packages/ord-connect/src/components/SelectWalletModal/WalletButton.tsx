@@ -9,6 +9,7 @@ interface WalletButtonProp {
   icon: string;
   setErrorMessage: (msg: string) => void;
   isDisabled?: boolean;
+  isMobileDevice?: boolean;
 }
 
 export function WalletButton({
@@ -18,6 +19,7 @@ export function WalletButton({
   icon,
   setErrorMessage,
   isDisabled,
+  isMobileDevice,
 }: WalletButtonProp) {
   const [loading, setLoading] = useState(false);
   return (
@@ -41,7 +43,12 @@ export function WalletButton({
       <img width={32} src={icon} alt={`Connect ${name} Wallet`} />
       <div className="wallet-option">
         <span className="wallet-option-label">{name}</span>
-        <span className="wallet-option-info">{info}</span>
+        <span
+          className="wallet-option-info"
+          style={{ display: isMobileDevice ? "block" : "none" }}
+        >
+          {info}
+        </span>
       </div>
       {loading ? (
         <img

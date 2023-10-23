@@ -182,17 +182,10 @@
 }
 
 .ord-connect-wallet-modal .wallet-option-info {
-  display: block;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
   color: #8c8c8c;
-}
-
-@media (min-width: 768px) {
-  .ord-connect-wallet-modal .wallet-option-info {
-    display: none;
-  }
 }
 
 .ord-connect-wallet-modal .horizontal-separator {
