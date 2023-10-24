@@ -40,31 +40,37 @@ export function WalletButton({
       }}
       disabled={isDisabled}
     >
-      <img width={32} src={icon} alt={`Connect ${name} Wallet`} />
-      <div className="wallet-option">
-        <span className="wallet-option-label">{name}</span>
-        <span
-          className="wallet-option-info"
-          style={{ display: isMobileDevice ? "block" : "none" }}
-        >
-          {info}
-        </span>
+      <div className="option-wrapper">
+        <img
+          className="wallet-icon"
+          src={icon}
+          alt={`Connect ${name} Wallet`}
+        />
+        <div className="wallet-option">
+          <span className="wallet-option-label">{name}</span>
+          <span
+            className="wallet-option-info"
+            style={{ display: isMobileDevice ? "block" : "none" }}
+          >
+            {info}
+          </span>
+        </div>
+        {loading ? (
+          <img
+            src={LoadingIcon}
+            width={30}
+            alt={`${name} wallet extension is loading`}
+          />
+        ) : (
+          <img
+            src={ChevronRightIcon}
+            alt="Chevron Right"
+            width={20}
+            height={20}
+            className="chveron-btn"
+          />
+        )}
       </div>
-      {loading ? (
-        <img
-          src={LoadingIcon}
-          width={30}
-          alt={`${name} wallet extension is loading`}
-        />
-      ) : (
-        <img
-          src={ChevronRightIcon}
-          alt="Chevron Right"
-          width={20}
-          height={20}
-          className="chveron-btn"
-        />
-      )}
     </button>
   );
 }
