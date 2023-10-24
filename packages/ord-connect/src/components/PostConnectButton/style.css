@@ -6,7 +6,7 @@
 .ord-wallet-connected-button {
   border-radius: 52px;
   border: 1px solid #8c8c8c;
-  background-color: #0f0229;
+  background-color: transparent;
   padding: 8px 12px 8px 8px;
   display: flex;
   align-items: center;
