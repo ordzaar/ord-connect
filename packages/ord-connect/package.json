@@ -37,6 +37,7 @@
     "sats-connect": "^1.1.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.39.0",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@types/node": "^20.8.8",
     "@types/react": "^18.2.31",
