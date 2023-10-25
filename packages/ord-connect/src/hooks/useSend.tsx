@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { JsonRpcDatasource, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
-import { sendBtcTransaction } from "sats-connect";
+import { BitcoinNetworkType, sendBtcTransaction } from "sats-connect";
 
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 import { capitalizeFirstLetter } from "../utils/text-helper";
@@ -75,9 +75,9 @@ export function useSend(): [SendFunction, string | null, boolean] {
       } else if (wallet === Wallet.XVERSE) {
         const payload = {
           network: {
-            type: capitalizeFirstLetter(network) as "Mainnet" | "Testnet",
+            type: capitalizeFirstLetter(network) as BitcoinNetworkType,
           },
-          recipients: [{ address: toAddress, amountSats: satoshis as any }],
+          recipients: [{ address: toAddress, amountSats: BigInt(satoshis) }],
           senderAddress: address.payments,
         };
 
