@@ -12,5 +12,6 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": "warn",
     "import/prefer-default-export": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
   },
 };
