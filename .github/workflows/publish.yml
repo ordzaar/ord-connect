@@ -19,7 +19,7 @@ jobs:
           node-version-file: ".nvmrc"
           cache: pnpm
 
-      - uses: actions/github-script@6f00a0b667f9463337970371ccda9072ee86fb27
+      - uses: actions/github-script@1f16022c7518aad314c43abcd029895291be0f52
         id: version
         with:
           script: |
