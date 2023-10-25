@@ -30,8 +30,8 @@ importers:
         specifier: 2.2.3
         version: 2.2.3
       bitcoinjs-lib:
-        specifier: ^6.1.5
-        version: 6.1.5
+        specifier: 6.1.3
+        version: 6.1.3
       boring-avatars:
         specifier: ^1.10.1
         version: 1.10.1
@@ -1370,18 +1370,6 @@ packages:
 
   /bitcoinjs-lib@6.1.3:
     resolution: {integrity: sha512-TYXs/Qf+GNk2nnsB9HrXWqzFuEgCg0Gx+v3UW3B8VuceFHXVvhT+7hRnTSvwkX0i8rz2rtujeU6gFaDcFqYFDw==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      '@noble/hashes': 1.3.2
-      bech32: 2.0.0
-      bip174: 2.1.1
-      bs58check: 3.0.1
-      typeforce: 1.18.0
-      varuint-bitcoin: 1.1.2
-    dev: false
-
-  /bitcoinjs-lib@6.1.5:
-    resolution: {integrity: sha512-yuf6xs9QX/E8LWE2aMJPNd0IxGofwfuVOiYdNUESkc+2bHHVKjhJd8qewqapeoolh9fihzHGoDCB5Vkr57RZCQ==}
     engines: {node: '>=8.0.0'}
     dependencies:
       '@noble/hashes': 1.3.2
