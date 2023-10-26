@@ -24,7 +24,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 628px;
+    width: 500px;
     height: auto;
     border-radius: 20px;
   }
@@ -56,16 +56,14 @@
 .ord-connect-wallet-modal .panel-title-container {
   display: flex;
   justify-content: space-between;
-  padding: 32px 24px 20px;
+  padding: 32px 24px 0px 24px;
   align-items: center;
-  border-bottom: 1px solid #333;
 }
 
 @media screen and (min-width: 768px) {
   .ord-connect-wallet-modal .panel-title-container {
-    padding-left: 48px;
+    padding: 24px 32px 0px 32px;
     border-bottom: 0px;
-    padding-bottom: 8px;
   }
 
   .ord-connect-wallet-modal .unsupported-browser-message {
@@ -75,11 +73,21 @@
 }
 
 .ord-connect-wallet-modal .panel-title {
-  font-weight: 700;
   font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
   line-height: 32px;
-  color: #fff;
   margin: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .ord-connect-wallet-modal .panel-title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0.2px;
+  }
 }
 
 .ord-connect-wallet-modal .unsupported-browser-message {
@@ -87,19 +95,25 @@
 }
 
 .ord-connect-wallet-modal .close-button {
+  display: inline-flex;
   background: transparent;
   border: 0px;
   cursor: pointer;
 }
 
 .ord-connect-wallet-modal .panel-content-container {
-  margin: 64px 24px 0px;
+  margin: 32px 24px 0px;
 }
 
 @media screen and (min-width: 768px) {
   .ord-connect-wallet-modal .panel-content-container {
-    margin-bottom: 48px;
-    margin-top: 48px;
+    margin: 48px 32px 32px 32px;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .ord-connect-wallet-modal .panel-content-container {
+    margin: 48px 32px 32px 32px;
   }
 }
 
@@ -123,6 +137,10 @@
   cursor: pointer;
 }
 
+.ord-connect-wallet-modal .wallet-option-button:disabled .chveron-btn {
+  opacity: 0.3;
+}
+
 .waiting-cursor {
   cursor: wait !important;
 }
@@ -142,6 +160,24 @@
   object-fit: cover;
 }
 
+.ord-connect-wallet-modal .option-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 12px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1080px) {
+  .ord-connect-wallet-modal .option-wrapper {
+    padding: 16px;
+  }
+}
+
+.ord-connect-wallet-modal .wallet-option-button {
+  padding: 8px 16px;
+}
+
 .ord-connect-wallet-modal .wallet-option-button:hover {
   background: rgba(255, 255, 255, 0.1);
 }
@@ -152,23 +188,56 @@
 }
 
 .ord-connect-wallet-modal .wallet-option-button:first-child {
-  padding: 32px 32px 24px;
+  padding: 16px 16px 8px 16px;
   border: 0px;
   margin-bottom: 0px;
-  border-radius: 20px 20px 20px 20px;
+  border-radius: 20px 20px 0px 0px;
 }
 
 .ord-connect-wallet-modal .wallet-option-button:nth-of-type(2) {
   border: 0px;
-  padding: 24px 32px 32px;
   margin-bottom: 0px;
   border-radius: 0px 0px 20px 20px;
 }
 
-.ord-connect-wallet-modal .wallet-option-label {
-  margin-left: 16px;
+.ord-connect-wallet-modal .wallet-option-button:last-child {
+  padding: 8px 16px 16px 16px;
+}
+
+.ord-connect-wallet-modal .wallet-icon {
+  width: 32px;
+}
+
+@media (min-width: 768px) {
+  .ord-connect-wallet-modal .wallet-icon {
+    width: 40px;
+  }
+}
+
+.ord-connect-wallet-modal .wallet-option {
   flex-grow: 1;
+  margin-left: 16px;
   text-align: left;
+}
+.ord-connect-wallet-modal .wallet-option-label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+@media screen and (min-width: 1079px) {
+  .ord-connect-wallet-modal .wallet-option-label {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+}
+
+.ord-connect-wallet-modal .wallet-option-info {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #8c8c8c;
 }
 
 .ord-connect-wallet-modal .horizontal-separator {

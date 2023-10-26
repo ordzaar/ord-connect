@@ -4,16 +4,22 @@ import LoadingIcon from "../../assets/loading.svg";
 
 interface WalletButtonProp {
   name: string;
+  info: string;
   onConnect: () => Promise<boolean>;
   icon: string;
   setErrorMessage: (msg: string) => void;
+  isDisabled?: boolean;
+  isMobileDevice?: boolean;
 }
 
 export function WalletButton({
   name,
+  info,
   onConnect,
   icon,
   setErrorMessage,
+  isDisabled,
+  isMobileDevice,
 }: WalletButtonProp) {
   const [loading, setLoading] = useState(false);
   return (
@@ -32,18 +38,39 @@ export function WalletButton({
           setLoading(false);
         }
       }}
+      disabled={isDisabled}
     >
-      <img width={40} src={icon} alt={`Connect ${name} Wallet`} />
-      <span className="wallet-option-label">{name}</span>
-      {loading ? (
+      <div className="option-wrapper">
         <img
-          src={LoadingIcon}
-          width={40}
-          alt={`${name} wallet extension is loading`}
+          className="wallet-icon"
+          src={icon}
+          alt={`Connect ${name} Wallet`}
         />
-      ) : (
-        <img src={ChevronRightIcon} alt="Chevron Right" />
-      )}
+        <div className="wallet-option">
+          <span className="wallet-option-label">{name}</span>
+          <span
+            className="wallet-option-info"
+            style={{ display: isMobileDevice ? "block" : "none" }}
+          >
+            {info}
+          </span>
+        </div>
+        {loading ? (
+          <img
+            src={LoadingIcon}
+            width={30}
+            alt={`${name} wallet extension is loading`}
+          />
+        ) : (
+          <img
+            src={ChevronRightIcon}
+            alt="Chevron Right"
+            width={20}
+            height={20}
+            className="chveron-btn"
+          />
+        )}
+      </div>
     </button>
   );
 }

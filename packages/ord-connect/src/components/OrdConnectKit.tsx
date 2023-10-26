@@ -7,6 +7,7 @@ import { SelectWalletModal } from "./SelectWalletModal";
 export interface OrdConnectKitProp {
   customStyle?: string;
   onViewWallet?: () => void;
+  disableMobile?: boolean;
 }
 
 /**
@@ -21,6 +22,7 @@ export interface OrdConnectKitProp {
 export function OrdConnectKit({
   customStyle,
   onViewWallet,
+  disableMobile,
 }: OrdConnectKitProp) {
   const { address, network, isModalOpen, openModal, closeModal } =
     useOrdContext();
@@ -37,7 +39,11 @@ export function OrdConnectKit({
         <PreConnectButton openModal={openModal} customStyle={customStyle} />
       )}
 
-      <SelectWalletModal isOpen={isModalOpen} closeModal={closeModal} />
+      <SelectWalletModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        disableMobile={disableMobile}
+      />
     </>
   );
 }

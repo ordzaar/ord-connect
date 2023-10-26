@@ -10,15 +10,18 @@ import {
   XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
 import { WalletButton } from "./WalletButton";
+import { isMobileDevice } from "../../utils/mobile-detector.ts";
 
 interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
+  disableMobile?: boolean;
 }
 
 export function SelectWalletModal({
   isOpen,
   closeModal,
+  disableMobile,
 }: SelectWalletModalProp) {
   const {
     updateAddress,
@@ -32,7 +35,7 @@ export function SelectWalletModal({
     publicKey,
   } = useOrdContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const isChromium = window.chrome;
+  const isSupportedDevice = !disableMobile || !isMobileDevice();
 
   const onConnectUnisatWallet = async () => {
     try {
@@ -172,9 +175,9 @@ export function SelectWalletModal({
               <Dialog.Panel className="panel">
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
-                    {isChromium
+                    {isSupportedDevice
                       ? "Choose wallet to connect"
-                      : "Unsupported Browser"}
+                      : "Unsupported device"}
                   </Dialog.Title>
                   <button
                     type="button"
@@ -186,26 +189,30 @@ export function SelectWalletModal({
                 </section>
 
                 <section className="panel-content-container">
-                  {isChromium ? (
+                  {isSupportedDevice ? (
                     <section className="panel-content-inner-container">
                       <WalletButton
-                        name="Unisat"
+                        name="Unisat Wallet"
+                        info="Coming soon on mobile browsing"
                         onConnect={onConnectUnisatWallet}
                         icon={UnisatWalletIcon}
                         setErrorMessage={setErrorMessage}
+                        isDisabled={isMobileDevice()} // disable unisat on mobile until it is supported
+                        isMobileDevice={isMobileDevice()}
                       />
                       <hr className="horizontal-separator" />
                       <WalletButton
                         name="Xverse"
+                        info="Available on Xverse app"
                         onConnect={onConnectXverseWallet}
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
+                        isMobileDevice={isMobileDevice()}
                       />
                     </section>
                   ) : (
                     <Dialog.Description className="unsupported-browser-message">
-                      To connect to your wallet, please download Google Chrome
-                      or any other Chromium-based browser.
+                      This website does not support mobile devices.
                     </Dialog.Description>
                   )}
                   <p className="error-message">{errorMessage}</p>
