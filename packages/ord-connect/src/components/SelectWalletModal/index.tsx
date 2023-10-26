@@ -197,7 +197,7 @@ export function SelectWalletModal({
                         onConnect={onConnectUnisatWallet}
                         icon={UnisatWalletIcon}
                         setErrorMessage={setErrorMessage}
-                        isDisabled={isMobileDevice()}
+                        isDisabled={isMobileDevice()} // disable unisat on mobile until it is supported
                         isMobileDevice={isMobileDevice()}
                       />
                       <hr className="horizontal-separator" />
