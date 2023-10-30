@@ -16,7 +16,7 @@
   "devDependencies": {
     "@stickyjs/prettier": "^1.3.4",
     "@stickyjs/turbo": "^1.3.4",
-    "@waveshq/standard-web-linter": "^2.20.0",
+    "@waveshq/standard-web-linter": "^2.22.0",
     "husky": "^8.0.3"
   },
   "lint-staged": {
