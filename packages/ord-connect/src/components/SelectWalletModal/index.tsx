@@ -37,16 +37,18 @@ export function SelectWalletModal({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
 
-  const onConnectUnisatWallet = async () => {
+  const onConnectUnisatWallet = async (readOnly?: boolean) => {
     try {
-      window.unisat.removeListener("accountsChanged", onConnectUnisatWallet);
+      window.unisat.removeListener("accountsChanged", () =>
+        onConnectUnisatWallet(),
+      );
     } catch (err: any) {
       // This will fail on first run, handle it silently
     }
     try {
       // Reset error message
       setErrorMessage("");
-      const unisat = await ordit.unisat.getAddresses(network);
+      const unisat = await ordit.unisat.getAddresses(network, readOnly);
 
       if (!unisat || unisat.length < 1) {
         throw Error("Unisat via Ordit returned no addresses.");
@@ -68,7 +70,9 @@ export function SelectWalletModal({
         payments: unisatWallet.format as AddressFormats,
       });
 
-      window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
+      window.unisat.addListener("accountsChanged", () =>
+        onConnectUnisatWallet(),
+      );
       closeModal();
       return true;
     } catch (err: any) {
@@ -138,7 +142,7 @@ export function SelectWalletModal({
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
     if (wallet === Wallet.UNISAT && address && publicKey && format) {
-      onConnectUnisatWallet();
+      onConnectUnisatWallet(true);
     }
   }, []);
 
