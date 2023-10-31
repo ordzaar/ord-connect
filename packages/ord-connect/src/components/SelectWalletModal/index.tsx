@@ -37,16 +37,18 @@ export function SelectWalletModal({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
 
-  const onConnectUnisatWallet = async () => {
+  const onConnectUnisatWallet = async (readOnly?: boolean) => {
     try {
-      window.unisat.removeListener("accountsChanged", onConnectUnisatWallet);
+      window.unisat.removeListener("accountsChanged", () =>
+        onConnectUnisatWallet()
+      );
     } catch (err: any) {
       // This will fail on first run, handle it silently
     }
     try {
       // Reset error message
       setErrorMessage("");
-      const unisat = await ordit.unisat.getAddresses(network);
+      const unisat = await ordit.unisat.getAddresses(network, readOnly);
 
       if (!unisat || unisat.length < 1) {
         throw Error("Unisat via Ordit returned no addresses.");
@@ -68,7 +70,9 @@ export function SelectWalletModal({
         payments: unisatWallet.format as AddressFormats,
       });
 
-      window.unisat.addListener("accountsChanged", onConnectUnisatWallet);
+      window.unisat.addListener("accountsChanged", () =>
+        onConnectUnisatWallet()
+      );
       closeModal();
       return true;
     } catch (err: any) {
@@ -76,7 +80,7 @@ export function SelectWalletModal({
         window.open(
           UNISAT_WALLET_CHROME_EXTENSION_URL,
           "_blank",
-          "noopener,noreferrer",
+          "noopener,noreferrer"
         );
       }
       setErrorMessage(err.message ?? err.toString());
@@ -102,7 +106,7 @@ export function SelectWalletModal({
       if (xverse.some((x) => x.format === "unknown")) {
         // xverse = xverse.map(x => ({...x, format: getAddressFormat(x.address, network).format}))
         throw Error(
-          "Xverse extension is misbehaving. Try to toggle between your networks. E.g. Switch to Mainnet then to Testnet or vice-versa.",
+          "Xverse extension is misbehaving. Try to toggle between your networks. E.g. Switch to Mainnet then to Testnet or vice-versa."
         );
       }
 
@@ -126,7 +130,7 @@ export function SelectWalletModal({
         window.open(
           XVERSE_WALLET_CHROME_EXTENSION_URL,
           "_blank",
-          "noopener,noreferrer",
+          "noopener,noreferrer"
         );
       }
       setErrorMessage(err.toString());
@@ -138,7 +142,7 @@ export function SelectWalletModal({
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
     if (wallet === Wallet.UNISAT && address && publicKey && format) {
-      onConnectUnisatWallet();
+      onConnectUnisatWallet(true);
     }
   }, []);
 
