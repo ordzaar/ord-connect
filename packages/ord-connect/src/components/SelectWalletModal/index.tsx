@@ -40,7 +40,7 @@ export function SelectWalletModal({
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
     try {
       window.unisat.removeListener("accountsChanged", () =>
-        onConnectUnisatWallet()
+        onConnectUnisatWallet(),
       );
     } catch (err: any) {
       // This will fail on first run, handle it silently
@@ -71,7 +71,7 @@ export function SelectWalletModal({
       });
 
       window.unisat.addListener("accountsChanged", () =>
-        onConnectUnisatWallet()
+        onConnectUnisatWallet(),
       );
       closeModal();
       return true;
@@ -80,7 +80,7 @@ export function SelectWalletModal({
         window.open(
           UNISAT_WALLET_CHROME_EXTENSION_URL,
           "_blank",
-          "noopener,noreferrer"
+          "noopener,noreferrer",
         );
       }
       setErrorMessage(err.message ?? err.toString());
@@ -106,7 +106,7 @@ export function SelectWalletModal({
       if (xverse.some((x) => x.format === "unknown")) {
         // xverse = xverse.map(x => ({...x, format: getAddressFormat(x.address, network).format}))
         throw Error(
-          "Xverse extension is misbehaving. Try to toggle between your networks. E.g. Switch to Mainnet then to Testnet or vice-versa."
+          "Xverse extension is misbehaving. Try to toggle between your networks. E.g. Switch to Mainnet then to Testnet or vice-versa.",
         );
       }
 
@@ -130,7 +130,7 @@ export function SelectWalletModal({
         window.open(
           XVERSE_WALLET_CHROME_EXTENSION_URL,
           "_blank",
-          "noopener,noreferrer"
+          "noopener,noreferrer",
         );
       }
       setErrorMessage(err.toString());
