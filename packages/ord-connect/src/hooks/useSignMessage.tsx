@@ -9,10 +9,10 @@ export function useSignMessage(): {
 } {
   const { network, wallet, publicKey, format } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const signMsg = async (address: string, message: string) => {
-    setisLoading(true);
+    setIsLoading(true);
     try {
       setError(null);
       if (!format || !publicKey) {
@@ -26,11 +26,11 @@ export function useSignMessage(): {
         network,
       });
 
-      setisLoading(false);
+      setIsLoading(false);
       return signedMessage;
     } catch (e) {
       setError(e.message);
-      setisLoading(false);
+      setIsLoading(false);
       throw new Error(e);
     }
   };
