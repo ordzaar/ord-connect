@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useOrdContext } from "../providers/OrdContext.tsx";
-import getSignedMessage from "../lib/signMessage.ts";
+import signMessage from "../lib/signMessage.ts";
 
 export function useSignMessage(): [
   (address, message) => Promise<string>,
@@ -11,7 +11,7 @@ export function useSignMessage(): [
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const signMessage = async (address, message) => {
+  const signMsg = async (address, message) => {
     setLoading(true);
     try {
       setError(null);
@@ -19,7 +19,7 @@ export function useSignMessage(): [
         throw new Error("No wallet is connected");
       }
 
-      const signedMessage = await getSignedMessage({
+      const signedMessage = await signMessage({
         address,
         wallet,
         message,
@@ -34,5 +34,5 @@ export function useSignMessage(): [
     }
   };
 
-  return [signMessage, error, loading];
+  return [signMsg, error, loading];
 }

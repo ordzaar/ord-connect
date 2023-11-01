@@ -8,7 +8,7 @@ interface SignMessageParams {
   network: Network;
 }
 
-export default async function getSignedMessage({
+export default async function signMessage({
   message,
   wallet,
   address,
