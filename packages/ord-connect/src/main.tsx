@@ -69,7 +69,7 @@ function SampleComponent() {
         onClick={async () => {
           const signed = await signMsg(
             address.ordinals,
-            "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\nmj4Bo243eA2MdLo1dcd7xPDjqjccEVzxby\n\nNonce: 4fd145cd",
+            "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\nmj4Bo243eA2MdLo1dcd7xPDjqjccEVzxby\n\nNonce: F5wt4JUVc3",
           );
           console.log(signed);
         }}

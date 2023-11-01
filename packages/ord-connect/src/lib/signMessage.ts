@@ -8,6 +8,7 @@ interface SignMessageParams {
   network: Network;
 }
 
+// returns based64 signature
 export default async function signMessage({
   message,
   wallet,
