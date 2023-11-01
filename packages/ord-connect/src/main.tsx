@@ -5,11 +5,13 @@ import { useSend } from "./hooks/useSend";
 import { OrdConnectKit, useSign } from "./index";
 import { OrdConnectProvider, useOrdContext } from "./providers/OrdContext.tsx";
 import "./style.css";
+import { useSignMessage } from "./hooks/useSignMessage.tsx";
 
 function SampleComponent() {
   const [send, error, loading] = useSend();
   const [getBalance] = useBalance();
   const [sign] = useSign();
+  const { signMsg } = useSignMessage();
   const [result, setResult] = React.useState("");
   const [balance, setBalance] = React.useState(0);
 
@@ -60,6 +62,19 @@ function SampleComponent() {
         }}
       >
         Sign PSBT
+      </button>
+
+      <button
+        type="button"
+        onClick={async () => {
+          const signed = await signMsg(
+            address.ordinals,
+            "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\nmj4Bo243eA2MdLo1dcd7xPDjqjccEVzxby\n\nNonce: F5wt4JUVc3",
+          );
+          console.log(signed);
+        }}
+      >
+        Sign message
       </button>
     </div>
   );
