@@ -2,17 +2,17 @@ import { useState } from "react";
 import { useOrdContext } from "../providers/OrdContext.tsx";
 import signMessage from "../lib/signMessage.ts";
 
-export function useSignMessage(): [
-  (address, message) => Promise<string>,
-  string,
-  boolean,
-] {
+export function useSignMessage(): {
+  isLoading: boolean;
+  signMsg: (address: string, message: string) => Promise<string>;
+  error: string;
+} {
   const { network, wallet, publicKey, format } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setisLoading] = useState<boolean>(false);
 
-  const signMsg = async (address, message) => {
-    setLoading(true);
+  const signMsg = async (address: string, message: string) => {
+    setisLoading(true);
     try {
       setError(null);
       if (!format || !publicKey) {
@@ -26,13 +26,14 @@ export function useSignMessage(): [
         network,
       });
 
+      setisLoading(false);
       return signedMessage;
     } catch (e) {
       setError(e.message);
-      setLoading(false);
+      setisLoading(false);
       throw new Error(e);
     }
   };
 
-  return [signMsg, error, loading];
+  return { signMsg, error, isLoading };
 }

@@ -4,7 +4,7 @@ import { Network, Wallet } from "../providers/OrdContext.tsx";
 interface SignMessageParams {
   message: string;
   wallet: Wallet;
-  address: string | Record<string, string>;
+  address: string;
   network: Network;
 }
 
@@ -13,21 +13,16 @@ export default async function signMessage({
   wallet,
   address,
   network,
-}: SignMessageParams) {
+}: SignMessageParams): Promise<string> {
   if (wallet === Wallet.UNISAT) {
     const signedMessage = await ordit.unisat.signMessage(message);
     return signedMessage.base64;
   }
 
   if (wallet === Wallet.XVERSE) {
-    let xverseAddress = address as string;
-    if (typeof address === "object") {
-      xverseAddress = address.ordinals;
-    }
-
     // Todo: remove any type fixes in ordit-sdk is done
     const signedMessage: any = await ordit.xverse.signMessage({
-      address: xverseAddress,
+      address,
       network,
       message,
     });

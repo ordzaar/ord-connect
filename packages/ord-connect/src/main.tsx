@@ -11,7 +11,7 @@ function SampleComponent() {
   const [send, error, loading] = useSend();
   const [getBalance] = useBalance();
   const [sign] = useSign();
-  const [signMsg] = useSignMessage();
+  const { signMsg } = useSignMessage();
   const [result, setResult] = React.useState("");
   const [balance, setBalance] = React.useState(0);
 
@@ -68,7 +68,7 @@ function SampleComponent() {
         type="button"
         onClick={async () => {
           const signed = await signMsg(
-            address,
+            address.ordinals,
             "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\nmj4Bo243eA2MdLo1dcd7xPDjqjccEVzxby\n\nNonce: 05b4ef10",
           );
           console.log(signed);
