@@ -195,16 +195,20 @@ export function SelectWalletModal({
                 <section className="panel-content-container">
                   {isSupportedDevice ? (
                     <section className="panel-content-inner-container">
-                      <WalletButton
-                        name="Unisat Wallet"
-                        info="Coming soon on mobile browsing"
-                        onConnect={onConnectUnisatWallet}
-                        icon={UnisatWalletIcon}
-                        setErrorMessage={setErrorMessage}
-                        isDisabled={isMobileDevice()} // disable unisat on mobile until it is supported
-                        isMobileDevice={isMobileDevice()}
-                      />
-                      <hr className="horizontal-separator" />
+                      {!isMobileDevice() && ( // TODO:: remove this once unisat supported on mobile devices
+                        <>
+                          <WalletButton
+                            name="Unisat Wallet"
+                            info="Coming soon on mobile browsing"
+                            onConnect={onConnectUnisatWallet}
+                            icon={UnisatWalletIcon}
+                            setErrorMessage={setErrorMessage}
+                            isDisabled={isMobileDevice()} // disable unisat on mobile until it is supported
+                            isMobileDevice={isMobileDevice()}
+                          />
+                          <hr className="horizontal-separator" />
+                        </>
+                      )}
                       <WalletButton
                         name="Xverse"
                         info="Available on Xverse app"
