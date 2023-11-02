@@ -7,5 +7,6 @@ export { OrdConnectProvider, useOrdContext } from "./providers/OrdContext.tsx";
 export { useSend } from "./hooks/useSend";
 export { useBalance } from "./hooks/useBalance";
 export { useSign } from "./hooks/useSign";
+export { useSignMessage } from "./hooks/useSignMessage";
 export { emptyBiAddressObject } from "./providers/OrdContext.tsx";
 export type { BiAddress } from "./providers/OrdContext.tsx";
