@@ -191,9 +191,18 @@
   padding: 16px 16px 8px 16px;
   border: 0px;
   margin-bottom: 0px;
-  border-radius: 20px 20px 20px 20px;
+  border-radius: 20px;
   /* repace with below border-radius once unisat is supported on mobile devices */
   /* border-radius: 20px 20px 0px 0px; */
+}
+
+@media screen and (min-width: 1080px) {
+  .ord-connect-wallet-modal .wallet-option-button:first-child {
+    padding: 16px 16px 8px 16px;
+    border: 0px;
+    margin-bottom: 0px;
+    border-radius: 20px 20px 0px 0px;
+  }
 }
 
 .ord-connect-wallet-modal .wallet-option-button:nth-of-type(2) {
