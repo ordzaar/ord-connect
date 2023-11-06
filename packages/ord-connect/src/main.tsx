@@ -1,11 +1,13 @@
+import "./style.css";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
+
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
+import { useSignMessage } from "./hooks/useSignMessage.tsx";
 import { OrdConnectKit, useSign } from "./index";
 import { OrdConnectProvider, useOrdContext } from "./providers/OrdContext.tsx";
-import "./style.css";
-import { useSignMessage } from "./hooks/useSignMessage.tsx";
 
 function SampleComponent() {
   const [send, error, loading] = useSend();

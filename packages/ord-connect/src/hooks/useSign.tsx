@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { Psbt } from "bitcoinjs-lib";
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useState } from "react";
+
 import signPsbt, {
   SerializedPsbt,
   SignPsbtOptionsParams,
 } from "../lib/signPsbt";
+import { useOrdContext } from "../providers/OrdContext.tsx";
 
 export function useSign(): [
   (

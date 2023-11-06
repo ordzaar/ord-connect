@@ -1,7 +1,8 @@
 import "./style.css";
+
 import { useOrdContext } from "../providers/OrdContext.tsx";
-import { PreConnectButton } from "./PreConnectButton";
 import { PostConnectButton } from "./PostConnectButton";
+import { PreConnectButton } from "./PreConnectButton";
 import { SelectWalletModal } from "./SelectWalletModal";
 
 export interface OrdConnectKitProp {
