@@ -17,7 +17,10 @@ export default async function signMessage({
   network,
 }: SignMessageParams): Promise<string> {
   if (wallet === Wallet.UNISAT) {
-    const signedMessage = await ordit.unisat.signMessage(message);
+    const signedMessage = await ordit.unisat.signMessage(
+      message,
+      "bip322-simple",
+    );
     return signedMessage.base64;
   }
 
