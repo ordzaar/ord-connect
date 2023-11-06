@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { JsonRpcDatasource, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
+import { useState } from "react";
 import { BitcoinNetworkType, sendBtcTransaction } from "sats-connect";
 
+import signPsbt from "../lib/signPsbt";
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 import { capitalizeFirstLetter } from "../utils/text-helper";
-import signPsbt from "../lib/signPsbt";
 
 type SendFunction = (
   address: string,

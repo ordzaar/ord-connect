@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
 import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
+import { Fragment, useEffect, useState } from "react";
+
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
@@ -9,8 +10,8 @@ import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
 } from "../../utils/constant";
-import { WalletButton } from "./WalletButton";
 import { isMobileDevice } from "../../utils/mobile-detector.ts";
+import { WalletButton } from "./WalletButton";
 
 interface SelectWalletModalProp {
   isOpen: boolean;

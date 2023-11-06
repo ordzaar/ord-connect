@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useOrdContext } from "../providers/OrdContext.tsx";
+
 import signMessage from "../lib/signMessage.ts";
+import { useOrdContext } from "../providers/OrdContext.tsx";
 
 export function useSignMessage(): {
   isLoading: boolean;
