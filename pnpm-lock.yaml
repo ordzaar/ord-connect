@@ -27,8 +27,8 @@ importers:
         specifier: ^1.7.17
         version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
       '@sadoprotocol/ordit-sdk':
-        specifier: 2.2.4
-        version: 2.2.4
+        specifier: 2.3.2
+        version: 2.3.2
       bitcoinjs-lib:
         specifier: 6.1.3
         version: 6.1.3
@@ -722,11 +722,12 @@ packages:
       string-argv: 0.3.2
     dev: true
 
-  /@sadoprotocol/ordit-sdk@2.2.4:
-    resolution: {integrity: sha512-DxopKcNl+j/KV6u0WAJIG0tDpo4V+VpONnmA+J9uLk7ANSwyebcnux87aIpWYJYKjvZTsUZ2GoD79n7A7htzkw==}
+  /@sadoprotocol/ordit-sdk@2.3.2:
+    resolution: {integrity: sha512-g8LOac+qdbQQjFWKh1JCn60Dvcgau1GORrGO8Z//oLnB6v5jGfayAARPWw2+5lHGAF2lIhztJvEGlIng+267Ag==}
     dependencies:
       '@bitcoinerlab/secp256k1': 1.0.2
       bip32: 4.0.0
+      bip322-js: 1.1.0
       bip39: 3.1.0
       bitcoinjs-lib: 6.1.3
       bitcoinjs-message: 2.2.0
@@ -1341,6 +1342,17 @@ packages:
   /bip174@2.1.1:
     resolution: {integrity: sha512-mdFV5+/v0XyNYXjBS6CQPLo9ekCx4gtKZFnJm5PMto7Fs9hTTDpkkzOB7/FtluRI6JbUUAu+snTYfJRgHLZbZQ==}
     engines: {node: '>=8.0.0'}
+    dev: false
+
+  /bip322-js@1.1.0:
+    resolution: {integrity: sha512-Nxyw4lnhh4qm/zitfagJYpO7HofkABbt7Cce+Wiy4PGeilJ/hOvtqM0pxmTZxMoOhRnvDPZ55NzkFPrsyq43ew==}
+    dependencies:
+      '@bitcoinerlab/secp256k1': 1.0.2
+      bitcoinjs-lib: 6.1.3
+      bitcoinjs-message: 2.2.0
+      ecpair: 2.1.0
+      fast-sha256: 1.3.0
+      secp256k1: 5.0.0
     dev: false
 
   /bip32@4.0.0:
@@ -2562,6 +2574,10 @@ packages:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
     dev: true
 
+  /fast-sha256@1.3.0:
+    resolution: {integrity: sha512-n11RGP/lrWEFI/bWdygLxhI+pVeo1ZYIVwvvPkW7azl/rOy+F3HYRZ2K5zeE9mmkhQppyv9sQFx0JM9UabnpPQ==}
+    dev: false
+
   /fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
     dependencies:
@@ -3536,6 +3552,10 @@ packages:
       - babel-plugin-macros
     dev: true
 
+  /node-addon-api@5.1.0:
+    resolution: {integrity: sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==}
+    dev: false
+
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -3546,6 +3566,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /node-gyp-build@4.6.1:
+    resolution: {integrity: sha512-24vnklJmyRS8ViBNI8KbtK/r/DmXQMRiOMXTNz2nrTnAYUwjmEEbnnpB/+kt+yWRv73bPsSPRFddrcIbAxSiMQ==}
+    hasBin: true
     dev: false
 
   /node-stdlib-browser@1.2.0:
@@ -4173,6 +4198,16 @@ packages:
       elliptic: 6.5.4
       nan: 2.18.0
       safe-buffer: 5.2.1
+    dev: false
+
+  /secp256k1@5.0.0:
+    resolution: {integrity: sha512-TKWX8xvoGHrxVdqbYeZM9w+izTF4b9z3NhSaDkdn81btvuh+ivbIMGT/zQvDtTFWhRlThpoz6LEYTr7n8A5GcA==}
+    engines: {node: '>=14.0.0'}
+    requiresBuild: true
+    dependencies:
+      elliptic: 6.5.4
+      node-addon-api: 5.1.0
+      node-gyp-build: 4.6.1
     dev: false
 
   /semver@6.3.1:
