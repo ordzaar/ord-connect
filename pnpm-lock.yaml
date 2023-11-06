@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@ordzaar/standard-web-linter':
-        specifier: ^0.3.0
-        version: 0.3.0(@typescript-eslint/eslint-plugin@6.9.1)(@typescript-eslint/parser@6.9.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+        specifier: ^0.3.3
+        version: 0.3.3(@typescript-eslint/eslint-plugin@6.9.1)(@typescript-eslint/parser@6.9.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@stickyjs/prettier':
         specifier: ^1.3.4
         version: 1.3.4
@@ -582,18 +582,18 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@ordzaar/standard-typescript@0.3.0(typescript@5.2.2):
-    resolution: {integrity: sha512-3unf6KfhoSE4KhHWd3GmGpzhgrw05t7t34jAoV/yi4I9jwIGqyh1kjxahqSrpOp2dmBQxteBNMxlqKnuPHUQhg==}
+  /@ordzaar/standard-typescript@0.3.3(typescript@5.2.2):
+    resolution: {integrity: sha512-ddZxANAYCHVbcaGLFFodAomLVQI0YDJsmw1TtA+hygrxh5usXNI4A8ZCkNgYALMc0PK5yeEs3I89EEju1+puNQ==}
     peerDependencies:
       typescript: 5.2.2
     dependencies:
       typescript: 5.2.2
     dev: true
 
-  /@ordzaar/standard-web-linter@0.3.0(@typescript-eslint/eslint-plugin@6.9.1)(@typescript-eslint/parser@6.9.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-S6Cp8JM8uZlNRKvcsyd4MSixjCi57fler+QkP4Cz2Q8D7Ky2G+qRchvEHFZwvQ27LoKMTIwMAJEkktn1coBRiw==}
+  /@ordzaar/standard-web-linter@0.3.3(@typescript-eslint/eslint-plugin@6.9.1)(@typescript-eslint/parser@6.9.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-DIDPrz9HgXrgzXFkxmE7XcgxLV+nmpF2SwhdKN4y1BFpNk0+6yCORRcDIadSB5RNohLuWbnUoRemarK3r5zM/A==}
     dependencies:
-      '@ordzaar/standard-typescript': 0.3.0(typescript@5.2.2)
+      '@ordzaar/standard-typescript': 0.3.3(typescript@5.2.2)
       eslint: 8.53.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@8.53.0)
       eslint-config-airbnb-typescript: 17.1.0(@typescript-eslint/eslint-plugin@6.9.1)(@typescript-eslint/parser@6.9.1)(eslint-plugin-import@2.29.0)(eslint@8.53.0)
