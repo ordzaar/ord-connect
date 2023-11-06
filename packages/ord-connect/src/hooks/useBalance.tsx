@@ -1,9 +1,10 @@
-import { useState } from "react";
 import {
   addressNameToType,
   getAddressesFromPublicKey,
   JsonRpcDatasource,
 } from "@sadoprotocol/ordit-sdk";
+import { useState } from "react";
+
 import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {

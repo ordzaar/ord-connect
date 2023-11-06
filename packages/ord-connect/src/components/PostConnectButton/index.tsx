@@ -1,12 +1,13 @@
-import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
+import Avatar from "boring-avatars";
 import { Fragment } from "react";
+
 import ChevronDownIcon from "../../assets/chevron-down.svg";
-import { TruncateMiddle } from "../../utils/text-helper";
 import LogoutIcon from "../../assets/logout.svg";
-import { Wallet, useOrdContext } from "../../providers/OrdContext.tsx";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
+import { useOrdContext, Wallet } from "../../providers/OrdContext.tsx";
+import { TruncateMiddle } from "../../utils/text-helper";
 
 interface PostConnectButtonProp {
   address: string;

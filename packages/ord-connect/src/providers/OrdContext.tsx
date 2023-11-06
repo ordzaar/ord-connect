@@ -2,9 +2,9 @@ import { AddressFormats } from "@sadoprotocol/ordit-sdk";
 import React, {
   createContext,
   useContext,
-  useState,
   useEffect,
   useMemo,
+  useState,
 } from "react";
 
 export enum Network {
