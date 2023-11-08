@@ -11,16 +11,12 @@
     "index.d.ts"
   ],
   "types": "./index.d.ts",
-  "main": "./dist/ord-connect.umd.cjs",
-  "module": "./dist/ord-connect.js",
   "exports": {
     ".": {
-      "import": "./dist/ord-connect.js",
-      "require": "./dist/ord-connect.umd.cjs"
+      "import": "./dist/index.js"
     },
     "./dist/style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
+      "import": "./dist/style.css"
     }
   },
   "scripts": {
@@ -36,7 +32,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
     "@types/node": "^20.8.8",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
@@ -52,6 +47,7 @@
     "vite": "^4.5.0",
     "vite-plugin-css-injected-by-js": "^3.3.0",
     "vite-plugin-dts": "^3.6.3",
+    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-node-polyfills": "^0.16.0"
   },
   "dependencies": {
