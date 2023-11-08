@@ -17,13 +17,6 @@ export enum Wallet {
   XVERSE = "xverse",
 }
 
-// TO-DO: Support unsafe psbt
-export enum SafeMode {
-  InscriptionAwareOnly,
-  InscriptionAndOrdinalAware,
-  NoSafety,
-}
-
 export interface BiAddress<T> {
   payments: T | null;
   ordinals: T | null;
@@ -51,8 +44,6 @@ interface OrdContextI {
   closeModal: () => void;
   format: BiAddressFormat;
   updateFormat: (format: BiAddressFormat) => void;
-  safeMode: boolean;
-  updateSafeMode: (safeMode: boolean) => void;
   disconnectWallet: () => void;
 }
 
@@ -70,8 +61,6 @@ const OrdContext = createContext<OrdContextI>({
   closeModal: () => {},
   format: emptyBiAddressObject,
   updateFormat: () => {},
-  safeMode: null,
-  updateSafeMode: () => {},
   disconnectWallet: () => {},
 });
 
@@ -80,7 +69,6 @@ const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
 const FORMAT = "format";
-const SAFE_MODE = "safeMode";
 const NETWORK = "network";
 
 // Helper function to get item from localStorage
@@ -132,13 +120,11 @@ function setItemToLocalStorage(
  *
  * @param {React.PropsWithChildren<any>} props - Props object.
  * @param {string} [props.initialNetwork] - Initialize the internal context network state on mount.
- *  * @param {string} [props.initialSafeMode] - Initialize the internal context safeMode state on mount.
  * @returns {JSX.Element} Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
   children,
   initialNetwork,
-  initialSafeMode,
 }: React.PropsWithChildren<any>) {
   const [address, setAddress] = useState<BiAddressString>(
     () => getItemFromLocalStorage(ADDRESS) ?? emptyBiAddressObject,
@@ -146,10 +132,6 @@ export function OrdConnectProvider({
 
   const [network, setNetwork] = useState<Network>(
     initialNetwork ?? getItemFromLocalStorage(NETWORK) ?? Network.TESTNET,
-  );
-
-  const [safeMode, setSafeMode] = useState<boolean>(
-    initialSafeMode ?? Boolean(getItemFromLocalStorage(SAFE_MODE)) ?? true,
   );
 
   const [wallet, setWallet] = useState<Wallet | null>(() =>
@@ -170,10 +152,6 @@ export function OrdConnectProvider({
   useEffect(() => setItemToLocalStorage(PUBLIC_KEY, publicKey), [publicKey]);
   useEffect(() => setItemToLocalStorage(FORMAT, format), [format]);
   useEffect(() => setItemToLocalStorage(NETWORK, network), [network]);
-  useEffect(
-    () => setItemToLocalStorage(SAFE_MODE, safeMode.toString()),
-    [safeMode],
-  );
 
   function disconnectWallet() {
     setAddress(emptyBiAddressObject);
@@ -197,11 +175,9 @@ export function OrdConnectProvider({
       closeModal: () => setIsModalOpen(false),
       format,
       updateFormat: setFormat,
-      safeMode,
-      updateSafeMode: setSafeMode,
       disconnectWallet,
     }),
-    [address, publicKey, network, isModalOpen, format, safeMode],
+    [address, publicKey, network, isModalOpen, format],
   );
 
   return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;

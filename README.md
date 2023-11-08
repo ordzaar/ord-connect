@@ -30,7 +30,7 @@ Just two simple steps:
 
     export default function YourReactComponent() {
       return (
-        <OrdConnectProvider initialNetwork={"testnet"} initialSafeMode={true}>
+        <OrdConnectProvider initialNetwork={"testnet"}>
           <OrdConnectKit />
         </OrdConnectProvider>
       );

@@ -1,10 +1,8 @@
 import { JsonRpcDatasource, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
 import { useState } from "react";
-import { BitcoinNetworkType, sendBtcTransaction } from "sats-connect";
 
 import signPsbt from "../lib/signPsbt";
-import { useOrdContext, Wallet } from "../providers/OrdContext.tsx";
-import { capitalizeFirstLetter } from "../utils/text-helper";
+import { useOrdContext } from "../providers/OrdContext.tsx";
 
 type SendFunction = (
   address: string,
@@ -13,13 +11,13 @@ type SendFunction = (
 ) => Promise<string | null>;
 
 export function useSend(): [SendFunction, string | null, boolean] {
-  const { wallet, network, address, publicKey, safeMode } = useOrdContext();
+  const { wallet, network, address, publicKey } = useOrdContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const datasource = new JsonRpcDatasource({ network });
 
-  const safeSend: SendFunction = async (toAddress, satoshis, feeRate) => {
+  const send: SendFunction = async (toAddress, satoshis, feeRate) => {
     setLoading(true);
     try {
       setError(null);
@@ -59,50 +57,5 @@ export function useSend(): [SendFunction, string | null, boolean] {
     }
   };
 
-  const unsafeSend: SendFunction = async (toAddress, satoshis, feeRate) => {
-    setLoading(true);
-    try {
-      setError(null);
-      if (!address || !publicKey) {
-        throw new Error("No wallet is connected");
-      }
-
-      let txId;
-      if (wallet === Wallet.UNISAT) {
-        txId = await window.unisat.sendBitcoin(toAddress, satoshis, {
-          feeRate,
-        });
-      } else if (wallet === Wallet.XVERSE) {
-        const payload = {
-          network: {
-            type: capitalizeFirstLetter(network) as BitcoinNetworkType,
-          },
-          recipients: [{ address: toAddress, amountSats: BigInt(satoshis) }],
-          senderAddress: address.payments,
-        };
-
-        const xverseOptions = {
-          payload,
-          onCancel: () => {
-            throw Error("User rejected the request.");
-          },
-          // eslint-disable-next-line no-return-assign
-          onFinish: (xverseTxId) => (txId = xverseTxId),
-        };
-
-        await sendBtcTransaction(xverseOptions);
-      } else {
-        throw new Error("No wallet selected");
-      }
-
-      setLoading(false);
-      return txId;
-    } catch (err: any) {
-      setError(err.message);
-      setLoading(false);
-      return null;
-    }
-  };
-
-  return [safeMode ? safeSend : unsafeSend, error, loading];
+  return [send, error, loading];
 }
