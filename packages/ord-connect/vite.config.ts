@@ -4,7 +4,7 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { resolve } from "path";
 import dts from "vite-plugin-dts";
 import * as packageJson from "./package.json";
-import commonjs from "@rollup/plugin-commonjs";
+import eslint from "vite-plugin-eslint";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 // https://vitejs.dev/config/
@@ -20,9 +20,10 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "ord-connect",
-      fileName: "ord-connect",
+      entry: {
+        index: resolve(__dirname, "src/index.ts"),
+      },
+      formats: ["es"],
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
@@ -36,7 +37,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
     }),
-    commonjs(),
+    eslint(),
     cssInjectedByJsPlugin(),
     nodePolyfills({
       // Whether to polyfill specific globals.
