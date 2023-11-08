@@ -84,7 +84,7 @@ function SampleComponent() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <OrdConnectProvider initialNetwork="testnet" initialSafeMode>
+    <OrdConnectProvider initialNetwork="testnet">
       <SampleComponent />
       <OrdConnectKit disableMobile={false} />
     </OrdConnectProvider>
