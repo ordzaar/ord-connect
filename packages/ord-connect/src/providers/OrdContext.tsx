@@ -1,11 +1,5 @@
 import { AddressFormats } from "@sadoprotocol/ordit-sdk";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 export enum Network {
   MAINNET = "mainnet",
@@ -147,12 +141,6 @@ export function OrdConnectProvider({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => setItemToLocalStorage(ADDRESS, address), [address]);
-  useEffect(() => setItemToLocalStorage(WALLET, wallet), [wallet]);
-  useEffect(() => setItemToLocalStorage(PUBLIC_KEY, publicKey), [publicKey]);
-  useEffect(() => setItemToLocalStorage(FORMAT, format), [format]);
-  useEffect(() => setItemToLocalStorage(NETWORK, network), [network]);
-
   function disconnectWallet() {
     setAddress(emptyBiAddressObject);
     setPublicKey(emptyBiAddressObject);
@@ -163,18 +151,33 @@ export function OrdConnectProvider({
   const context: OrdContextI = useMemo(
     () => ({
       address,
-      updateAddress: setAddress,
+      updateAddress: (newAddress) => {
+        setItemToLocalStorage(ADDRESS, newAddress);
+        setAddress(newAddress);
+      },
       publicKey,
-      updatePublicKey: setPublicKey,
+      updatePublicKey: (newPublicKey) => {
+        setItemToLocalStorage(PUBLIC_KEY, newPublicKey);
+        setPublicKey(newPublicKey);
+      },
       network,
-      updateNetwork: setNetwork,
+      updateNetwork: (newNetwork) => {
+        setItemToLocalStorage(NETWORK, newNetwork);
+        setNetwork(newNetwork);
+      },
       wallet,
-      updateWallet: setWallet,
+      updateWallet: (newWallet) => {
+        setItemToLocalStorage(WALLET, newWallet);
+        setWallet(newWallet);
+      },
       isModalOpen,
       openModal: () => setIsModalOpen(true),
       closeModal: () => setIsModalOpen(false),
       format,
-      updateFormat: setFormat,
+      updateFormat: (newFormat) => {
+        setItemToLocalStorage(FORMAT, newFormat);
+        setFormat(newFormat);
+      },
       disconnectWallet,
     }),
     [address, publicKey, network, isModalOpen, format],
