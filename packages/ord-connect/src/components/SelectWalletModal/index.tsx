@@ -57,7 +57,7 @@ export function SelectWalletModal({
       const unisat = await getUnisatAddresses(network, readOnly);
 
       if (!unisat || unisat.length < 1) {
-        throw Error("Unisat via Ordit returned no addresses.");
+        throw new Error("Unisat via Ordit returned no addresses.");
       }
 
       // Unisat only returns one wallet by default
