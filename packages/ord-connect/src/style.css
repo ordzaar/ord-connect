@@ -1,5 +1,18 @@
 body {
-  background-color: black;
-  text-align: right;
-  color: white;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 8px;
+}
+
+.controls {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
 }

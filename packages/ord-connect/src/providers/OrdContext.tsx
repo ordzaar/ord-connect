@@ -77,10 +77,7 @@ function getItemFromLocalStorage<T>(_key: string): T | null {
 }
 
 // Helper function to set item to localStorage
-function setItemToLocalStorage(
-  _key: string,
-  value: string | null | BiAddress<any>,
-) {
+function setItemToLocalStorage<T>(_key: string, value: T) {
   const key = `${KEY_PREFIX}_${_key}`;
   try {
     if (value) {
@@ -180,7 +177,7 @@ export function OrdConnectProvider({
       },
       disconnectWallet,
     }),
-    [address, publicKey, network, isModalOpen, format],
+    [address, publicKey, network, wallet, isModalOpen, format],
   );
 
   return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;
