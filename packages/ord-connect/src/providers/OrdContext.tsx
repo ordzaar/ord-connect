@@ -1,4 +1,4 @@
-import { AddressFormats } from "@sadoprotocol/ordit-sdk";
+import { AddressFormat } from "@ordzaar/ordit-sdk";
 import React, { createContext, useContext, useMemo, useState } from "react";
 
 export enum Network {
@@ -17,7 +17,7 @@ export interface BiAddress<T> {
 }
 
 type BiAddressString = BiAddress<string>;
-type BiAddressFormat = BiAddress<AddressFormats>;
+type BiAddressFormat = BiAddress<AddressFormat>;
 
 export const emptyBiAddressObject: BiAddress<null> = {
   payments: null,

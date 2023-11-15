@@ -1,4 +1,4 @@
-import { JsonRpcDatasource, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
+import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 import { useState } from "react";
 
 import signPsbt from "../lib/signPsbt";
