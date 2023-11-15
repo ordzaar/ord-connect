@@ -101,11 +101,15 @@ export function SelectWalletModal({
       // P2SH-P2WPKH = BTC
       // Taproot = Ordinals / Inscriptions
       if (!xverse || xverse.length < 1) {
-        throw Error("Xverse via Ordit returned no addresses.");
+        throw new Error("Xverse via Ordit returned no addresses.");
       }
 
-      const p2sh = xverse.find((a) => a.format === "p2sh-p2wpkh");
-      const taproot = xverse.find((a) => a.format === "taproot");
+      const p2sh = xverse.find(
+        (walletAddress) => walletAddress.format === "p2sh-p2wpkh",
+      );
+      const taproot = xverse.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
 
       updateAddress({
         ordinals: taproot.address,
