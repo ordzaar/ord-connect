@@ -9,8 +9,8 @@ import { OrdConnectKit, useSign } from "./index";
 import { OrdConnectProvider, useOrdContext } from "./providers/OrdContext.tsx";
 
 function TestControls() {
-  const [send, error, loading] = useSend();
-  const [getBalance] = useBalance();
+  const [send, sendError, isSending] = useSend();
+  const [getBalance, balanceError, isLoadingBalance] = useBalance();
   const [sign] = useSign();
   const { signMsg } = useSignMessage();
   const [result, setResult] = React.useState("");
@@ -78,10 +78,15 @@ function TestControls() {
         {address?.ordinals ? (
           <p>Connected Address: {address.ordinals ?? ""}</p>
         ) : null}
-        {balance ? <p>Wallet Balance: {balance} sats</p> : null}
+        {balance || isLoadingBalance ? (
+          <p>
+            Wallet Balance: {isLoadingBalance ? "Loading" : `${balance} sats`}
+          </p>
+        ) : null}
+        {balanceError ? <p>Wallet Balance Error: {balanceError}</p> : null}
         {result ? <p>Transaction ID: {result}</p> : null}
-        {error ? <p>Error: {error}</p> : null}
-        {loading ? <p>Loading</p> : null}
+        {sendError ? <p>Send Error: {sendError}</p> : null}
+        {isSending ? <p>Sending</p> : null}
       </div>
     </div>
   );
