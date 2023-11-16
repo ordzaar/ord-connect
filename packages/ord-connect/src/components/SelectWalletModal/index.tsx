@@ -54,7 +54,7 @@ export function SelectWalletModal({
       );
     }
     if (err instanceof Error) {
-      setErrorMessage(err.toString());
+      setErrorMessage(err.message ?? err.toString());
     } else {
       // safeguard as we don't throw string errors
       setErrorMessage("Unknown error occurred.");
