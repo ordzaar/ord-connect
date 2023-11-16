@@ -81,7 +81,7 @@ export function SelectWalletModal({
       );
       closeModal();
       return true;
-    } catch (err) {
+    } catch (err: unknown) {
       if (err instanceof BrowserWalletNotInstalledError) {
         window.open(
           UNISAT_WALLET_CHROME_EXTENSION_URL,
@@ -89,7 +89,12 @@ export function SelectWalletModal({
           "noopener,noreferrer",
         );
       }
-      setErrorMessage(err.message ?? err.toString());
+      if (err instanceof Error) {
+        setErrorMessage(err.message ?? err.toString());
+      } else {
+        // safeguard as we don't throw string errors
+        setErrorMessage("Unknown error occurred.");
+      }
       console.error("Error while connecting to Unisat wallet", err);
       return false;
     }
@@ -126,7 +131,7 @@ export function SelectWalletModal({
       });
       closeModal();
       return true;
-    } catch (err) {
+    } catch (err: unknown) {
       if (err instanceof BrowserWalletNotInstalledError) {
         window.open(
           XVERSE_WALLET_CHROME_EXTENSION_URL,
@@ -134,7 +139,12 @@ export function SelectWalletModal({
           "noopener,noreferrer",
         );
       }
-      setErrorMessage(err.toString());
+      if (err instanceof Error) {
+        setErrorMessage(err.message ?? err.toString());
+      } else {
+        // safeguard as we don't throw string errors
+        setErrorMessage("Unknown error occurred.");
+      }
       console.error("Error while connecting to Xverse wallet", err);
       return false;
     }
