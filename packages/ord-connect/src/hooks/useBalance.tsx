@@ -40,7 +40,7 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
 
       setLoading(false);
       return totalCardinalsAvailable;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message);
       setLoading(false);
       return 0; // Returning 0 as default value in case of an error

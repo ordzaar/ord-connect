@@ -50,7 +50,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
 
       setLoading(false);
       return txId;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message);
       setLoading(false);
       return null;

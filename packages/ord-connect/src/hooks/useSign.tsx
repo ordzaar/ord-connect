@@ -48,7 +48,7 @@ export function useSign(): [
 
       setLoading(false);
       return signedPsbt;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message);
       setLoading(false);
       throw new Error(err);

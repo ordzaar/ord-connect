@@ -48,7 +48,7 @@ export function SelectWalletModal({
       window.unisat.removeListener("accountsChanged", () =>
         onConnectUnisatWallet(),
       );
-    } catch (err: any) {
+    } catch (_) {
       // This will fail on first run, handle it silently
     }
     try {
@@ -81,7 +81,7 @@ export function SelectWalletModal({
       );
       closeModal();
       return true;
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof BrowserWalletNotInstalledError) {
         window.open(
           UNISAT_WALLET_CHROME_EXTENSION_URL,
@@ -126,7 +126,7 @@ export function SelectWalletModal({
       });
       closeModal();
       return true;
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof BrowserWalletNotInstalledError) {
         window.open(
           XVERSE_WALLET_CHROME_EXTENSION_URL,
