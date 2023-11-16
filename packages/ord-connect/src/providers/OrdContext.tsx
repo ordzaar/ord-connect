@@ -26,10 +26,12 @@ export interface BiAddress<T> {
 type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormat>;
 
-const emptyBiAddressObject: BiAddress<null> = {
+const EMPTY_BIADDRESS_OBJECT: BiAddress<null> = {
   payments: null,
   ordinals: null,
 };
+
+const NOOP = () => {};
 
 interface OrdContextType {
   address: BiAddressString;
@@ -49,20 +51,20 @@ interface OrdContextType {
 }
 
 const OrdContext = createContext<OrdContextType>({
-  address: emptyBiAddressObject,
-  updateAddress: () => {},
-  publicKey: emptyBiAddressObject,
-  updatePublicKey: () => {},
+  address: EMPTY_BIADDRESS_OBJECT,
+  updateAddress: NOOP,
+  publicKey: EMPTY_BIADDRESS_OBJECT,
+  updatePublicKey: NOOP,
   network: Network.TESTNET,
-  updateNetwork: () => {},
+  updateNetwork: NOOP,
   wallet: null,
-  updateWallet: () => {},
+  updateWallet: NOOP,
   isModalOpen: false,
-  openModal: () => {},
-  closeModal: () => {},
-  format: emptyBiAddressObject,
-  updateFormat: () => {},
-  disconnectWallet: () => {},
+  openModal: NOOP,
+  closeModal: NOOP,
+  format: EMPTY_BIADDRESS_OBJECT,
+  updateFormat: NOOP,
+  disconnectWallet: NOOP,
 });
 
 const KEY_PREFIX = "ord-connect";
@@ -129,7 +131,7 @@ export function OrdConnectProvider({
   initialNetwork,
 }: PropsWithChildren<OrdConnectProviderProps>) {
   const [address, setAddress] = useState<BiAddressString>(
-    () => getItemFromLocalStorage(ADDRESS) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(ADDRESS) ?? EMPTY_BIADDRESS_OBJECT,
   );
 
   const [network, setNetwork] = useState<Network>(
@@ -140,19 +142,19 @@ export function OrdConnectProvider({
     getItemFromLocalStorage(WALLET),
   );
   const [publicKey, setPublicKey] = useState<BiAddressString>(
-    () => getItemFromLocalStorage(PUBLIC_KEY) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(PUBLIC_KEY) ?? EMPTY_BIADDRESS_OBJECT,
   );
 
   const [format, setFormat] = useState<BiAddressFormat>(
-    () => getItemFromLocalStorage(FORMAT) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(FORMAT) ?? EMPTY_BIADDRESS_OBJECT,
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const disconnectWallet = useCallback(() => {
-    setAddress(emptyBiAddressObject);
-    setPublicKey(emptyBiAddressObject);
-    setFormat(emptyBiAddressObject);
+    setAddress(EMPTY_BIADDRESS_OBJECT);
+    setPublicKey(EMPTY_BIADDRESS_OBJECT);
+    setFormat(EMPTY_BIADDRESS_OBJECT);
     setWallet(null);
   }, []);
 
