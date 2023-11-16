@@ -9,11 +9,11 @@ importers:
   .:
     devDependencies:
       '@ordzaar/standard-prettier':
-        specifier: ^0.3.6
-        version: 0.3.6(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2)
+        specifier: ^0.3.7
+        version: 0.3.7(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2)
       '@ordzaar/standard-web-linter':
-        specifier: ^0.3.6
-        version: 0.3.6(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+        specifier: ^0.3.7
+        version: 0.3.7(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       husky:
         specifier: ^8.0.3
         version: 8.0.3
@@ -602,19 +602,19 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@ordzaar/standard-prettier@0.3.6(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2):
-    resolution: {integrity: sha512-IRHYWwf4I4ey8lUH9zE6aYhwhO/CTexwRa7mK/cCg9+tdJP/m9IiqL3V2/ymI6pPyqfhN9ZJi0qnnHvm6dcOqQ==}
+  /@ordzaar/standard-prettier@0.3.7(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2):
+    resolution: {integrity: sha512-YqrmcSjnhd65sIUbaF3HMiTS/xfMbkltvJGHpQ7A6yofFaczoPkBbA+YxFUP8YE8Rt2I7W4VFdahJ07GaiAPDg==}
     dependencies:
-      '@ordzaar/standard-typescript': 0.3.6(typescript@5.2.2)
+      '@ordzaar/standard-typescript': 0.3.7(typescript@5.2.2)
       eslint: 8.53.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@8.53.0)
       eslint-config-airbnb-typescript: 17.1.0(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(eslint-plugin-import@2.29.0)(eslint@8.53.0)
       eslint-config-prettier: 9.0.0(eslint@8.53.0)
-      eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+      eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.53.0)
       husky: 8.0.3
-      lint-staged: 15.0.2
-      prettier: 3.0.3
+      lint-staged: 15.1.0
+      prettier: 3.1.0
     transitivePeerDependencies:
       - '@types/eslint'
       - '@typescript-eslint/eslint-plugin'
@@ -627,18 +627,18 @@ packages:
       - typescript
     dev: true
 
-  /@ordzaar/standard-typescript@0.3.6(typescript@5.2.2):
-    resolution: {integrity: sha512-wr0U5ftwD5t9r9yQQQuPbUPWr8nRG9jVnJyaNPfwJk1SbKV+B2qDuKW3w9h2yZ7fTFLRAt4Vx4LP2j0y6JE4qg==}
+  /@ordzaar/standard-typescript@0.3.7(typescript@5.2.2):
+    resolution: {integrity: sha512-YoumgagGdf+1eyx77WHRbJTozSTKs3BNGY8VmhF0/PZYVUdfeieJ2a11PhotgSHaP8J/HD6Nwz5jxw07ld/+AQ==}
     peerDependencies:
       typescript: 5.2.2
     dependencies:
       typescript: 5.2.2
     dev: true
 
-  /@ordzaar/standard-web-linter@0.3.6(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-Q9TUg0M5sSzIqCiEofoFlxfsOJdz3ea8KGxHdXvLahCiarXXDSLf59h42noo5lGwlXfPA/vP1lgoSSl+3ve5Iw==}
+  /@ordzaar/standard-web-linter@0.3.7(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-1kRp2iz4JU2HYFQZsQIFZH+TW6DFTNj8xSUnESi4hLZaHVjLWaNMvlrlUxycxZ18+H7A6WY2EU6Hj3rvFodUXw==}
     dependencies:
-      '@ordzaar/standard-typescript': 0.3.6(typescript@5.2.2)
+      '@ordzaar/standard-typescript': 0.3.7(typescript@5.2.2)
       eslint: 8.53.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@8.53.0)
       eslint-config-airbnb-typescript: 17.1.0(@typescript-eslint/eslint-plugin@6.10.0)(@typescript-eslint/parser@6.10.0)(eslint-plugin-import@2.29.0)(eslint@8.53.0)
@@ -648,14 +648,14 @@ packages:
       eslint-plugin-import: 2.29.0(@typescript-eslint/parser@6.10.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.53.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.53.0)
       eslint-plugin-node: 11.1.0(eslint@8.53.0)
-      eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+      eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
       eslint-plugin-react: 7.33.2(eslint@8.53.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.53.0)
       eslint-plugin-simple-import-sort: 10.0.0(eslint@8.53.0)
       husky: 8.0.3
-      lint-staged: 15.0.2
+      lint-staged: 15.1.0
       next: 14.0.2(react-dom@18.2.0)(react@18.2.0)
-      prettier: 3.0.3
+      prettier: 3.1.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@opentelemetry/api'
@@ -2326,7 +2326,7 @@ packages:
       semver: 6.3.1
     dev: true
 
-  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3):
+  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0):
     resolution: {integrity: sha512-m3u5RnR56asrwV/lDC4GHorlW75DsFfmUcjfCYylTUs85dBRnB7VM6xG8eCMJdeDRnppzmxZVf1GEPJvl1JmNg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -2342,7 +2342,7 @@ packages:
     dependencies:
       eslint: 8.53.0
       eslint-config-prettier: 9.0.0(eslint@8.53.0)
-      prettier: 3.0.3
+      prettier: 3.1.0
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.5
     dev: true
@@ -3261,8 +3261,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /lint-staged@15.0.2:
-    resolution: {integrity: sha512-vnEy7pFTHyVuDmCAIFKR5QDO8XLVlPFQQyujQ/STOxe40ICWqJ6knS2wSJ/ffX/Lw0rz83luRDh+ET7toN+rOw==}
+  /lint-staged@15.1.0:
+    resolution: {integrity: sha512-ZPKXWHVlL7uwVpy8OZ7YQjYDAuO5X4kMh0XgZvPNxLcCCngd0PO5jKQyy3+s4TL2EnHoIXIzP1422f/l3nZKMw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     dependencies:
@@ -3275,7 +3275,7 @@ packages:
       micromatch: 4.0.5
       pidtree: 0.6.0
       string-argv: 0.3.2
-      yaml: 2.3.3
+      yaml: 2.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3778,8 +3778,8 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
+  /prettier@3.1.0:
+    resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
@@ -4789,8 +4789,8 @@ packages:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
     dev: true
 
-  /yaml@2.3.3:
-    resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
+  /yaml@2.3.4:
+    resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
     dev: true
 
