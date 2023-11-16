@@ -2,6 +2,7 @@ import { AddressFormat } from "@ordzaar/ordit-sdk";
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -148,12 +149,12 @@ export function OrdConnectProvider({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function disconnectWallet() {
+  const disconnectWallet = useCallback(() => {
     setAddress(emptyBiAddressObject);
     setPublicKey(emptyBiAddressObject);
     setFormat(emptyBiAddressObject);
     setWallet(null);
-  }
+  }, []);
 
   const context: OrdContextType = useMemo(
     () => ({
@@ -187,7 +188,15 @@ export function OrdConnectProvider({
       },
       disconnectWallet,
     }),
-    [address, publicKey, network, wallet, isModalOpen, format],
+    [
+      address,
+      publicKey,
+      network,
+      wallet,
+      isModalOpen,
+      format,
+      disconnectWallet,
+    ],
   );
 
   return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;
