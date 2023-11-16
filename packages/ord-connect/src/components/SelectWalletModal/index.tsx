@@ -5,16 +5,12 @@ import {
 } from "@ordzaar/ordit-sdk";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdContext, Wallet } from "../../providers/OrdContext";
-import {
-  UNISAT_WALLET_CHROME_EXTENSION_URL,
-  XVERSE_WALLET_CHROME_EXTENSION_URL,
-} from "../../utils/constant";
 import { isMobileDevice } from "../../utils/mobile-detector.ts";
 import { WalletButton } from "./WalletButton";
 
@@ -23,6 +19,11 @@ interface SelectWalletModalProp {
   closeModal: () => void;
   disableMobile?: boolean;
 }
+
+const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
+  [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
+  [Wallet.XVERSE]: "https://www.xverse.app/download",
+};
 
 export function SelectWalletModal({
   isOpen,
@@ -42,6 +43,23 @@ export function SelectWalletModal({
   } = useOrdContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
+
+  const onError = useCallback((walletProvider: Wallet, err: unknown) => {
+    if (err instanceof BrowserWalletNotInstalledError) {
+      window.open(
+        WALLET_CHROME_EXTENSION_URL[walletProvider],
+        "_blank",
+        "noopener,noreferrer",
+      );
+    }
+    if (err instanceof Error) {
+      setErrorMessage(err.toString());
+    } else {
+      // safeguard as we don't throw string errors
+      setErrorMessage("Unknown error occurred.");
+    }
+    console.error(`Error while connecting to ${walletProvider} wallet`, err);
+  }, []);
 
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
     try {
@@ -81,16 +99,8 @@ export function SelectWalletModal({
       );
       closeModal();
       return true;
-    } catch (err) {
-      if (err instanceof BrowserWalletNotInstalledError) {
-        window.open(
-          UNISAT_WALLET_CHROME_EXTENSION_URL,
-          "_blank",
-          "noopener,noreferrer",
-        );
-      }
-      setErrorMessage(err.message ?? err.toString());
-      console.error("Error while connecting to Unisat wallet", err);
+    } catch (err: unknown) {
+      onError(Wallet.UNISAT, err);
       return false;
     }
   };
@@ -126,16 +136,8 @@ export function SelectWalletModal({
       });
       closeModal();
       return true;
-    } catch (err) {
-      if (err instanceof BrowserWalletNotInstalledError) {
-        window.open(
-          XVERSE_WALLET_CHROME_EXTENSION_URL,
-          "_blank",
-          "noopener,noreferrer",
-        );
-      }
-      setErrorMessage(err.toString());
-      console.error("Error while connecting to Xverse wallet", err);
+    } catch (err: unknown) {
+      onError(Wallet.XVERSE, err);
       return false;
     }
   };
