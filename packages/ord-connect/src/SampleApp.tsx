@@ -1,6 +1,6 @@
 import "./style.css";
 
-import React from "react";
+import { useCallback, useState } from "react";
 
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
@@ -13,64 +13,59 @@ function TestControls() {
   const [getBalance, balanceError, isLoadingBalance] = useBalance();
   const [sign] = useSign();
   const { signMsg } = useSignMessage();
-  const [result, setResult] = React.useState("");
-  const [balance, setBalance] = React.useState(0);
+  const [result, setResult] = useState("");
+  const [balance, setBalance] = useState(0);
 
   const { address } = useOrdContext();
+
+  const handleCheckBalance = useCallback(async () => {
+    const walletBalance = await getBalance();
+    if (walletBalance) {
+      setBalance(walletBalance);
+    }
+  }, [getBalance]);
+
+  const handleSend = useCallback(async () => {
+    const txId = await send(
+      "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
+      1000,
+      10,
+    );
+    if (txId) {
+      setResult(txId);
+    }
+  }, [send]);
+
+  const handleSignPsbt = useCallback(async () => {
+    const signed = await sign(
+      address.payments,
+      "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
+      { extractTx: false },
+    );
+    console.log(signed);
+  }, [address.payments, sign]);
+
+  const handleSignMessage = useCallback(async () => {
+    const signed = await signMsg(
+      address.ordinals,
+      "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\ntb1q82avu57rf0xe4wgrkudwa0ewrh7mfrsejkum3h\n\nNonce: 4NfCJ3FEDQ",
+    );
+    console.log(signed);
+  }, [address.ordinals, signMsg]);
 
   return (
     <div className="controls">
       <div>
-        <button
-          type="button"
-          onClick={async () => {
-            const walletBalance = await getBalance();
-            if (typeof walletBalance === "number") {
-              setBalance(walletBalance);
-            }
-          }}
-        >
+        <button type="button" onClick={handleCheckBalance}>
           Check balance
         </button>
-        <button
-          type="button"
-          onClick={async () => {
-            const txId = await send(
-              "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
-              1000,
-              10,
-            );
-            if (typeof txId === "string") {
-              setResult(txId);
-            }
-          }}
-        >
+        <button type="button" onClick={handleSend}>
           Send money
         </button>
-        <button
-          type="button"
-          onClick={async () => {
-            const signed = await sign(
-              address.payments,
-              "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
-              { extractTx: false },
-            );
-            console.log(signed);
-          }}
-        >
+        <button type="button" onClick={handleSignPsbt}>
           Sign PSBT
         </button>
-
-        <button
-          type="button"
-          onClick={async () => {
-            const signed = await signMsg(
-              address.ordinals,
-              "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\ntb1q82avu57rf0xe4wgrkudwa0ewrh7mfrsejkum3h\n\nNonce: 4NfCJ3FEDQ",
-            );
-            console.log(signed);
-          }}
-        >
+        <button type="button" onClick={handleSignMessage}>
           Sign message
         </button>
       </div>

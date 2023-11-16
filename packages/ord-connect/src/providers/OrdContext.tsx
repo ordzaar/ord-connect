@@ -1,5 +1,11 @@
 import { AddressFormat } from "@ordzaar/ordit-sdk";
-import React, { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 export enum Network {
   MAINNET = "mainnet",
@@ -90,6 +96,10 @@ function setItemToLocalStorage<T>(_key: string, value: T) {
   }
 }
 
+export type OrdConnectProviderProps = {
+  initialNetwork: Network;
+};
+
 /**
  * (Optionally) global context provider for OrdConnectKit and its consumer(s).
  *
@@ -109,14 +119,14 @@ function setItemToLocalStorage<T>(_key: string, value: T) {
  *   );
  * }
  *
- * @param {React.PropsWithChildren<any>} props - Props object.
- * @param {string} [props.initialNetwork] - Initialize the internal context network state on mount.
- * @returns {JSX.Element} Provider component for OrdConnect.
+ * @param props - Props object.
+ * @param props.initialNetwork - Initial network state.
+ * @returns Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
   children,
   initialNetwork,
-}: React.PropsWithChildren<any>) {
+}: PropsWithChildren<OrdConnectProviderProps>) {
   const [address, setAddress] = useState<BiAddressString>(
     () => getItemFromLocalStorage(ADDRESS) ?? emptyBiAddressObject,
   );
