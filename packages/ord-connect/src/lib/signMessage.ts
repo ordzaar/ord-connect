@@ -1,7 +1,7 @@
 import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
 import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
 
-import { Network, Wallet } from "../providers/OrdContext.tsx";
+import { Network, Wallet } from "../providers/OrdContext";
 
 interface SignMessageParams {
   message: string;

@@ -5,7 +5,7 @@ import {
 } from "@ordzaar/ordit-sdk";
 import { useState } from "react";
 
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useOrdContext } from "../providers/OrdContext";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
   const { network, publicKey, format } = useOrdContext();

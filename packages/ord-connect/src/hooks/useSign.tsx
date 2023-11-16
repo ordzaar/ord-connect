@@ -5,7 +5,7 @@ import signPsbt, {
   SerializedPsbt,
   SignPsbtOptionsParams,
 } from "../lib/signPsbt";
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useOrdContext } from "../providers/OrdContext";
 
 export function useSign(): [
   (

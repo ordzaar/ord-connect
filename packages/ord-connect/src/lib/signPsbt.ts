@@ -2,7 +2,7 @@ import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
 import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
 import { Psbt } from "bitcoinjs-lib";
 
-import { Network, Wallet } from "../providers/OrdContext.tsx";
+import { Network, Wallet } from "../providers/OrdContext";
 
 export interface SignPsbtOptionsParams {
   finalize?: boolean;

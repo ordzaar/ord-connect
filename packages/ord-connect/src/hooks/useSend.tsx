@@ -2,7 +2,7 @@ import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 import { useState } from "react";
 
 import signPsbt from "../lib/signPsbt";
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useOrdContext } from "../providers/OrdContext";
 
 type SendFunction = (
   address: string,

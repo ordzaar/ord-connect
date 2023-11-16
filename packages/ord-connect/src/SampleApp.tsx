@@ -4,9 +4,13 @@ import { useCallback, useState } from "react";
 
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
-import { useSignMessage } from "./hooks/useSignMessage.tsx";
+import { useSignMessage } from "./hooks/useSignMessage";
 import { OrdConnectKit, useSign } from "./index";
-import { OrdConnectProvider, useOrdContext } from "./providers/OrdContext.tsx";
+import {
+  Network,
+  OrdConnectProvider,
+  useOrdContext,
+} from "./providers/OrdContext";
 
 function TestControls() {
   const [send, sendError, isSending] = useSend();
@@ -90,7 +94,7 @@ function TestControls() {
 export function SampleApp() {
   return (
     <div className="app">
-      <OrdConnectProvider initialNetwork="testnet">
+      <OrdConnectProvider initialNetwork={Network.TESTNET}>
         <OrdConnectKit disableMobile={false} />
         <TestControls />
       </OrdConnectProvider>

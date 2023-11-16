@@ -10,7 +10,7 @@ import { Fragment, useEffect, useState } from "react";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdContext, Wallet } from "../../providers/OrdContext.tsx";
+import { useOrdContext, Wallet } from "../../providers/OrdContext";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
