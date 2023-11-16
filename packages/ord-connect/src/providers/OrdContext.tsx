@@ -30,7 +30,7 @@ const emptyBiAddressObject: BiAddress<null> = {
   ordinals: null,
 };
 
-interface OrdContextI {
+interface OrdContextType {
   address: BiAddressString;
   updateAddress: (address: BiAddressString) => void;
   publicKey: BiAddressString;
@@ -47,7 +47,7 @@ interface OrdContextI {
   disconnectWallet: () => void;
 }
 
-const OrdContext = createContext<OrdContextI>({
+const OrdContext = createContext<OrdContextType>({
   address: emptyBiAddressObject,
   updateAddress: () => {},
   publicKey: emptyBiAddressObject,
@@ -155,7 +155,7 @@ export function OrdConnectProvider({
     setWallet(null);
   }
 
-  const context: OrdContextI = useMemo(
+  const context: OrdContextType = useMemo(
     () => ({
       address,
       updateAddress: (newAddress) => {
