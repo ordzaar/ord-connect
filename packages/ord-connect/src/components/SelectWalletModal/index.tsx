@@ -11,10 +11,6 @@ import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdContext, Wallet } from "../../providers/OrdContext";
-import {
-  UNISAT_WALLET_CHROME_EXTENSION_URL,
-  XVERSE_WALLET_CHROME_EXTENSION_URL,
-} from "../../utils/constant";
 import { isMobileDevice } from "../../utils/mobile-detector.ts";
 import { WalletButton } from "./WalletButton";
 
@@ -25,8 +21,8 @@ interface SelectWalletModalProp {
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
-  [Wallet.UNISAT]: UNISAT_WALLET_CHROME_EXTENSION_URL,
-  [Wallet.XVERSE]: XVERSE_WALLET_CHROME_EXTENSION_URL,
+  [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
+  [Wallet.XVERSE]: "https://www.xverse.app/download",
 };
 
 export function SelectWalletModal({
@@ -57,7 +53,7 @@ export function SelectWalletModal({
       );
     }
     if (err instanceof Error) {
-      setErrorMessage(err.message ?? err.toString());
+      setErrorMessage(err.toString());
     } else {
       // safeguard as we don't throw string errors
       setErrorMessage("Unknown error occurred.");
