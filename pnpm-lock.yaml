@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@ordzaar/standard-prettier':
-        specifier: ^0.3.7
-        version: 0.3.7(@typescript-eslint/eslint-plugin@6.11.0)(@typescript-eslint/parser@6.11.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2)
+        specifier: ^0.4.0
+        version: 0.4.0(@typescript-eslint/eslint-plugin@6.11.0)(@typescript-eslint/parser@6.11.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2)
       '@ordzaar/standard-web-linter':
         specifier: ^0.3.7
         version: 0.3.7(@typescript-eslint/eslint-plugin@6.11.0)(@typescript-eslint/parser@6.11.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
@@ -602,10 +602,10 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@ordzaar/standard-prettier@0.3.7(@typescript-eslint/eslint-plugin@6.11.0)(@typescript-eslint/parser@6.11.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2):
-    resolution: {integrity: sha512-YqrmcSjnhd65sIUbaF3HMiTS/xfMbkltvJGHpQ7A6yofFaczoPkBbA+YxFUP8YE8Rt2I7W4VFdahJ07GaiAPDg==}
+  /@ordzaar/standard-prettier@0.4.0(@typescript-eslint/eslint-plugin@6.11.0)(@typescript-eslint/parser@6.11.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(typescript@5.2.2):
+    resolution: {integrity: sha512-5zYWKASroyvbELt1HvSUyKznSEyhiP5TojHTYsUbQ1SfbD8Gzz5PvKfCgAuiyh3GrFCwYNi8wiaFmReERR1BhQ==}
     dependencies:
-      '@ordzaar/standard-typescript': 0.3.7(typescript@5.2.2)
+      '@ordzaar/standard-typescript': 0.4.0(typescript@5.2.2)
       eslint: 8.53.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@8.53.0)
       eslint-config-airbnb-typescript: 17.1.0(@typescript-eslint/eslint-plugin@6.11.0)(@typescript-eslint/parser@6.11.0)(eslint-plugin-import@2.29.0)(eslint@8.53.0)
@@ -629,6 +629,14 @@ packages:
 
   /@ordzaar/standard-typescript@0.3.7(typescript@5.2.2):
     resolution: {integrity: sha512-YoumgagGdf+1eyx77WHRbJTozSTKs3BNGY8VmhF0/PZYVUdfeieJ2a11PhotgSHaP8J/HD6Nwz5jxw07ld/+AQ==}
+    peerDependencies:
+      typescript: 5.2.2
+    dependencies:
+      typescript: 5.2.2
+    dev: true
+
+  /@ordzaar/standard-typescript@0.4.0(typescript@5.2.2):
+    resolution: {integrity: sha512-d1JoJPNGN9R2X5E9D7kSh4VZuu5lqALzUXH9E0u2+iSJggz1GTPdesUfFYw3kc+WMmSUj2mAuiz8ypj+76T47Q==}
     peerDependencies:
       typescript: 5.2.2
     dependencies:
