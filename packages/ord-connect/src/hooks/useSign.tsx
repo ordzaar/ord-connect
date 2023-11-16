@@ -5,7 +5,7 @@ import signPsbt, {
   SerializedPsbt,
   SignPsbtOptionsParams,
 } from "../lib/signPsbt";
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useOrdContext } from "../providers/OrdContext";
 
 export function useSign(): [
   (
@@ -48,7 +48,7 @@ export function useSign(): [
 
       setLoading(false);
       return signedPsbt;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message);
       setLoading(false);
       throw new Error(err);

@@ -1,11 +1,16 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { AddressFormats, ordit } from "@sadoprotocol/ordit-sdk";
+import {
+  AddressFormat,
+  BrowserWalletNotInstalledError,
+} from "@ordzaar/ordit-sdk";
+import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
+import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 import { Fragment, useEffect, useState } from "react";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdContext, Wallet } from "../../providers/OrdContext.tsx";
+import { useOrdContext, Wallet } from "../../providers/OrdContext";
 import {
   UNISAT_WALLET_CHROME_EXTENSION_URL,
   XVERSE_WALLET_CHROME_EXTENSION_URL,
@@ -43,16 +48,16 @@ export function SelectWalletModal({
       window.unisat.removeListener("accountsChanged", () =>
         onConnectUnisatWallet(),
       );
-    } catch (err: any) {
+    } catch (_) {
       // This will fail on first run, handle it silently
     }
     try {
       // Reset error message
       setErrorMessage("");
-      const unisat = await ordit.unisat.getAddresses(network, readOnly);
+      const unisat = await getUnisatAddresses(network, readOnly);
 
       if (!unisat || unisat.length < 1) {
-        throw Error("Unisat via Ordit returned no addresses.");
+        throw new Error("Unisat via Ordit returned no addresses.");
       }
 
       // Unisat only returns one wallet by default
@@ -62,13 +67,13 @@ export function SelectWalletModal({
         payments: unisatWallet.address,
       });
       updatePublicKey({
-        ordinals: unisatWallet.pub,
-        payments: unisatWallet.pub,
+        ordinals: unisatWallet.publicKey,
+        payments: unisatWallet.publicKey,
       });
       updateWallet(Wallet.UNISAT);
       updateFormat({
-        ordinals: unisatWallet.format as AddressFormats,
-        payments: unisatWallet.format as AddressFormats,
+        ordinals: unisatWallet.format as AddressFormat,
+        payments: unisatWallet.format as AddressFormat,
       });
 
       window.unisat.addListener("accountsChanged", () =>
@@ -76,8 +81,8 @@ export function SelectWalletModal({
       );
       closeModal();
       return true;
-    } catch (err: any) {
-      if (err.message === "Unisat not installed.") {
+    } catch (err) {
+      if (err instanceof BrowserWalletNotInstalledError) {
         window.open(
           UNISAT_WALLET_CHROME_EXTENSION_URL,
           "_blank",
@@ -85,49 +90,44 @@ export function SelectWalletModal({
         );
       }
       setErrorMessage(err.message ?? err.toString());
-      console.error("Error while connecting to UniSat wallet", err);
+      console.error("Error while connecting to Unisat wallet", err);
       return false;
     }
   };
   const onConnectXverseWallet = async () => {
     try {
       setErrorMessage("");
-      const xverse = await ordit.xverse.getAddresses({
-        network,
-      });
-      // Nested Segwit = BTC
+      const xverse = await getXverseAddresses(network);
+      // P2SH-P2WPKH = BTC
       // Taproot = Ordinals / Inscriptions
       if (!xverse || xverse.length < 1) {
-        throw Error("Xverse via Ordit returned no addresses.");
+        throw new Error("Xverse via Ordit returned no addresses.");
       }
 
-      // Xverse's address format resolution may fail
-      // While we can resolve it via ordit-sdk, it is most likely a broken state with Xverse (it's set to Testnet, but returns Mainnet addresses/public keys)
-      // So, just throw an error
-      if (xverse.some((x) => x.format === "unknown")) {
-        // xverse = xverse.map(x => ({...x, format: getAddressFormat(x.address, network).format}))
-        throw Error(
-          "Xverse extension is misbehaving. Try to toggle between your networks. E.g. Switch to Mainnet then to Testnet or vice-versa.",
-        );
-      }
-
-      const nestedSegwit = xverse.find((a) => a.format === "nested-segwit");
-      const taproot = xverse.find((a) => a.format === "taproot");
+      const p2sh = xverse.find(
+        (walletAddress) => walletAddress.format === "p2sh-p2wpkh",
+      );
+      const taproot = xverse.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
 
       updateAddress({
         ordinals: taproot.address,
-        payments: nestedSegwit.address,
+        payments: p2sh.address,
       });
-      updatePublicKey({ ordinals: taproot.pub, payments: nestedSegwit.pub });
+      updatePublicKey({
+        ordinals: taproot.publicKey,
+        payments: p2sh.publicKey,
+      });
       updateWallet(Wallet.XVERSE);
       updateFormat({
-        ordinals: taproot.format as AddressFormats,
-        payments: nestedSegwit.format as AddressFormats,
+        ordinals: taproot.format as AddressFormat,
+        payments: p2sh.format as AddressFormat,
       });
       closeModal();
       return true;
-    } catch (err: any) {
-      if (err?.message === "Xverse not installed.") {
+    } catch (err) {
+      if (err instanceof BrowserWalletNotInstalledError) {
         window.open(
           XVERSE_WALLET_CHROME_EXTENSION_URL,
           "_blank",

@@ -1,11 +1,11 @@
 import {
-  addressNameToType,
+  ADDRESS_FORMAT_TO_TYPE,
   getAddressesFromPublicKey,
   JsonRpcDatasource,
-} from "@sadoprotocol/ordit-sdk";
+} from "@ordzaar/ordit-sdk";
 import { useState } from "react";
 
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useOrdContext } from "../providers/OrdContext";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
   const { network, publicKey, format } = useOrdContext();
@@ -24,7 +24,7 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       const { address } = getAddressesFromPublicKey(
         publicKey.payments,
         network,
-        addressNameToType[format.payments],
+        ADDRESS_FORMAT_TO_TYPE[format.payments],
       )[0];
 
       const { spendableUTXOs } = await datasource.getUnspents({
@@ -39,8 +39,8 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       );
 
       setLoading(false);
-      return totalCardinalsAvailable as number;
-    } catch (err: any) {
+      return totalCardinalsAvailable;
+    } catch (err) {
       setError(err.message);
       setLoading(false);
       return 0; // Returning 0 as default value in case of an error

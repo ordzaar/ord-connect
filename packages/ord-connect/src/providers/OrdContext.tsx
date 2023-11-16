@@ -1,5 +1,12 @@
-import { AddressFormats } from "@sadoprotocol/ordit-sdk";
-import React, { createContext, useContext, useMemo, useState } from "react";
+import { AddressFormat } from "@ordzaar/ordit-sdk";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 export enum Network {
   MAINNET = "mainnet",
@@ -17,14 +24,16 @@ export interface BiAddress<T> {
 }
 
 type BiAddressString = BiAddress<string>;
-type BiAddressFormat = BiAddress<AddressFormats>;
+type BiAddressFormat = BiAddress<AddressFormat>;
 
-export const emptyBiAddressObject: BiAddress<null> = {
+const EMPTY_BIADDRESS_OBJECT: BiAddress<null> = {
   payments: null,
   ordinals: null,
 };
 
-interface OrdContextI {
+const NOOP = () => {};
+
+interface OrdContextType {
   address: BiAddressString;
   updateAddress: (address: BiAddressString) => void;
   publicKey: BiAddressString;
@@ -41,21 +50,21 @@ interface OrdContextI {
   disconnectWallet: () => void;
 }
 
-const OrdContext = createContext<OrdContextI>({
-  address: emptyBiAddressObject,
-  updateAddress: () => {},
-  publicKey: emptyBiAddressObject,
-  updatePublicKey: () => {},
+const OrdContext = createContext<OrdContextType>({
+  address: EMPTY_BIADDRESS_OBJECT,
+  updateAddress: NOOP,
+  publicKey: EMPTY_BIADDRESS_OBJECT,
+  updatePublicKey: NOOP,
   network: Network.TESTNET,
-  updateNetwork: () => {},
+  updateNetwork: NOOP,
   wallet: null,
-  updateWallet: () => {},
+  updateWallet: NOOP,
   isModalOpen: false,
-  openModal: () => {},
-  closeModal: () => {},
-  format: emptyBiAddressObject,
-  updateFormat: () => {},
-  disconnectWallet: () => {},
+  openModal: NOOP,
+  closeModal: NOOP,
+  format: EMPTY_BIADDRESS_OBJECT,
+  updateFormat: NOOP,
+  disconnectWallet: NOOP,
 });
 
 const KEY_PREFIX = "ord-connect";
@@ -77,10 +86,7 @@ function getItemFromLocalStorage<T>(_key: string): T | null {
 }
 
 // Helper function to set item to localStorage
-function setItemToLocalStorage(
-  _key: string,
-  value: string | null | BiAddress<any>,
-) {
+function setItemToLocalStorage<T>(_key: string, value: T) {
   const key = `${KEY_PREFIX}_${_key}`;
   try {
     if (value) {
@@ -92,6 +98,10 @@ function setItemToLocalStorage(
     console.error(`Error saving ${key} to localStorage`, error);
   }
 }
+
+export type OrdConnectProviderProps = {
+  initialNetwork: Network;
+};
 
 /**
  * (Optionally) global context provider for OrdConnectKit and its consumer(s).
@@ -112,16 +122,16 @@ function setItemToLocalStorage(
  *   );
  * }
  *
- * @param {React.PropsWithChildren<any>} props - Props object.
- * @param {string} [props.initialNetwork] - Initialize the internal context network state on mount.
- * @returns {JSX.Element} Provider component for OrdConnect.
+ * @param props - Props object.
+ * @param props.initialNetwork - Initial network state.
+ * @returns Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
   children,
   initialNetwork,
-}: React.PropsWithChildren<any>) {
+}: PropsWithChildren<OrdConnectProviderProps>) {
   const [address, setAddress] = useState<BiAddressString>(
-    () => getItemFromLocalStorage(ADDRESS) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(ADDRESS) ?? EMPTY_BIADDRESS_OBJECT,
   );
 
   const [network, setNetwork] = useState<Network>(
@@ -132,23 +142,23 @@ export function OrdConnectProvider({
     getItemFromLocalStorage(WALLET),
   );
   const [publicKey, setPublicKey] = useState<BiAddressString>(
-    () => getItemFromLocalStorage(PUBLIC_KEY) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(PUBLIC_KEY) ?? EMPTY_BIADDRESS_OBJECT,
   );
 
   const [format, setFormat] = useState<BiAddressFormat>(
-    () => getItemFromLocalStorage(FORMAT) ?? emptyBiAddressObject,
+    () => getItemFromLocalStorage(FORMAT) ?? EMPTY_BIADDRESS_OBJECT,
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function disconnectWallet() {
-    setAddress(emptyBiAddressObject);
-    setPublicKey(emptyBiAddressObject);
-    setFormat(emptyBiAddressObject);
+  const disconnectWallet = useCallback(() => {
+    setAddress(EMPTY_BIADDRESS_OBJECT);
+    setPublicKey(EMPTY_BIADDRESS_OBJECT);
+    setFormat(EMPTY_BIADDRESS_OBJECT);
     setWallet(null);
-  }
+  }, []);
 
-  const context: OrdContextI = useMemo(
+  const context: OrdContextType = useMemo(
     () => ({
       address,
       updateAddress: (newAddress) => {
@@ -180,7 +190,15 @@ export function OrdConnectProvider({
       },
       disconnectWallet,
     }),
-    [address, publicKey, network, isModalOpen, format],
+    [
+      address,
+      publicKey,
+      network,
+      wallet,
+      isModalOpen,
+      format,
+      disconnectWallet,
+    ],
   );
 
   return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;

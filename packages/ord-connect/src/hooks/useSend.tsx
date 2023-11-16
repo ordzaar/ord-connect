@@ -1,8 +1,8 @@
-import { JsonRpcDatasource, PSBTBuilder } from "@sadoprotocol/ordit-sdk";
+import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 import { useState } from "react";
 
 import signPsbt from "../lib/signPsbt";
-import { useOrdContext } from "../providers/OrdContext.tsx";
+import { useOrdContext } from "../providers/OrdContext";
 
 type SendFunction = (
   address: string,
@@ -50,7 +50,7 @@ export function useSend(): [SendFunction, string | null, boolean] {
 
       setLoading(false);
       return txId;
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message);
       setLoading(false);
       return null;

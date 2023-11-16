@@ -1,6 +1,7 @@
-import { ordit } from "@sadoprotocol/ordit-sdk";
+import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
+import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
 
-import { Network, Wallet } from "../providers/OrdContext.tsx";
+import { Network, Wallet } from "../providers/OrdContext";
 
 interface SignMessageParams {
   message: string;
@@ -9,7 +10,12 @@ interface SignMessageParams {
   network: Network;
 }
 
-// returns based64 signature
+/**
+ * Sign message
+ *
+ * @param options Options
+ * @returns base64 signature
+ */
 export default async function signMessage({
   message,
   wallet,
@@ -17,24 +23,14 @@ export default async function signMessage({
   network,
 }: SignMessageParams): Promise<string> {
   if (wallet === Wallet.UNISAT) {
-    const signedMessage = await ordit.unisat.signMessage(
-      message,
-      "bip322-simple",
-    );
-    return signedMessage.base64;
+    const { base64 } = await signUnisatMessage(message, "bip322-simple");
+    return base64;
   }
 
   if (wallet === Wallet.XVERSE) {
-    // Todo: remove any type fixes in ordit-sdk is done
-    const signedMessage: any = await ordit.xverse.signMessage({
-      address,
-      network,
-      message,
-    });
-
-    return signedMessage.signature;
+    const { base64 } = await signXverseMessage(message, address, network);
+    return base64;
   }
 
-  // else throw error
   throw new Error("Invalid wallet selected");
 }

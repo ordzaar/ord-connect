@@ -1,7 +1,8 @@
-import { ordit } from "@sadoprotocol/ordit-sdk";
+import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
+import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
 import { Psbt } from "bitcoinjs-lib";
 
-import { Network, Wallet } from "../providers/OrdContext.tsx";
+import { Network, Wallet } from "../providers/OrdContext";
 
 export interface SignPsbtOptionsParams {
   finalize?: boolean;
@@ -41,7 +42,7 @@ export default async function signPsbt({
   const extractTx = options?.extractTx ?? true;
 
   if (wallet === Wallet.UNISAT) {
-    const signedUnisatPsbt = await ordit.unisat.signPsbt(psbt, {
+    const signedUnisatPsbt = await signUnisatPsbt(psbt, {
       finalize,
       extractTx,
     });
@@ -52,9 +53,8 @@ export default async function signPsbt({
     const getAllInputIndices = () =>
       psbt.data.inputs.map((value, index) => index);
     const xverseSignPsbtOptions = {
-      psbt,
       network,
-      inputs: [
+      inputsToSign: [
         {
           address,
           signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
@@ -64,7 +64,7 @@ export default async function signPsbt({
       finalize,
       extractTx,
     };
-    const signedXversePsbt = await ordit.xverse.signPsbt(xverseSignPsbtOptions);
+    const signedXversePsbt = await signXversePsbt(psbt, xverseSignPsbtOptions);
     return signedXversePsbt;
   }
   // else throw error

@@ -26,11 +26,11 @@ Just two simple steps:
 2.  Import ord-connect into your dApp:
 
     ```javascript
-    import { OrdConnectProvider, OrdConnectKit } from "@ordzaar/ord-connect";
+    import { Network, OrdConnectProvider, OrdConnectKit } from "@ordzaar/ord-connect";
 
     export default function YourReactComponent() {
       return (
-        <OrdConnectProvider initialNetwork={"testnet"}>
+        <OrdConnectProvider initialNetwork={Network.TESTNET}>
           <OrdConnectKit />
         </OrdConnectProvider>
       );

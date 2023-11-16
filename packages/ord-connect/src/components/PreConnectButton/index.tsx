@@ -1,4 +1,4 @@
-import type { OrdConnectKitProp } from "../OrdConnectKit.tsx";
+import type { OrdConnectKitProp } from "../OrdConnectKit";
 
 interface PreConnectButtonProp extends OrdConnectKitProp {
   openModal: () => void;
