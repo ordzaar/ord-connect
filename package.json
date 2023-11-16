@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@ordzaar/standard-prettier": "^0.4.0",
-    "@ordzaar/standard-web-linter": "^0.3.7",
+    "@ordzaar/standard-web-linter": "^0.4.0",
     "husky": "^8.0.3",
     "turbo": "^1.10.16"
   },
