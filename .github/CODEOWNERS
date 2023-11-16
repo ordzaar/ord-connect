@@ -2,11 +2,11 @@
 
 # More details are here: https://help.github.com/articles/about-codeowners/
 
-/.github/                               @thedoublejay @kyleleow @jordankzf @JoshuaC817
+/.github/                               @thedoublejay @kyleleow
 
-packages                                @thedoublejay @kyleleow @jordankzf @JoshuaC817
-README.md                               @thedoublejay @kyleleow @jordankzf @JoshuaC817
-pnpm-lock.yaml                          @thedoublejay @kyleleow @jordankzf @JoshuaC817
-pnpm-workspace.yaml                     @thedoublejay @kyleleow @jordankzf @JoshuaC817
-.gitignore                              @thedoublejay @kyleleow @jordankzf @JoshuaC817
-examples                                @thedoublejay @kyleleow @jordankzf @JoshuaC817
+packages                                @thedoublejay @kyleleow
+README.md                               @thedoublejay @kyleleow
+pnpm-lock.yaml                          @thedoublejay @kyleleow
+pnpm-workspace.yaml                     @thedoublejay @kyleleow
+.gitignore                              @thedoublejay @kyleleow
+examples                                @thedoublejay @kyleleow
