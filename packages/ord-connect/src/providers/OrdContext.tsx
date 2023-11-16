@@ -25,7 +25,7 @@ export interface BiAddress<T> {
 type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormat>;
 
-export const emptyBiAddressObject: BiAddress<null> = {
+const emptyBiAddressObject: BiAddress<null> = {
   payments: null,
   ordinals: null,
 };

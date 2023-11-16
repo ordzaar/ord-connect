@@ -9,4 +9,3 @@ export { useSign } from "./hooks/useSign";
 export { useSignMessage } from "./hooks/useSignMessage";
 export type { BiAddress } from "./providers/OrdContext";
 export { OrdConnectProvider, useOrdContext } from "./providers/OrdContext";
-export { emptyBiAddressObject } from "./providers/OrdContext";
