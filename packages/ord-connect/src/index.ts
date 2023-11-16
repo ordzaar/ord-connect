@@ -7,5 +7,12 @@ export { useBalance } from "./hooks/useBalance";
 export { useSend } from "./hooks/useSend";
 export { useSign } from "./hooks/useSign";
 export { useSignMessage } from "./hooks/useSignMessage";
-export type { BiAddress } from "./providers/OrdContext";
-export { OrdConnectProvider, useOrdContext } from "./providers/OrdContext";
+export type {
+  BiAddress,
+  OrdConnectProviderProps,
+} from "./providers/OrdContext";
+export {
+  Network,
+  OrdConnectProvider,
+  useOrdContext,
+} from "./providers/OrdContext";
