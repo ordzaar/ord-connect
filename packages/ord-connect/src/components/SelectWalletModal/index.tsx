@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import {
   AddressFormat,
   BrowserWalletNotInstalledError,
+  BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
@@ -45,22 +46,26 @@ export function SelectWalletModal({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
 
-  const onError = useCallback((walletProvider: Wallet, err: unknown) => {
-    if (err instanceof BrowserWalletNotInstalledError) {
-      window.open(
-        WALLET_CHROME_EXTENSION_URL[walletProvider],
-        "_blank",
-        "noopener,noreferrer",
-      );
-    }
-    if (err instanceof Error) {
+  const onError = useCallback(
+    (
+      walletProvider: Wallet,
+      err:
+        | BrowserWalletNotInstalledError
+        | BrowserWalletRequestCancelledByUserError
+        | Error,
+    ) => {
+      if (err instanceof BrowserWalletNotInstalledError) {
+        window.open(
+          WALLET_CHROME_EXTENSION_URL[walletProvider],
+          "_blank",
+          "noopener,noreferrer",
+        );
+      }
       setErrorMessage(err.message ?? err.toString());
-    } else {
-      // safeguard as we don't throw string errors
-      setErrorMessage("Unknown error occurred.");
-    }
-    console.error(`Error while connecting to ${walletProvider} wallet`, err);
-  }, []);
+      console.error(`Error while connecting to ${walletProvider} wallet`, err);
+    },
+    [],
+  );
 
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
     try {
@@ -100,7 +105,7 @@ export function SelectWalletModal({
       );
       closeModal();
       return true;
-    } catch (err: unknown) {
+    } catch (err) {
       onError(Wallet.UNISAT, err);
       return false;
     }
@@ -137,7 +142,7 @@ export function SelectWalletModal({
       });
       closeModal();
       return true;
-    } catch (err: unknown) {
+    } catch (err) {
       onError(Wallet.XVERSE, err);
       return false;
     }
