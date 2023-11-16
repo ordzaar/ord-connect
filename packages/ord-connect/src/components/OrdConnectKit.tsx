@@ -1,9 +1,10 @@
-import "./style.css";
-
 import { useOrdContext } from "../providers/OrdContext";
+
 import { PostConnectButton } from "./PostConnectButton";
 import { PreConnectButton } from "./PreConnectButton";
 import { SelectWalletModal } from "./SelectWalletModal";
+
+import "./style.css";
 
 export interface OrdConnectKitProp {
   customStyle?: string;

@@ -1,16 +1,16 @@
-import "./style.css";
-
 import { useCallback, useState } from "react";
 
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
 import { useSignMessage } from "./hooks/useSignMessage";
-import { OrdConnectKit, useSign } from "./index";
 import {
   Network,
   OrdConnectProvider,
   useOrdContext,
 } from "./providers/OrdContext";
+import { OrdConnectKit, useSign } from "./index";
+
+import "./style.css";
 
 function TestControls() {
   const [send, sendError, isSending] = useSend();

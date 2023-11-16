@@ -1,6 +1,6 @@
-import { Menu, Transition } from "@headlessui/react";
-import Avatar from "boring-avatars";
 import { Fragment } from "react";
+import Avatar from "boring-avatars";
+import { Menu, Transition } from "@headlessui/react";
 
 import ChevronDownIcon from "../../assets/chevron-down.svg";
 import LogoutIcon from "../../assets/logout.svg";

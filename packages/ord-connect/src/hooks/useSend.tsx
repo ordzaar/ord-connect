@@ -1,5 +1,5 @@
-import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 import { useState } from "react";
+import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 
 import signPsbt from "../lib/signPsbt";
 import { useOrdContext } from "../providers/OrdContext";

@@ -1,3 +1,4 @@
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   AddressFormat,
@@ -5,13 +6,13 @@ import {
 } from "@ordzaar/ordit-sdk";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
-import { Fragment, useCallback, useEffect, useState } from "react";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdContext, Wallet } from "../../providers/OrdContext";
 import { isMobileDevice } from "../../utils/mobile-detector.ts";
+
 import { WalletButton } from "./WalletButton";
 
 interface SelectWalletModalProp {

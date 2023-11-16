@@ -1,9 +1,9 @@
+import { useState } from "react";
 import {
   ADDRESS_FORMAT_TO_TYPE,
   getAddressesFromPublicKey,
   JsonRpcDatasource,
 } from "@ordzaar/ordit-sdk";
-import { useState } from "react";
 
 import { useOrdContext } from "../providers/OrdContext";
 

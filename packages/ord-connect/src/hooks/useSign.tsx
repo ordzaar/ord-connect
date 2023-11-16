@@ -1,5 +1,5 @@
-import { Psbt } from "bitcoinjs-lib";
 import { useState } from "react";
+import { Psbt } from "bitcoinjs-lib";
 
 import signPsbt, {
   SerializedPsbt,

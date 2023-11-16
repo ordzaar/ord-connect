@@ -1,4 +1,3 @@
-import { AddressFormat } from "@ordzaar/ordit-sdk";
 import {
   createContext,
   PropsWithChildren,
@@ -7,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { AddressFormat } from "@ordzaar/ordit-sdk";
 
 export enum Network {
   MAINNET = "mainnet",
