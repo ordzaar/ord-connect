@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 const KEY_PREFIX = "ord-connect";
 
@@ -37,9 +31,13 @@ export function useLocalStorage<T>(
   key: string,
   initialValue: T,
 ): [T, Dispatch<SetStateAction<T>>] {
-  const [state, setInnerState] = useState<T>(
-    () => getItemFromLocalStorage(key) ?? initialValue,
-  );
+  const [state, setInnerState] = useState<T>(() => {
+    const value = getItemFromLocalStorage<T>(key);
+    if (!value) {
+      setItemToLocalStorage(key, initialValue);
+    }
+    return value;
+  });
 
   const setState = useCallback(
     (newValue: T) => {
@@ -48,10 +46,6 @@ export function useLocalStorage<T>(
     },
     [key],
   );
-
-  useEffect(() => {
-    setState(initialValue);
-  }, [initialValue, setState]);
 
   return [state, setState];
 }
