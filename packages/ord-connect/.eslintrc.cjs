@@ -16,6 +16,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-explicit-any": "warn",
     "jsx-a11y/control-has-associated-label": "warn",
+    "@next/next/no-img-element": "off",
   },
   overrides: [
     {
