@@ -132,6 +132,8 @@ export function OrdConnectProvider({
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = useCallback(() => setIsModalOpen(true), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const disconnectWallet = useCallback(() => {
     setAddress(EMPTY_BIADDRESS_OBJECT);
@@ -151,25 +153,27 @@ export function OrdConnectProvider({
       wallet,
       updateWallet: setWallet,
       isModalOpen,
-      openModal: () => setIsModalOpen(true),
-      closeModal: () => setIsModalOpen(false),
+      openModal,
+      closeModal,
       format,
       updateFormat: setFormat,
       disconnectWallet,
     }),
     [
       address,
-      publicKey,
-      network,
-      wallet,
-      isModalOpen,
-      format,
-      disconnectWallet,
       setAddress,
+      publicKey,
       setPublicKey,
+      network,
       setNetwork,
+      wallet,
       setWallet,
+      isModalOpen,
+      openModal,
+      closeModal,
+      format,
       setFormat,
+      disconnectWallet,
     ],
   );
 
