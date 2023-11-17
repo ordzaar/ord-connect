@@ -99,7 +99,7 @@ export type OrdConnectProviderProps = {
  * }
  *
  * @param props - Props object.
- * @param props.initialNetwork - Initial network state if network is not set
+ * @param props.initialNetwork - Initial network state if network is not set.
  * @returns Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
