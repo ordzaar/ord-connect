@@ -30,7 +30,12 @@ export function WalletButton({
       onClick={async () => {
         setLoading(true);
         const timeout = (resolve) => setTimeout(() => resolve("timeout"), 5000);
-        const success = await Promise.race([onConnect(), new Promise(timeout)]);
+        const success = await Promise.race([
+          onConnect()
+            .then(() => setLoading(false))
+            .catch(() => setLoading(false)),
+          new Promise(timeout),
+        ]);
         if (success === "timeout") {
           setErrorMessage(
             "No wallet pop-up? The extension is not responding. Try reloading your browser.",
