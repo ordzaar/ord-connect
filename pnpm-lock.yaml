@@ -52,8 +52,8 @@ importers:
         specifier: ^6.11.0
         version: 6.11.0(eslint@8.54.0)(typescript@5.2.2)
       '@vitejs/plugin-react-swc':
-        specifier: ^3.4.1
-        version: 3.4.1(vite@4.5.0)
+        specifier: ^3.5.0
+        version: 3.5.0(vite@4.5.0)
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
@@ -1085,10 +1085,10 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-react-swc@3.4.1(vite@4.5.0):
-    resolution: {integrity: sha512-7YQOQcVV5x1luD8nkbCDdyYygFvn1hjqJk68UvNAzY2QG4o4N5EwAhLLFNOcd1HrdMwDl0VElP8VutoWf9IvJg==}
+  /@vitejs/plugin-react-swc@3.5.0(vite@4.5.0):
+    resolution: {integrity: sha512-1PrOvAaDpqlCV+Up8RkAh9qaiUjoDUcjtttyhXDKw53XA6Ve16SOp6cCOpRs8Dj8DqUQs6eTW5YkLcLJjrXAig==}
     peerDependencies:
-      vite: ^4
+      vite: ^4 || ^5
     dependencies:
       '@swc/core': 1.3.96
       vite: 4.5.0(@types/node@20.9.0)
