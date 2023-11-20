@@ -8,6 +8,8 @@ import {
 } from "react";
 import { AddressFormat } from "@ordzaar/ordit-sdk";
 
+import { useLocalStorage } from "../hooks/useLocalStorage";
+
 export enum Network {
   MAINNET = "mainnet",
   TESTNET = "testnet",
@@ -67,37 +69,11 @@ const OrdContext = createContext<OrdContextType>({
   disconnectWallet: NOOP,
 });
 
-const KEY_PREFIX = "ord-connect";
 const ADDRESS = "address";
 const WALLET = "wallet";
 const PUBLIC_KEY = "publicKey";
 const FORMAT = "format";
 const NETWORK = "network";
-
-// Helper function to get item from localStorage
-function getItemFromLocalStorage<T>(_key: string): T | null {
-  const key = `${KEY_PREFIX}_${_key}`;
-  try {
-    return JSON.parse(localStorage.getItem(key)) as T | null;
-  } catch (error) {
-    console.error(`Error retrieving ${key} from localStorage`, error);
-    return null;
-  }
-}
-
-// Helper function to set item to localStorage
-function setItemToLocalStorage<T>(_key: string, value: T) {
-  const key = `${KEY_PREFIX}_${_key}`;
-  try {
-    if (value) {
-      localStorage.setItem(key, JSON.stringify(value));
-    } else {
-      localStorage.removeItem(key);
-    }
-  } catch (error) {
-    console.error(`Error saving ${key} to localStorage`, error);
-  }
-}
 
 export type OrdConnectProviderProps = {
   initialNetwork: Network;
@@ -123,80 +99,80 @@ export type OrdConnectProviderProps = {
  * }
  *
  * @param props - Props object.
- * @param props.initialNetwork - Initial network state.
+ * @param props.initialNetwork - Initial network state if network is not set.
  * @returns Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
   children,
   initialNetwork,
 }: PropsWithChildren<OrdConnectProviderProps>) {
-  const [address, setAddress] = useState<BiAddressString>(
-    () => getItemFromLocalStorage(ADDRESS) ?? EMPTY_BIADDRESS_OBJECT,
+  if (!initialNetwork) {
+    throw new Error("Initial network cannot be empty");
+  }
+
+  const [address, setAddress] = useLocalStorage<BiAddressString>(
+    ADDRESS,
+    EMPTY_BIADDRESS_OBJECT,
   );
 
-  const [network, setNetwork] = useState<Network>(
-    initialNetwork ?? getItemFromLocalStorage(NETWORK) ?? Network.TESTNET,
+  const [network, setNetwork] = useLocalStorage<Network>(
+    NETWORK,
+    initialNetwork,
   );
 
-  const [wallet, setWallet] = useState<Wallet | null>(() =>
-    getItemFromLocalStorage(WALLET),
-  );
-  const [publicKey, setPublicKey] = useState<BiAddressString>(
-    () => getItemFromLocalStorage(PUBLIC_KEY) ?? EMPTY_BIADDRESS_OBJECT,
+  const [wallet, setWallet] = useLocalStorage<Wallet | null>(WALLET, null);
+  const [publicKey, setPublicKey] = useLocalStorage<BiAddressString>(
+    PUBLIC_KEY,
+    EMPTY_BIADDRESS_OBJECT,
   );
 
-  const [format, setFormat] = useState<BiAddressFormat>(
-    () => getItemFromLocalStorage(FORMAT) ?? EMPTY_BIADDRESS_OBJECT,
+  const [format, setFormat] = useLocalStorage<BiAddressFormat>(
+    FORMAT,
+    EMPTY_BIADDRESS_OBJECT,
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = useCallback(() => setIsModalOpen(true), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const disconnectWallet = useCallback(() => {
     setAddress(EMPTY_BIADDRESS_OBJECT);
     setPublicKey(EMPTY_BIADDRESS_OBJECT);
     setFormat(EMPTY_BIADDRESS_OBJECT);
     setWallet(null);
-  }, []);
+  }, [setAddress, setFormat, setPublicKey, setWallet]);
 
   const context: OrdContextType = useMemo(
     () => ({
       address,
-      updateAddress: (newAddress) => {
-        setItemToLocalStorage(ADDRESS, newAddress);
-        setAddress(newAddress);
-      },
+      updateAddress: setAddress,
       publicKey,
-      updatePublicKey: (newPublicKey) => {
-        setItemToLocalStorage(PUBLIC_KEY, newPublicKey);
-        setPublicKey(newPublicKey);
-      },
+      updatePublicKey: setPublicKey,
       network,
-      updateNetwork: (newNetwork) => {
-        setItemToLocalStorage(NETWORK, newNetwork);
-        setNetwork(newNetwork);
-      },
+      updateNetwork: setNetwork,
       wallet,
-      updateWallet: (newWallet) => {
-        setItemToLocalStorage(WALLET, newWallet);
-        setWallet(newWallet);
-      },
+      updateWallet: setWallet,
       isModalOpen,
-      openModal: () => setIsModalOpen(true),
-      closeModal: () => setIsModalOpen(false),
+      openModal,
+      closeModal,
       format,
-      updateFormat: (newFormat) => {
-        setItemToLocalStorage(FORMAT, newFormat);
-        setFormat(newFormat);
-      },
+      updateFormat: setFormat,
       disconnectWallet,
     }),
     [
       address,
+      setAddress,
       publicKey,
+      setPublicKey,
       network,
+      setNetwork,
       wallet,
+      setWallet,
       isModalOpen,
+      openModal,
+      closeModal,
       format,
+      setFormat,
       disconnectWallet,
     ],
   );

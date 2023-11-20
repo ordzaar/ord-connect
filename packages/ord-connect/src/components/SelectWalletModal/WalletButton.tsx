@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import LoadingIcon from "../../assets/loading.svg";
@@ -23,22 +23,31 @@ export function WalletButton({
   isMobileDevice,
 }: WalletButtonProp) {
   const [loading, setLoading] = useState(false);
+
+  const handleWalletConnectClick = useCallback(async () => {
+    setLoading(true);
+    const result = await Promise.race([
+      onConnect()
+        .then(() => setLoading(false))
+        .catch(() => setLoading(false)),
+      new Promise<string>((resolve) => {
+        setTimeout(() => resolve("timeout"), 5000);
+      }),
+    ]);
+    if (result === "timeout") {
+      setErrorMessage(
+        "No wallet pop-up? The extension is not responding. Try reloading your browser.",
+      );
+    } else {
+      setLoading(false);
+    }
+  }, [onConnect, setErrorMessage]);
+
   return (
     <button
       type="button"
       className="wallet-option-button"
-      onClick={async () => {
-        setLoading(true);
-        const timeout = (resolve) => setTimeout(() => resolve("timeout"), 5000);
-        const success = await Promise.race([onConnect(), new Promise(timeout)]);
-        if (success === "timeout") {
-          setErrorMessage(
-            "No wallet pop-up? The extension is not responding. Try reloading your browser.",
-          );
-        } else {
-          setLoading(false);
-        }
-      }}
+      onClick={handleWalletConnectClick}
       disabled={isDisabled}
     >
       <div className="option-wrapper">

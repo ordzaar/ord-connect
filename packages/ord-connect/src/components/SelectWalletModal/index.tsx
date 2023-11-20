@@ -1,7 +1,6 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
-  AddressFormat,
   BrowserWalletNotInstalledError,
   BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
@@ -96,8 +95,8 @@ export function SelectWalletModal({
       });
       updateWallet(Wallet.UNISAT);
       updateFormat({
-        ordinals: unisatWallet.format as AddressFormat,
-        payments: unisatWallet.format as AddressFormat,
+        ordinals: unisatWallet.format,
+        payments: unisatWallet.format,
       });
 
       window.unisat.addListener("accountsChanged", () =>
@@ -137,8 +136,8 @@ export function SelectWalletModal({
       });
       updateWallet(Wallet.XVERSE);
       updateFormat({
-        ordinals: taproot.format as AddressFormat,
-        payments: p2sh.format as AddressFormat,
+        ordinals: taproot.format,
+        payments: p2sh.format,
       });
       closeModal();
       return true;
