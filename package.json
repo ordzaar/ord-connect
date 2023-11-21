@@ -14,8 +14,8 @@
     "lint": "turbo run lint -- --fix"
   },
   "devDependencies": {
-    "@ordzaar/standard-prettier": "^0.4.1",
-    "@ordzaar/standard-web-linter": "^0.4.1",
+    "@ordzaar/standard-prettier": "^0.4.2",
+    "@ordzaar/standard-web-linter": "^0.4.2",
     "husky": "^8.0.3",
     "turbo": "^1.10.16"
   },
