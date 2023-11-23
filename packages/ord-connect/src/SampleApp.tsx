@@ -15,8 +15,8 @@ import "./style.css";
 function TestControls() {
   const [send, sendError, isSending] = useSend();
   const [getBalance, balanceError, isLoadingBalance] = useBalance();
-  const [sign] = useSign();
-  const { signMsg } = useSignMessage();
+  const [sign, signPsbtError] = useSign();
+  const { signMsg, error: signMessageError } = useSignMessage();
   const [result, setResult] = useState("");
   const [balance, setBalance] = useState(0);
 
@@ -84,6 +84,10 @@ function TestControls() {
         ) : null}
         {balanceError ? <p>Wallet Balance Error: {balanceError}</p> : null}
         {result ? <p>Transaction ID: {result}</p> : null}
+        {signPsbtError ? <p>Sign Psbt Error: {signPsbtError}</p> : null}
+        {signMessageError ? (
+          <p>Sign Message Error: {signMessageError}</p>
+        ) : null}
         {sendError ? <p>Send Error: {sendError}</p> : null}
         {isSending ? <p>Sending</p> : null}
       </div>

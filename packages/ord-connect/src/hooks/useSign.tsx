@@ -51,7 +51,7 @@ export function useSign(): [
     } catch (err) {
       setError(err.message);
       setLoading(false);
-      throw new Error(err);
+      throw err;
     }
   };
 
