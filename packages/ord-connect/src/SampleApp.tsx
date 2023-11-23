@@ -43,8 +43,7 @@ function TestControls() {
   const handleSignPsbt = useCallback(async () => {
     const signed = await sign(
       address.payments,
-      "cHNidP8BAH4CAAAAAXCE3tebayD9R1TaLOhsW4iEUDA8edROqqez+aKHpCrWAQAAAAD9////AlgCAAAAAAAAIlEgkDB/2eswKF2yzvpu8YhWuRq//nRCblAIq7Ufz45gkH9KURMAAAAAABepFCZXS7cUu/89AA40z/O2fFCHJZMchwAAAAAAAQEgU1QTAAAAAAAXqRQmV0u3FLv/PQAONM/ztnxQhyWTHIcBBBYAFAUG+7KCigWOsgY5njiKALmUXkLzAAAA",
-      // "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
+      "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
       { extractTx: false },
     );
     console.log(signed);
