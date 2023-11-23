@@ -29,10 +29,10 @@ export function useSignMessage(): {
 
       setIsLoading(false);
       return signedMessage;
-    } catch (e) {
-      setError(e.message);
+    } catch (err) {
+      setError(err.message);
       setIsLoading(false);
-      throw new Error(e);
+      throw err;
     }
   };
 

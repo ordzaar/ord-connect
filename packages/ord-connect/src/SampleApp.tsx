@@ -15,8 +15,8 @@ import "./style.css";
 function TestControls() {
   const [send, sendError, isSending] = useSend();
   const [getBalance, balanceError, isLoadingBalance] = useBalance();
-  const [sign] = useSign();
-  const { signMsg } = useSignMessage();
+  const [sign, signPsbtError] = useSign();
+  const { signMsg, error: signMessageError } = useSignMessage();
   const [result, setResult] = useState("");
   const [balance, setBalance] = useState(0);
 
@@ -43,7 +43,8 @@ function TestControls() {
   const handleSignPsbt = useCallback(async () => {
     const signed = await sign(
       address.payments,
-      "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
+      "cHNidP8BAH4CAAAAAXCE3tebayD9R1TaLOhsW4iEUDA8edROqqez+aKHpCrWAQAAAAD9////AlgCAAAAAAAAIlEgkDB/2eswKF2yzvpu8YhWuRq//nRCblAIq7Ufz45gkH9KURMAAAAAABepFCZXS7cUu/89AA40z/O2fFCHJZMchwAAAAAAAQEgU1QTAAAAAAAXqRQmV0u3FLv/PQAONM/ztnxQhyWTHIcBBBYAFAUG+7KCigWOsgY5njiKALmUXkLzAAAA",
+      // "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
       { extractTx: false },
     );
     console.log(signed);
@@ -84,6 +85,10 @@ function TestControls() {
         ) : null}
         {balanceError ? <p>Wallet Balance Error: {balanceError}</p> : null}
         {result ? <p>Transaction ID: {result}</p> : null}
+        {signPsbtError ? <p>Sign Psbt Error: {signPsbtError}</p> : null}
+        {signMessageError ? (
+          <p>Sign Message Error: {signMessageError}</p>
+        ) : null}
         {sendError ? <p>Send Error: {sendError}</p> : null}
         {isSending ? <p>Sending</p> : null}
       </div>
