@@ -41,6 +41,7 @@ export function SelectWalletModal({
     format,
     address,
     publicKey,
+    disconnectWallet,
   } = useOrdContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
@@ -62,15 +63,17 @@ export function SelectWalletModal({
       }
       setErrorMessage(err.message ?? err.toString());
       console.error(`Error while connecting to ${walletProvider} wallet`, err);
+      disconnectWallet();
     },
     [],
   );
 
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
+    const listener = () => {
+      onConnectUnisatWallet();
+    };
     try {
-      window.unisat.removeListener("accountsChanged", () =>
-        onConnectUnisatWallet(),
-      );
+      window.unisat.removeListener("accountsChanged", listener);
     } catch (_) {
       // This will fail on first run, handle it silently
     }
@@ -80,6 +83,7 @@ export function SelectWalletModal({
       const unisat = await getUnisatAddresses(network, readOnly);
 
       if (!unisat || unisat.length < 1) {
+        disconnectWallet();
         throw new Error("Unisat via Ordit returned no addresses.");
       }
 
@@ -99,9 +103,7 @@ export function SelectWalletModal({
         payments: unisatWallet.format,
       });
 
-      window.unisat.addListener("accountsChanged", () =>
-        onConnectUnisatWallet(),
-      );
+      window.unisat.addListener("accountsChanged", listener);
       closeModal();
       return true;
     } catch (err) {
@@ -116,6 +118,7 @@ export function SelectWalletModal({
       // P2SH-P2WPKH = BTC
       // Taproot = Ordinals / Inscriptions
       if (!xverse || xverse.length < 1) {
+        disconnectWallet();
         throw new Error("Xverse via Ordit returned no addresses.");
       }
 
