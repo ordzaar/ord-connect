@@ -41,6 +41,7 @@ export function SelectWalletModal({
     format,
     address,
     publicKey,
+    disconnectWallet,
   } = useOrdContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
@@ -62,6 +63,7 @@ export function SelectWalletModal({
       }
       setErrorMessage(err.message ?? err.toString());
       console.error(`Error while connecting to ${walletProvider} wallet`, err);
+      disconnectWallet();
     },
     [],
   );
@@ -81,6 +83,7 @@ export function SelectWalletModal({
       const unisat = await getUnisatAddresses(network, readOnly);
 
       if (!unisat || unisat.length < 1) {
+        disconnectWallet();
         throw new Error("Unisat via Ordit returned no addresses.");
       }
 
@@ -115,6 +118,7 @@ export function SelectWalletModal({
       // P2SH-P2WPKH = BTC
       // Taproot = Ordinals / Inscriptions
       if (!xverse || xverse.length < 1) {
+        disconnectWallet();
         throw new Error("Xverse via Ordit returned no addresses.");
       }
 
