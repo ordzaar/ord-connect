@@ -67,10 +67,11 @@ export function SelectWalletModal({
   );
 
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
+    const listener = () => {
+      onConnectUnisatWallet();
+    };
     try {
-      window.unisat.removeListener("accountsChanged", () =>
-        onConnectUnisatWallet(),
-      );
+      window.unisat.removeListener("accountsChanged", listener);
     } catch (_) {
       // This will fail on first run, handle it silently
     }
@@ -99,9 +100,7 @@ export function SelectWalletModal({
         payments: unisatWallet.format,
       });
 
-      window.unisat.addListener("accountsChanged", () =>
-        onConnectUnisatWallet(),
-      );
+      window.unisat.addListener("accountsChanged", listener);
       closeModal();
       return true;
     } catch (err) {
