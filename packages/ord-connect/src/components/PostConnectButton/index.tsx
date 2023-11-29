@@ -25,7 +25,7 @@ export function PostConnectButton({
   return (
     <Menu
       as="section"
-      className="ord-wallet-connected-container relative inline-block text-left"
+      className="ord-connect-font ord-wallet-connected-container relative inline-block text-left"
     >
       {({ open }) => (
         <>

@@ -3,7 +3,7 @@
 @import url("../components/PostConnectButton/style.css");
 @import url("../components/SelectWalletModal/style.css");
 
-* {
+.ord-connect-font * {
   font-family: "Space Grotesk", sans-serif;
 }
 
