@@ -11,7 +11,8 @@ import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdContext, Wallet } from "../../providers/OrdContext";
-import { isMobileDevice } from "../../utils/mobile-detector.ts";
+import { isMobileDevice } from "../../utils/mobile-detector";
+import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
 import { WalletButton } from "./WalletButton";
 
@@ -153,7 +154,15 @@ export function SelectWalletModal({
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
     if (wallet === Wallet.UNISAT && address && publicKey && format) {
-      onConnectUnisatWallet(true);
+      const connectToUnisatWalletOnLoad = async () => {
+        const isUnisatExtensionReady = await waitForUnisatExtensionReady();
+        if (!isUnisatExtensionReady) {
+          disconnectWallet();
+          return;
+        }
+        onConnectUnisatWallet(true);
+      };
+      connectToUnisatWalletOnLoad();
     }
   }, []);
 
