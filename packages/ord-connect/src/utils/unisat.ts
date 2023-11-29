@@ -14,7 +14,9 @@ export async function waitForUnisatExtensionReady() {
         // eslint-disable-next-line no-await-in-loop
         const accounts = await window.unisat.getAccounts();
         // Accounts may be empty even though extension is loaded - we need to wait until this API is ready.
-        return !!accounts && accounts.length > 0;
+        if (accounts && accounts.length > 0) {
+          return true;
+        }
       } catch (_) {
         // If we reach here, getAccounts never existed. This should never happen.
         break;
