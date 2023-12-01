@@ -43,7 +43,7 @@
     "vite-plugin-css-injected-by-js": "^3.3.0",
     "vite-plugin-dts": "^3.6.3",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-node-polyfills": "^0.16.0"
+    "vite-plugin-node-polyfills": "^0.17.0"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
