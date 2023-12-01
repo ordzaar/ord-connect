@@ -28,10 +28,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.2",
-    "@types/react": "^18.2.38",
-    "@types/react-dom": "^18.2.16",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^8.54.0",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -39,11 +39,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.2",
+    "vite": "^5.0.4",
     "vite-plugin-css-injected-by-js": "^3.3.0",
-    "vite-plugin-dts": "^3.6.3",
+    "vite-plugin-dts": "^3.6.4",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-node-polyfills": "^0.16.0"
+    "vite-plugin-node-polyfills": "^0.17.0"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
