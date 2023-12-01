@@ -170,7 +170,7 @@ export function SelectWalletModal({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="ord-connect-wallet-modal"
+        className="ord-connect-font ord-connect-wallet-modal"
         onClose={closeModal}
       >
         <Transition.Child

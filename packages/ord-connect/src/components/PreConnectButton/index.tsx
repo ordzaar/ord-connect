@@ -13,7 +13,9 @@ export function PreConnectButton({
       type="button"
       onClick={openModal}
       data-testid="connect-wallet-button"
-      className={`ord-connect-wallet-button ${customStyle}`}
+      className={`ord-connect-font ord-connect-wallet-button ${
+        customStyle ?? ""
+      }`}
     >
       <span />
     </button>
