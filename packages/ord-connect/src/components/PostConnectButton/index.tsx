@@ -7,7 +7,7 @@ import LogoutIcon from "../../assets/logout.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
-import { TruncateMiddle } from "../../utils/text-helper";
+import { truncateMiddle } from "../../utils/text-helper";
 
 interface PostConnectButtonProp {
   address: string;
@@ -48,7 +48,7 @@ export function PostConnectButton({
             </div>
 
             <section className="address-container">
-              <p className="address">{TruncateMiddle(address)}</p>
+              <p className="address">{truncateMiddle(address)}</p>
               <section className="network-container">
                 <div className="status-indicator" />
                 <p className="network">
@@ -83,7 +83,7 @@ export function PostConnectButton({
                 }}
               >
                 <span className="label">View profile</span>
-                <span className="value">{TruncateMiddle(address)}</span>
+                <span className="value">{truncateMiddle(address)}</span>
               </Menu.Item>
               <Menu.Item
                 as="button"

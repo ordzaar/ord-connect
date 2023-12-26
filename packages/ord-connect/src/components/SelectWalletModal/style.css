@@ -191,9 +191,7 @@
   padding: 16px 16px 8px 16px;
   border: 0px;
   margin-bottom: 0px;
-  border-radius: 20px;
-  /* repace with below border-radius once unisat is supported on mobile devices */
-  /* border-radius: 20px 20px 0px 0px; */
+  border-radius: 20px 20px 0px 0px;
 }
 
 @media screen and (min-width: 1080px) {
@@ -230,6 +228,25 @@
   margin-left: 16px;
   text-align: left;
 }
+
+.ord-connect-wallet-modal .wallet-option-connected-address {
+  display: flex;
+  padding: 4px 12px 4px 8px;
+  align-items: center;
+  margin-left: 16px;
+  margin-right: 16px;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+}
+
+.ord-connect-wallet-modal .wallet-option-connected-address .label {
+  margin-left: 4px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .ord-connect-wallet-modal .wallet-option-label {
   font-size: 16px;
   font-weight: 600;
@@ -244,7 +261,7 @@
   }
 }
 
-.ord-connect-wallet-modal .wallet-option-info {
+.ord-connect-wallet-modal .wallet-option-subtitle {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -252,7 +269,7 @@
 }
 
 .ord-connect-wallet-modal .horizontal-separator {
-  margin: 0px 16px;
+  margin: 2px 16px;
   border: 0px;
   border-top: 0.5px solid rgba(255, 255, 255, 0.1);
 }
