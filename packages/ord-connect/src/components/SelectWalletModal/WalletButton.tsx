@@ -35,10 +35,10 @@ export function WalletButton({
 
   // Introduce an initial state because otherwise while the modal is closing,
   // the connected address is suddenly updated in the dialog
-  const [{ connectedWallet, connectedAddress }] = useState(() => ({
+  const [{ connectedWallet, connectedAddress }] = useState({
     connectedWallet: _connectedWallet,
     connectedAddress: _connectedAddress,
-  }));
+  });
 
   const [loading, setLoading] = useState(false);
   const walletName = WALLET_TO_NAME[wallet];
