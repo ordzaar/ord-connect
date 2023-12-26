@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 
 import signPsbt from "../lib/signPsbt";
@@ -15,47 +15,49 @@ export function useSend(): [SendFunction, string | null, boolean] {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const datasource = new JsonRpcDatasource({ network });
+  const send: SendFunction = useCallback(
+    async (toAddress, satoshis, feeRate) => {
+      setLoading(true);
+      try {
+        setError(null);
+        if (!address || !publicKey) {
+          throw new Error("No wallet is connected");
+        }
 
-  const send: SendFunction = async (toAddress, satoshis, feeRate) => {
-    setLoading(true);
-    try {
-      setError(null);
-      if (!address || !publicKey) {
-        throw new Error("No wallet is connected");
+        const psbtBuilder = new PSBTBuilder({
+          address: address.payments,
+          feeRate,
+          network,
+          publicKey: publicKey.payments,
+          outputs: [
+            {
+              address: toAddress,
+              value: satoshis,
+            },
+          ],
+        });
+        await psbtBuilder.prepare();
+
+        const signedPsbt = await signPsbt({
+          address: address.payments,
+          wallet,
+          network,
+          psbt: psbtBuilder.toPSBT(),
+        });
+
+        const datasource = new JsonRpcDatasource({ network });
+        const txId = await datasource.relay({ hex: signedPsbt.hex });
+
+        setLoading(false);
+        return txId;
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+        return null;
       }
-
-      const psbtBuilder = new PSBTBuilder({
-        address: address.payments,
-        feeRate,
-        network,
-        publicKey: publicKey.payments,
-        outputs: [
-          {
-            address: toAddress,
-            value: satoshis,
-          },
-        ],
-      });
-      await psbtBuilder.prepare();
-
-      const signedPsbt = await signPsbt({
-        address: address.payments,
-        wallet,
-        network,
-        psbt: psbtBuilder.toPSBT(),
-      });
-
-      const txId = await datasource.relay({ hex: signedPsbt.hex });
-
-      setLoading(false);
-      return txId;
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-      return null;
-    }
-  };
+    },
+    [address, network, publicKey, wallet],
+  );
 
   return [send, error, loading];
 }

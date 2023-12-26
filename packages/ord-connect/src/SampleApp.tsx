@@ -18,15 +18,13 @@ function TestControls() {
   const [sign, signPsbtError] = useSign();
   const { signMsg, error: signMessageError } = useSignMessage();
   const [result, setResult] = useState("");
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance] = useState<number | undefined>(undefined);
 
-  const { address } = useOrdConnect();
+  const { address, wallet } = useOrdConnect();
 
   const handleCheckBalance = useCallback(async () => {
     const walletBalance = await getBalance();
-    if (walletBalance) {
-      setBalance(walletBalance);
-    }
+    setBalance(walletBalance);
   }, [getBalance]);
 
   const handleSend = useCallback(async () => {
@@ -74,10 +72,11 @@ function TestControls() {
         </button>
       </div>
       <div>
+        {wallet ? <p>Wallet: {wallet}</p> : null}
         {address?.ordinals ? (
           <p>Connected Address: {address.ordinals ?? ""}</p>
         ) : null}
-        {balance || isLoadingBalance ? (
+        {typeof balance === "number" || isLoadingBalance ? (
           <p>
             Wallet Balance: {isLoadingBalance ? "Loading" : `${balance} sats`}
           </p>
