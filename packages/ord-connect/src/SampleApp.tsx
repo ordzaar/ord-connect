@@ -6,8 +6,8 @@ import { useSignMessage } from "./hooks/useSignMessage";
 import {
   Network,
   OrdConnectProvider,
-  useOrdContext,
-} from "./providers/OrdContext";
+  useOrdConnect,
+} from "./providers/OrdConnectProvider";
 import { OrdConnectKit, useSign } from "./index";
 
 import "./style.css";
@@ -20,7 +20,7 @@ function TestControls() {
   const [result, setResult] = useState("");
   const [balance, setBalance] = useState(0);
 
-  const { address } = useOrdContext();
+  const { address } = useOrdConnect();
 
   const handleCheckBalance = useCallback(async () => {
     const walletBalance = await getBalance();

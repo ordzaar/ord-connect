@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 import signMessage from "../lib/signMessage.ts";
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 export function useSignMessage(): {
   isLoading: boolean;
   signMsg: (address: string, message: string) => Promise<string>;
   error: string;
 } {
-  const { network, wallet, publicKey, format } = useOrdContext();
+  const { network, wallet, publicKey, format } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

@@ -5,10 +5,10 @@ import {
   JsonRpcDatasource,
 } from "@ordzaar/ordit-sdk";
 
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 export function useBalance(): [() => Promise<number>, string | null, boolean] {
-  const { network, publicKey, format } = useOrdContext();
+  const { network, publicKey, format } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

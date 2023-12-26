@@ -6,7 +6,7 @@ import ChevronDownIcon from "../../assets/chevron-down.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdContext, Wallet } from "../../providers/OrdContext";
+import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
 import { TruncateMiddle } from "../../utils/text-helper";
 
 interface PostConnectButtonProp {
@@ -20,7 +20,7 @@ export function PostConnectButton({
   network,
   onViewWallet,
 }: PostConnectButtonProp) {
-  const { disconnectWallet, wallet } = useOrdContext();
+  const { disconnectWallet, wallet } = useOrdConnect();
 
   return (
     <Menu

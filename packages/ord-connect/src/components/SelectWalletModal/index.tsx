@@ -10,7 +10,7 @@ import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdContext, Wallet } from "../../providers/OrdContext";
+import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
 import { isMobileDevice } from "../../utils/mobile-detector";
 import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
@@ -43,7 +43,7 @@ export function SelectWalletModal({
     address,
     publicKey,
     disconnectWallet,
-  } = useOrdContext();
+  } = useOrdConnect();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isSupportedDevice = !disableMobile || !isMobileDevice();
 

@@ -5,7 +5,7 @@ import signPsbt, {
   SerializedPsbt,
   SignPsbtOptionsParams,
 } from "../lib/signPsbt";
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 export function useSign(): [
   (
@@ -16,7 +16,7 @@ export function useSign(): [
   string | null,
   boolean,
 ] {
-  const { network, publicKey, format, wallet } = useOrdContext();
+  const { network, publicKey, format, wallet } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

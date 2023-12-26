@@ -33,9 +33,7 @@ const EMPTY_BIADDRESS_OBJECT: BiAddress<null> = {
   ordinals: null,
 };
 
-const NOOP = () => {};
-
-interface OrdContextType {
+interface OrdConnectContextType {
   address: BiAddressString;
   updateAddress: (address: BiAddressString) => void;
   publicKey: BiAddressString;
@@ -52,22 +50,7 @@ interface OrdContextType {
   disconnectWallet: () => void;
 }
 
-const OrdContext = createContext<OrdContextType>({
-  address: EMPTY_BIADDRESS_OBJECT,
-  updateAddress: NOOP,
-  publicKey: EMPTY_BIADDRESS_OBJECT,
-  updatePublicKey: NOOP,
-  network: Network.TESTNET,
-  updateNetwork: NOOP,
-  wallet: null,
-  updateWallet: NOOP,
-  isModalOpen: false,
-  openModal: NOOP,
-  closeModal: NOOP,
-  format: EMPTY_BIADDRESS_OBJECT,
-  updateFormat: NOOP,
-  disconnectWallet: NOOP,
-});
+const OrdConnectContext = createContext<OrdConnectContextType>(undefined);
 
 const ADDRESS = "address";
 const WALLET = "wallet";
@@ -142,7 +125,7 @@ export function OrdConnectProvider({
     setWallet(null);
   }, [setAddress, setFormat, setPublicKey, setWallet]);
 
-  const context: OrdContextType = useMemo(
+  const context: OrdConnectContextType = useMemo(
     () => ({
       address,
       updateAddress: setAddress,
@@ -177,9 +160,19 @@ export function OrdConnectProvider({
     ],
   );
 
-  return <OrdContext.Provider value={context}>{children}</OrdContext.Provider>;
+  return (
+    <OrdConnectContext.Provider value={context}>
+      {children}
+    </OrdConnectContext.Provider>
+  );
 }
 
-export function useOrdContext() {
-  return useContext(OrdContext);
+export function useOrdConnect() {
+  const context = useContext(OrdConnectContext);
+
+  if (!context) {
+    throw new Error("useOrdConnect must be used within OrdConnectProvider");
+  }
+
+  return context;
 }

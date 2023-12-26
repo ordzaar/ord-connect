@@ -1,4 +1,4 @@
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 import { PostConnectButton } from "./PostConnectButton";
 import { PreConnectButton } from "./PreConnectButton";
@@ -27,7 +27,7 @@ export function OrdConnectKit({
   disableMobile,
 }: OrdConnectKitProp) {
   const { address, network, isModalOpen, openModal, closeModal } =
-    useOrdContext();
+    useOrdConnect();
 
   return (
     <>

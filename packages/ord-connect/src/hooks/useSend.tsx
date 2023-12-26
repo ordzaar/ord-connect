@@ -2,7 +2,7 @@ import { useState } from "react";
 import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 
 import signPsbt from "../lib/signPsbt";
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 type SendFunction = (
   address: string,
@@ -11,7 +11,7 @@ type SendFunction = (
 ) => Promise<string | null>;
 
 export function useSend(): [SendFunction, string | null, boolean] {
-  const { wallet, network, address, publicKey } = useOrdContext();
+  const { wallet, network, address, publicKey } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
