@@ -11,7 +11,7 @@ import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
-import { isMobileDevice } from "../../utils/mobile-detector";
+import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
 import { WalletButton } from "./WalletButton";
@@ -45,7 +45,8 @@ export function SelectWalletModal({
     disconnectWallet,
   } = useOrdConnect();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const isSupportedDevice = !disableMobile || !isMobileDevice();
+  const isMobile = isMobileUserAgent();
+  const isSupportedDevice = !disableMobile || !isMobile;
 
   const onError = useCallback(
     (
@@ -215,7 +216,7 @@ export function SelectWalletModal({
                 <section className="panel-content-container">
                   {isSupportedDevice ? (
                     <section className="panel-content-inner-container">
-                      {!isMobileDevice() && ( // TODO:: remove this once unisat supported on mobile devices
+                      {!isMobile && ( // TODO:: remove this once unisat supported on mobile devices
                         <>
                           <WalletButton
                             name="Unisat Wallet"
@@ -223,8 +224,8 @@ export function SelectWalletModal({
                             onConnect={onConnectUnisatWallet}
                             icon={UnisatWalletIcon}
                             setErrorMessage={setErrorMessage}
-                            isDisabled={isMobileDevice()} // disable unisat on mobile until it is supported
-                            isMobileDevice={isMobileDevice()}
+                            isDisabled={isMobile} // disable unisat on mobile until it is supported
+                            isMobileDevice={isMobile}
                           />
                           <hr className="horizontal-separator" />
                         </>
@@ -235,7 +236,7 @@ export function SelectWalletModal({
                         onConnect={onConnectXverseWallet}
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
-                        isMobileDevice={isMobileDevice()}
+                        isMobileDevice={isMobile}
                       />
                     </section>
                   ) : (
