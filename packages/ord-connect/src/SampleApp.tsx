@@ -13,9 +13,13 @@ import { OrdConnectKit, useSign } from "./index";
 import "./style.css";
 
 function TestControls() {
-  const [send, sendError, isSending] = useSend();
-  const [getBalance, balanceError, isLoadingBalance] = useBalance();
-  const [sign, signPsbtError] = useSign();
+  const { send, error: sendError, loading: isSending } = useSend();
+  const {
+    getBalance,
+    error: balanceError,
+    loading: isLoadingBalance,
+  } = useBalance();
+  const { sign, error: signPsbtError } = useSign();
   const { signMsg, error: signMessageError } = useSignMessage();
   const [result, setResult] = useState("");
   const [balance, setBalance] = useState<number | undefined>(undefined);

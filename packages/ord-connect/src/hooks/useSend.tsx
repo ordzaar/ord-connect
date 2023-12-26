@@ -10,7 +10,7 @@ type SendFunction = (
   feeRate: number,
 ) => Promise<string | null>;
 
-export function useSend(): [SendFunction, string | null, boolean] {
+export function useSend() {
   const { wallet, network, address, publicKey } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -69,5 +69,5 @@ export function useSend(): [SendFunction, string | null, boolean] {
     [address, network, publicKey, wallet],
   );
 
-  return [send, error, loading];
+  return { send, error, loading };
 }

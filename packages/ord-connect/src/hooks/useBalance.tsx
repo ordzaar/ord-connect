@@ -7,7 +7,7 @@ import {
 
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
-export function useBalance(): [() => Promise<number>, string | null, boolean] {
+export function useBalance() {
   const { network, publicKey, format } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,5 +46,5 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
     }
   }, [format, network, publicKey]);
 
-  return [getBalance, error, loading];
+  return { getBalance, error, loading };
 }

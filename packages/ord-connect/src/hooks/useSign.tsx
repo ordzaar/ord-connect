@@ -7,15 +7,7 @@ import signPsbt, {
 } from "../lib/signPsbt";
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
-export function useSign(): [
-  (
-    address: string,
-    unsignedPsbtBase64: string,
-    options: SignPsbtOptionsParams,
-  ) => Promise<SerializedPsbt>,
-  string | null,
-  boolean,
-] {
+export function useSign() {
   const { network, publicKey, format, wallet } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -58,5 +50,5 @@ export function useSign(): [
     [format, network, publicKey, wallet],
   );
 
-  return [sign, error, loading];
+  return { sign, error, loading };
 }
