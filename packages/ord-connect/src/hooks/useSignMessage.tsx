@@ -5,8 +5,8 @@ import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 export function useSignMessage(): {
   isLoading: boolean;
-  signMsg: (address: string, message: string) => Promise<string>;
-  error: string;
+  signMsg: (address: string, message: string) => Promise<string | null>;
+  error: string | null;
 } {
   const { network, wallet, publicKey, format } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export function useSignMessage(): {
       setIsLoading(true);
       try {
         setError(null);
-        if (!format || !publicKey) {
+        if (!format || !publicKey || !wallet) {
           throw new Error("No wallet is connected");
         }
 
@@ -31,7 +31,7 @@ export function useSignMessage(): {
         setIsLoading(false);
         return signedMessage;
       } catch (err) {
-        setError(err.message);
+        setError((err as Error).message);
         setIsLoading(false);
         throw err;
       }

@@ -28,7 +28,7 @@ export interface BiAddress<T> {
 type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormat>;
 
-const EMPTY_BIADDRESS_OBJECT: BiAddress<null> = {
+const EMPTY_BIADDRESS_OBJECT = {
   payments: null,
   ordinals: null,
 };
@@ -50,7 +50,9 @@ interface OrdConnectContextType {
   disconnectWallet: () => void;
 }
 
-const OrdConnectContext = createContext<OrdConnectContextType>(undefined);
+const OrdConnectContext = createContext<OrdConnectContextType | undefined>(
+  undefined,
+);
 
 const ADDRESS = "address";
 const WALLET = "wallet";
@@ -121,7 +123,7 @@ export function OrdConnectProvider({
   const disconnectWallet = useCallback(() => {
     setAddress(EMPTY_BIADDRESS_OBJECT);
     setPublicKey(EMPTY_BIADDRESS_OBJECT);
-    setFormat(EMPTY_BIADDRESS_OBJECT);
+    setFormat(EMPTY_BIADDRESS_OBJECT as BiAddressFormat);
     setWallet(null);
   }, [setAddress, setFormat, setPublicKey, setWallet]);
 

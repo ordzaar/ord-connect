@@ -16,7 +16,7 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
     setLoading(true);
     try {
       setError(null);
-      if (!format || !publicKey) {
+      if (!format || !format.payments || !publicKey || !publicKey.payments) {
         throw new Error("No wallet is connected");
       }
       const { address } = getAddressesFromPublicKey(
@@ -40,7 +40,7 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
       setLoading(false);
       return totalSatsAvailable;
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
       return 0; // Returning 0 as default value in case of an error
     }

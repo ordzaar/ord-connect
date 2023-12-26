@@ -39,6 +39,10 @@ function TestControls() {
   }, [send]);
 
   const handleSignPsbt = useCallback(async () => {
+    if (!address.payments) {
+      throw new Error("No payment address");
+    }
+
     const signed = await sign(
       address.payments,
       "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
@@ -48,6 +52,10 @@ function TestControls() {
   }, [address.payments, sign]);
 
   const handleSignMessage = useCallback(async () => {
+    if (!address.ordinals) {
+      throw new Error("No payment address");
+    }
+
     const signed = await signMsg(
       address.ordinals,
       "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\ntb1q82avu57rf0xe4wgrkudwa0ewrh7mfrsejkum3h\n\nNonce: 4NfCJ3FEDQ",

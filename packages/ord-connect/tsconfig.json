@@ -8,10 +8,11 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": true,
+    "strict": true,
     "jsx": "react-jsx"
   },
   "include": ["src"],

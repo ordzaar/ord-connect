@@ -20,8 +20,8 @@ interface SignPsbtParams {
 }
 
 export interface SerializedPsbt {
-  hex: string;
-  base64: string;
+  hex: string | null;
+  base64: string | null;
 }
 
 /**

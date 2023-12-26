@@ -67,7 +67,7 @@ export function SelectWalletModal({
       console.error(`Error while connecting to ${walletProvider} wallet`, err);
       disconnectWallet();
     },
-    [],
+    [disconnectWallet],
   );
 
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
@@ -109,7 +109,7 @@ export function SelectWalletModal({
       closeModal();
       return true;
     } catch (err) {
-      onError(Wallet.UNISAT, err);
+      onError(Wallet.UNISAT, err as Error);
       return false;
     }
   };
@@ -131,6 +131,12 @@ export function SelectWalletModal({
         (walletAddress) => walletAddress.format === "taproot",
       );
 
+      if (!p2sh || !taproot) {
+        throw new Error(
+          "Xverse via Ordit did not return P2SH or Taproot addresses.",
+        );
+      }
+
       updateAddress({
         ordinals: taproot.address,
         payments: p2sh.address,
@@ -147,7 +153,7 @@ export function SelectWalletModal({
       closeModal();
       return true;
     } catch (err) {
-      onError(Wallet.XVERSE, err);
+      onError(Wallet.XVERSE, err as Error);
       return false;
     }
   };

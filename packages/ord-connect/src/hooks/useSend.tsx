@@ -7,7 +7,7 @@ import { useOrdConnect } from "../providers/OrdConnectProvider";
 type SendFunction = (
   address: string,
   satoshis: number,
-  feeRate?: number,
+  feeRate: number,
 ) => Promise<string | null>;
 
 export function useSend(): [SendFunction, string | null, boolean] {
@@ -20,7 +20,13 @@ export function useSend(): [SendFunction, string | null, boolean] {
       setLoading(true);
       try {
         setError(null);
-        if (!address || !publicKey) {
+        if (
+          !address ||
+          !address.payments ||
+          !publicKey ||
+          !publicKey.payments ||
+          !wallet
+        ) {
           throw new Error("No wallet is connected");
         }
 
@@ -45,13 +51,17 @@ export function useSend(): [SendFunction, string | null, boolean] {
           psbt: psbtBuilder.toPSBT(),
         });
 
+        if (!signedPsbt.hex) {
+          throw new Error("PSBT is not signed correctly");
+        }
+
         const datasource = new JsonRpcDatasource({ network });
         const txId = await datasource.relay({ hex: signedPsbt.hex });
 
         setLoading(false);
         return txId;
       } catch (err) {
-        setError(err.message);
+        setError((err as Error).message);
         setLoading(false);
         return null;
       }

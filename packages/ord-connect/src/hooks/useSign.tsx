@@ -29,7 +29,7 @@ export function useSign(): [
       setLoading(true);
       try {
         setError(null);
-        if (!format || !publicKey) {
+        if (!format || !publicKey || !wallet) {
           throw new Error("No wallet is connected");
         }
 
@@ -50,7 +50,7 @@ export function useSign(): [
         setLoading(false);
         return signedPsbt;
       } catch (err) {
-        setError(err.message);
+        setError((err as Error).message);
         setLoading(false);
         throw err;
       }
