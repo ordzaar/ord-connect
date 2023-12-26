@@ -118,8 +118,9 @@
   padding: 26px 16px 18px;
 }
 
-.ord-wallet-connection-dropdown .dropdown-button:nth-child(3) {
-  padding: 18px 16px;
+.ord-wallet-connection-dropdown
+  .dropdown-button:not(:first-child):not(:last-child) {
+  padding: 9px 16px;
 }
 
 .ord-wallet-connection-dropdown .dropdown-button:last-child {
@@ -130,12 +131,31 @@
   color: #fff;
   font-size: 14px;
   font-weight: 600;
-  width: 70%;
+  flex: 1 1 0%;
   text-align: left;
 }
 
 .ord-wallet-connection-dropdown .value {
   color: #a6a6a6;
+}
+
+.ord-wallet-connection-dropdown .change-wallet-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 700;
+  flex: 1 1 0%;
+  text-align: right;
+}
+
+.ord-wallet-connection-dropdown .profile-item-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ord-wallet-connection-dropdown .profile-item-inner-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .ord-wallet-connection-dropdown .offers {
@@ -150,7 +170,7 @@
 }
 
 .ord-wallet-connection-dropdown .horizontal-separator {
-  margin: 0px 16px;
+  margin: 6px 16px;
   border: 0px;
   border-top: 0.5px solid rgba(255, 255, 255, 0.1);
 }

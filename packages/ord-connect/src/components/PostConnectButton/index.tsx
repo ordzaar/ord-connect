@@ -12,13 +12,15 @@ import { TruncateMiddle } from "../../utils/text-helper";
 interface PostConnectButtonProp {
   address: string;
   network: string;
-  onViewWallet?: () => void;
+  onViewProfile?: () => void;
+  onChangeWallet?: () => void;
 }
 
 export function PostConnectButton({
   address,
   network,
-  onViewWallet,
+  onViewProfile,
+  onChangeWallet,
 }: PostConnectButtonProp) {
   const { disconnectWallet, wallet } = useOrdConnect();
 
@@ -76,10 +78,21 @@ export function PostConnectButton({
               <Menu.Item
                 as="button"
                 className="dropdown-button"
-                onClick={onViewWallet}
+                onClick={() => {
+                  onViewProfile?.();
+                }}
               >
-                <span className="label">View wallet</span>
+                <span className="label">View profile</span>
                 <span className="value">{TruncateMiddle(address)}</span>
+              </Menu.Item>
+              <Menu.Item
+                as="button"
+                className="dropdown-button"
+                onClick={() => {
+                  onChangeWallet?.();
+                }}
+              >
+                <span className="change-wallet-label">Change wallet</span>
               </Menu.Item>
               <hr className="horizontal-separator" />
               {/* <Menu.Item as="button" className="dropdown-button"> */}
