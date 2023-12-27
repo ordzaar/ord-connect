@@ -51,10 +51,6 @@ export function useSend() {
           psbt: psbtBuilder.toPSBT(),
         });
 
-        if (!signedPsbt.hex) {
-          throw new Error("PSBT is not signed correctly");
-        }
-
         const datasource = new JsonRpcDatasource({ network });
         const txId = await datasource.relay({ hex: signedPsbt.hex });
 

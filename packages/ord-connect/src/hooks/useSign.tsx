@@ -35,10 +35,6 @@ export function useSign() {
           options,
         });
 
-        if (!signedPsbt || !signedPsbt.hex) {
-          throw new Error("Signing failed.");
-        }
-
         setLoading(false);
         return signedPsbt;
       } catch (err) {
