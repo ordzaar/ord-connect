@@ -14,10 +14,10 @@
     "lint": "turbo run lint -- --fix"
   },
   "devDependencies": {
-    "@ordzaar/standard-prettier": "^0.4.6",
-    "@ordzaar/standard-web-linter": "^0.4.6",
+    "@ordzaar/standard-prettier": "^0.4.14",
+    "@ordzaar/standard-web-linter": "^0.4.14",
     "husky": "^8.0.3",
-    "turbo": "^1.10.16"
+    "turbo": "^1.11.2"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
