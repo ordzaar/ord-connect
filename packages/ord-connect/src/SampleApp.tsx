@@ -110,7 +110,10 @@ export function SampleApp() {
   return (
     <div className="app">
       <OrdConnectProvider initialNetwork={Network.TESTNET}>
-        <OrdConnectKit disableMobile={false} />
+        <OrdConnectKit
+          onViewProfile={() => console.log("View profile clicked")}
+          disableMobile={false}
+        />
         <TestControls />
       </OrdConnectProvider>
     </div>
