@@ -1,24 +1,22 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ADDRESS_FORMAT_TO_TYPE,
   getAddressesFromPublicKey,
   JsonRpcDatasource,
 } from "@ordzaar/ordit-sdk";
 
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
-export function useBalance(): [() => Promise<number>, string | null, boolean] {
-  const { network, publicKey, format } = useOrdContext();
+export function useBalance() {
+  const { network, publicKey, format } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const datasource = new JsonRpcDatasource({ network });
-
-  const getBalance = async (): Promise<number> => {
+  const getBalance = useCallback(async (): Promise<number> => {
     setLoading(true);
     try {
       setError(null);
-      if (!format || !publicKey) {
+      if (!format || !format.payments || !publicKey || !publicKey.payments) {
         throw new Error("No wallet is connected");
       }
       const { address } = getAddressesFromPublicKey(
@@ -27,25 +25,26 @@ export function useBalance(): [() => Promise<number>, string | null, boolean] {
         ADDRESS_FORMAT_TO_TYPE[format.payments],
       )[0];
 
+      const datasource = new JsonRpcDatasource({ network });
       const { spendableUTXOs } = await datasource.getUnspents({
         address,
         type: "spendable",
       });
 
-      const totalCardinalsAvailable = spendableUTXOs.reduce(
+      const totalSatsAvailable = spendableUTXOs.reduce(
         (total: number, spendable: { safeToSpend: boolean; sats: number }) =>
           spendable.safeToSpend ? total + spendable.sats : total,
         0,
       );
 
       setLoading(false);
-      return totalCardinalsAvailable;
+      return totalSatsAvailable;
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       setLoading(false);
       return 0; // Returning 0 as default value in case of an error
     }
-  };
+  }, [format, network, publicKey]);
 
-  return [getBalance, error, loading];
+  return { getBalance, error, loading };
 }

@@ -10,9 +10,9 @@ export { useSignMessage } from "./hooks/useSignMessage";
 export type {
   BiAddress,
   OrdConnectProviderProps,
-} from "./providers/OrdContext";
+} from "./providers/OrdConnectProvider";
 export {
   Network,
   OrdConnectProvider,
-  useOrdContext,
-} from "./providers/OrdContext";
+  useOrdConnect,
+} from "./providers/OrdConnectProvider";

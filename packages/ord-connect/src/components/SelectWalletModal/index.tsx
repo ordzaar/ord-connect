@@ -10,8 +10,8 @@ import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 import CloseModalIcon from "../../assets/close-modal.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdContext, Wallet } from "../../providers/OrdContext";
-import { isMobileDevice } from "../../utils/mobile-detector";
+import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
+import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
 import { WalletButton } from "./WalletButton";
@@ -43,9 +43,10 @@ export function SelectWalletModal({
     address,
     publicKey,
     disconnectWallet,
-  } = useOrdContext();
+  } = useOrdConnect();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const isSupportedDevice = !disableMobile || !isMobileDevice();
+  const isMobile = isMobileUserAgent();
+  const isSupportedDevice = !disableMobile || !isMobile;
 
   const onError = useCallback(
     (
@@ -66,7 +67,7 @@ export function SelectWalletModal({
       console.error(`Error while connecting to ${walletProvider} wallet`, err);
       disconnectWallet();
     },
-    [],
+    [disconnectWallet],
   );
 
   const onConnectUnisatWallet = async (readOnly?: boolean) => {
@@ -108,7 +109,7 @@ export function SelectWalletModal({
       closeModal();
       return true;
     } catch (err) {
-      onError(Wallet.UNISAT, err);
+      onError(Wallet.UNISAT, err as Error);
       return false;
     }
   };
@@ -130,6 +131,12 @@ export function SelectWalletModal({
         (walletAddress) => walletAddress.format === "taproot",
       );
 
+      if (!p2sh || !taproot) {
+        throw new Error(
+          "Xverse via Ordit did not return P2SH or Taproot addresses.",
+        );
+      }
+
       updateAddress({
         ordinals: taproot.address,
         payments: p2sh.address,
@@ -146,7 +153,7 @@ export function SelectWalletModal({
       closeModal();
       return true;
     } catch (err) {
-      onError(Wallet.XVERSE, err);
+      onError(Wallet.XVERSE, err as Error);
       return false;
     }
   };
@@ -215,27 +222,27 @@ export function SelectWalletModal({
                 <section className="panel-content-container">
                   {isSupportedDevice ? (
                     <section className="panel-content-inner-container">
-                      {!isMobileDevice() && ( // TODO:: remove this once unisat supported on mobile devices
+                      {!isMobile && ( // TODO:: remove this once unisat supported on mobile devices
                         <>
                           <WalletButton
-                            name="Unisat Wallet"
-                            info="Coming soon on mobile browsing"
+                            wallet={Wallet.UNISAT}
+                            subtitle="Coming soon on mobile browsing"
                             onConnect={onConnectUnisatWallet}
                             icon={UnisatWalletIcon}
                             setErrorMessage={setErrorMessage}
-                            isDisabled={isMobileDevice()} // disable unisat on mobile until it is supported
-                            isMobileDevice={isMobileDevice()}
+                            isDisabled={isMobile} // disable unisat on mobile until it is supported
+                            isMobileDevice={isMobile}
                           />
                           <hr className="horizontal-separator" />
                         </>
                       )}
                       <WalletButton
-                        name="Xverse"
-                        info="Available on Xverse app"
+                        wallet={Wallet.XVERSE}
+                        subtitle="Available on Xverse app"
                         onConnect={onConnectXverseWallet}
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
-                        isMobileDevice={isMobileDevice()}
+                        isMobileDevice={isMobile}
                       />
                     </section>
                   ) : (

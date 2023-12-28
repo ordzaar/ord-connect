@@ -1,4 +1,4 @@
-import { useOrdContext } from "../providers/OrdContext";
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 import { PostConnectButton } from "./PostConnectButton";
 import { PreConnectButton } from "./PreConnectButton";
@@ -8,7 +8,7 @@ import "./style.css";
 
 export interface OrdConnectKitProp {
   customStyle?: string;
-  onViewWallet?: () => void;
+  onViewProfile?: () => void;
   disableMobile?: boolean;
 }
 
@@ -18,16 +18,16 @@ export interface OrdConnectKitProp {
  * @component
  * @param {Object} props - Props for the OrdConnectKit component.
  * @param {string} [props.customStyle] - Custom CSS style for the button.
- * @param {Function} [props.onViewWallet] - Callback function to handle viewing wallet.
+ * @param {Function} [props.onViewProfile] - Callback function to handle viewing wallet profile.
  * @returns {JSX.Element} OrdConnectKit React component.
  */
 export function OrdConnectKit({
   customStyle,
-  onViewWallet,
+  onViewProfile,
   disableMobile,
 }: OrdConnectKitProp) {
   const { address, network, isModalOpen, openModal, closeModal } =
-    useOrdContext();
+    useOrdConnect();
 
   return (
     <>
@@ -35,7 +35,8 @@ export function OrdConnectKit({
         <PostConnectButton
           address={address.ordinals}
           network={network}
-          onViewWallet={onViewWallet}
+          onViewProfile={onViewProfile}
+          onChangeWallet={openModal}
         />
       ) : (
         <PreConnectButton openModal={openModal} customStyle={customStyle} />

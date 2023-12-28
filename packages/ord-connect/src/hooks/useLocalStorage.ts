@@ -6,7 +6,8 @@ const KEY_PREFIX = "ord-connect";
 function getItemFromLocalStorage<T>(_key: string): T | null {
   const key = `${KEY_PREFIX}_${_key}`;
   try {
-    return JSON.parse(localStorage.getItem(key)) as T | null;
+    const value = localStorage.getItem(key);
+    return value !== null && value !== undefined ? JSON.parse(value) : null;
   } catch (error) {
     console.error(`Error retrieving ${key} from localStorage`, error);
     return null;
@@ -35,12 +36,13 @@ export function useLocalStorage<T>(
     const value = getItemFromLocalStorage<T>(key);
     if (!value) {
       setItemToLocalStorage(key, initialValue);
+      return initialValue;
     }
     return value;
   });
 
-  const setState = useCallback(
-    (newValue: T) => {
+  const setState: Dispatch<SetStateAction<T>> = useCallback(
+    (newValue) => {
       setItemToLocalStorage(key, newValue);
       setInnerState(newValue);
     },

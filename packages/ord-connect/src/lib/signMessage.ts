@@ -1,7 +1,7 @@
 import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
 import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
 
-import { Network, Wallet } from "../providers/OrdContext";
+import { Network, Wallet } from "../providers/OrdConnectProvider";
 
 interface SignMessageParams {
   message: string;
@@ -21,7 +21,7 @@ export default async function signMessage({
   wallet,
   address,
   network,
-}: SignMessageParams): Promise<string> {
+}: SignMessageParams): Promise<string | null> {
   if (wallet === Wallet.UNISAT) {
     const { base64 } = await signUnisatMessage(message, "bip322-simple");
     return base64;

@@ -6,21 +6,23 @@ import ChevronDownIcon from "../../assets/chevron-down.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdContext, Wallet } from "../../providers/OrdContext";
-import { TruncateMiddle } from "../../utils/text-helper";
+import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
+import { truncateMiddle } from "../../utils/text-helper";
 
 interface PostConnectButtonProp {
   address: string;
   network: string;
-  onViewWallet?: () => void;
+  onViewProfile?: () => void;
+  onChangeWallet?: () => void;
 }
 
 export function PostConnectButton({
   address,
   network,
-  onViewWallet,
+  onViewProfile,
+  onChangeWallet,
 }: PostConnectButtonProp) {
-  const { disconnectWallet, wallet } = useOrdContext();
+  const { disconnectWallet, wallet } = useOrdConnect();
 
   return (
     <Menu
@@ -46,7 +48,7 @@ export function PostConnectButton({
             </div>
 
             <section className="address-container">
-              <p className="address">{TruncateMiddle(address)}</p>
+              <p className="address">{truncateMiddle(address)}</p>
               <section className="network-container">
                 <div className="status-indicator" />
                 <p className="network">
@@ -76,10 +78,21 @@ export function PostConnectButton({
               <Menu.Item
                 as="button"
                 className="dropdown-button"
-                onClick={onViewWallet}
+                onClick={() => {
+                  onViewProfile?.();
+                }}
               >
-                <span className="label">View wallet</span>
-                <span className="value">{TruncateMiddle(address)}</span>
+                <span className="label">View profile</span>
+                <span className="value">{truncateMiddle(address)}</span>
+              </Menu.Item>
+              <Menu.Item
+                as="button"
+                className="dropdown-button"
+                onClick={() => {
+                  onChangeWallet?.();
+                }}
+              >
+                <span className="change-wallet-label">Change wallet</span>
               </Menu.Item>
               <hr className="horizontal-separator" />
               {/* <Menu.Item as="button" className="dropdown-button"> */}

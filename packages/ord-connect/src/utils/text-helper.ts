@@ -1,4 +1,4 @@
-export function TruncateMiddle(
+export function truncateMiddle(
   value: string,
   frontStringToKeep = 4,
   backStringToKeep = 5,

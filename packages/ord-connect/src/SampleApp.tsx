@@ -6,27 +6,29 @@ import { useSignMessage } from "./hooks/useSignMessage";
 import {
   Network,
   OrdConnectProvider,
-  useOrdContext,
-} from "./providers/OrdContext";
+  useOrdConnect,
+} from "./providers/OrdConnectProvider";
 import { OrdConnectKit, useSign } from "./index";
 
 import "./style.css";
 
 function TestControls() {
-  const [send, sendError, isSending] = useSend();
-  const [getBalance, balanceError, isLoadingBalance] = useBalance();
-  const [sign, signPsbtError] = useSign();
+  const { send, error: sendError, loading: isSending } = useSend();
+  const {
+    getBalance,
+    error: balanceError,
+    loading: isLoadingBalance,
+  } = useBalance();
+  const { sign, error: signPsbtError } = useSign();
   const { signMsg, error: signMessageError } = useSignMessage();
   const [result, setResult] = useState("");
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance] = useState<number | undefined>(undefined);
 
-  const { address } = useOrdContext();
+  const { address, wallet } = useOrdConnect();
 
   const handleCheckBalance = useCallback(async () => {
     const walletBalance = await getBalance();
-    if (walletBalance) {
-      setBalance(walletBalance);
-    }
+    setBalance(walletBalance);
   }, [getBalance]);
 
   const handleSend = useCallback(async () => {
@@ -41,6 +43,10 @@ function TestControls() {
   }, [send]);
 
   const handleSignPsbt = useCallback(async () => {
+    if (!address.payments) {
+      throw new Error("No payment address");
+    }
+
     const signed = await sign(
       address.payments,
       "cHNidP8BAFICAAAAARXJoLPdXB0nA98DsK0PaC5ABbmJbxKPAZ+WUvKJYgieAAAAAAD/////AaRCDwAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIAAAAAAAEBH2QAAAAAAAAAFgAUQQLeNoYbzPdxCaEZpQnxIuzjchIBAwSDAAAAAAA=",
@@ -50,6 +56,10 @@ function TestControls() {
   }, [address.payments, sign]);
 
   const handleSignMessage = useCallback(async () => {
+    if (!address.ordinals) {
+      throw new Error("No payment address");
+    }
+
     const signed = await signMsg(
       address.ordinals,
       "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\ntb1q82avu57rf0xe4wgrkudwa0ewrh7mfrsejkum3h\n\nNonce: 4NfCJ3FEDQ",
@@ -74,10 +84,11 @@ function TestControls() {
         </button>
       </div>
       <div>
+        {wallet ? <p>Wallet: {wallet}</p> : null}
         {address?.ordinals ? (
           <p>Connected Address: {address.ordinals ?? ""}</p>
         ) : null}
-        {balance || isLoadingBalance ? (
+        {typeof balance === "number" || isLoadingBalance ? (
           <p>
             Wallet Balance: {isLoadingBalance ? "Loading" : `${balance} sats`}
           </p>
