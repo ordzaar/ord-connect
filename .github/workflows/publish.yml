@@ -14,7 +14,7 @@ jobs:
 
       - run: corepack enable pnpm
 
-      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8
+      - uses: actions/setup-node@d86ebcd40b3cb50b156bfa44dd277faf38282d12
         with:
           node-version-file: ".nvmrc"
           cache: pnpm
