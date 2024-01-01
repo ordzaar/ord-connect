@@ -70,50 +70,53 @@ export function SelectWalletModal({
     [disconnectWallet],
   );
 
-  const onConnectUnisatWallet = async (readOnly?: boolean) => {
-    const listener = () => {
-      onConnectUnisatWallet();
-    };
-    try {
-      window.unisat.removeListener("accountsChanged", listener);
-    } catch (_) {
-      // This will fail on first run, handle it silently
-    }
-    try {
-      // Reset error message
-      setErrorMessage("");
-      const unisat = await getUnisatAddresses(network, readOnly);
+  const onConnectUnisatWallet = useCallback(
+    async ({ readOnly }: { readOnly?: boolean } = {}) => {
+      try {
+        // Reset error message
+        setErrorMessage("");
+        const unisat = await getUnisatAddresses(network, readOnly);
 
-      if (!unisat || unisat.length < 1) {
-        disconnectWallet();
-        throw new Error("Unisat via Ordit returned no addresses.");
+        if (!unisat || unisat.length < 1) {
+          disconnectWallet();
+          throw new Error("Unisat via Ordit returned no addresses.");
+        }
+
+        // Unisat only returns one wallet by default
+        const unisatWallet = unisat[0];
+        updateAddress({
+          ordinals: unisatWallet.address,
+          payments: unisatWallet.address,
+        });
+        updatePublicKey({
+          ordinals: unisatWallet.publicKey,
+          payments: unisatWallet.publicKey,
+        });
+        updateWallet(Wallet.UNISAT);
+        updateFormat({
+          ordinals: unisatWallet.format,
+          payments: unisatWallet.format,
+        });
+
+        closeModal();
+        return true;
+      } catch (err) {
+        onError(Wallet.UNISAT, err as Error);
+        return false;
       }
-
-      // Unisat only returns one wallet by default
-      const unisatWallet = unisat[0];
-      updateAddress({
-        ordinals: unisatWallet.address,
-        payments: unisatWallet.address,
-      });
-      updatePublicKey({
-        ordinals: unisatWallet.publicKey,
-        payments: unisatWallet.publicKey,
-      });
-      updateWallet(Wallet.UNISAT);
-      updateFormat({
-        ordinals: unisatWallet.format,
-        payments: unisatWallet.format,
-      });
-
-      window.unisat.addListener("accountsChanged", listener);
-      closeModal();
-      return true;
-    } catch (err) {
-      onError(Wallet.UNISAT, err as Error);
-      return false;
-    }
-  };
-  const onConnectXverseWallet = async () => {
+    },
+    [
+      closeModal,
+      disconnectWallet,
+      network,
+      onError,
+      updateAddress,
+      updateFormat,
+      updatePublicKey,
+      updateWallet,
+    ],
+  );
+  const onConnectXverseWallet = useCallback(async () => {
     try {
       setErrorMessage("");
       const xverse = await getXverseAddresses(network);
@@ -156,21 +159,51 @@ export function SelectWalletModal({
       onError(Wallet.XVERSE, err as Error);
       return false;
     }
-  };
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
 
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
+    let isMounted = true;
+    let isConnectSuccessful = false;
+    const listener = () => onConnectUnisatWallet();
+
     if (wallet === Wallet.UNISAT && address && publicKey && format) {
       const connectToUnisatWalletOnLoad = async () => {
         const isUnisatExtensionReady = await waitForUnisatExtensionReady();
+        if (!isMounted) {
+          return;
+        }
         if (!isUnisatExtensionReady) {
           disconnectWallet();
           return;
         }
-        onConnectUnisatWallet(true);
+
+        isConnectSuccessful = await onConnectUnisatWallet({ readOnly: true });
+        if (!isMounted) {
+          return;
+        }
+
+        if (isConnectSuccessful) {
+          window.unisat.addListener("accountsChanged", listener);
+        }
       };
       connectToUnisatWalletOnLoad();
     }
+    return () => {
+      isMounted = false;
+      if (isConnectSuccessful) {
+        window.unisat.removeListener("accountsChanged", listener);
+      }
+    };
   }, []);
 
   return (
