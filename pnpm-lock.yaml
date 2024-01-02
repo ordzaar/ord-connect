@@ -27,8 +27,8 @@ importers:
         specifier: ^1.7.17
         version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
       '@ordzaar/ordit-sdk':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.2.0
+        version: 1.2.0
       bitcoinjs-lib:
         specifier: 6.1.5
         version: 6.1.5
@@ -595,8 +595,8 @@ packages:
       fastq: 1.16.0
     dev: true
 
-  /@ordzaar/ordit-sdk@1.1.0:
-    resolution: {integrity: sha512-E9YyNwpH901etSPuR4oWaa1A/lWC3BpqegGuoIsDk89vyyQu9BfFE/ypyxQA78yXULEEdFCITpoON1LNtblwXw==}
+  /@ordzaar/ordit-sdk@1.2.0:
+    resolution: {integrity: sha512-QNbrSzR6BQIpuw3igwtgP9hMOtSe53/jBev0gbJ2r65vCBngjT78zSJ1G0xULFOgnlVv3lpxTar63nuuPE//nw==}
     dependencies:
       '@bitcoinerlab/secp256k1': 1.0.5
       bignumber.js: 9.1.2
@@ -608,7 +608,7 @@ packages:
       buffer-reverse: 1.0.1
       cross-fetch: 4.0.0
       ecpair: 2.1.0
-      ethers: 6.8.1
+      ethers: 6.9.1
       sats-connect: 1.1.2
     transitivePeerDependencies:
       - bufferutil
@@ -2683,8 +2683,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /ethers@6.8.1:
-    resolution: {integrity: sha512-iEKm6zox5h1lDn6scuRWdIdFJUCGg3+/aQWu0F4K0GVyEZiktFkqrJbRjTn1FlYEPz7RKA707D6g5Kdk6j7Ljg==}
+  /ethers@6.9.1:
+    resolution: {integrity: sha512-kuV8fGd4/8Gj7wkurbsuUsm1DCG6N5gKGYdw3fnWG/7QGknhy1xtHD7kbkCWQAcbAYmzLCLqCPedS3FYncFkKQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
