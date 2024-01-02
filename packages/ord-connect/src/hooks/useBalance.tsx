@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import {
   ADDRESS_FORMAT_TO_TYPE,
+  AddressType,
   getAddressesFromPublicKey,
   JsonRpcDatasource,
 } from "@ordzaar/ordit-sdk";
@@ -22,7 +23,10 @@ export function useBalance() {
       const { address } = getAddressesFromPublicKey(
         publicKey.payments,
         network,
-        ADDRESS_FORMAT_TO_TYPE[format.payments],
+        ADDRESS_FORMAT_TO_TYPE[format.payments] as Exclude<
+          AddressType,
+          "p2wsh"
+        >,
       )[0];
 
       const datasource = new JsonRpcDatasource({ network });
