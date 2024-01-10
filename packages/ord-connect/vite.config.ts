@@ -10,15 +10,6 @@ import * as packageJson from "./package.json";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  optimizeDeps: {
-    esbuildOptions: {
-      // Node.js global to browser globalThis
-      define: {
-        global: "globalThis",
-      },
-    },
-    include: [...Object.keys(packageJson.peerDependencies)],
-  },
   build: {
     lib: {
       entry: {
@@ -27,10 +18,17 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: [...Object.keys(packageJson.peerDependencies)],
+      external: [
+        ...Object.keys(packageJson.peerDependencies),
+        /^@ordzaar\/ordit-sdk\/.*/, // ordit-sdk/unisat, ordit-sdk/xverse imports
+      ],
     },
     commonjsOptions: {
-      include: [/node_modules/, ...Object.keys(packageJson.peerDependencies)],
+      include: [
+        /node_modules/,
+        ...Object.keys(packageJson.peerDependencies),
+        /^@ordzaar\/ordit-sdk\/.*/, // ordit-sdk/unisat, ordit-sdk/xverse imports
+      ],
     },
   },
   plugins: [
@@ -41,9 +39,9 @@ export default defineConfig({
     eslint(),
     cssInjectedByJsPlugin(),
     nodePolyfills({
-      // Whether to polyfill specific globals.
       globals: {
-        Buffer: true, // can also be 'build', 'dev', or false
+        // required for ordit-sdk functionality
+        Buffer: true,
       },
     }),
   ],
