@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   BrowserWalletNotInstalledError,
@@ -20,6 +20,7 @@ interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
   disableMobile?: boolean;
+  renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
@@ -31,6 +32,7 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
   disableMobile,
+  renderAvatar,
 }: SelectWalletModalProp) {
   const {
     updateAddress,
@@ -269,6 +271,7 @@ export function SelectWalletModal({
                             setErrorMessage={setErrorMessage}
                             isDisabled={isMobile} // disable unisat on mobile until it is supported
                             isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
                           />
                           <hr className="horizontal-separator" />
                         </>
@@ -280,6 +283,7 @@ export function SelectWalletModal({
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
                         isMobileDevice={isMobile}
+                        renderAvatar={renderAvatar}
                       />
                     </section>
                   ) : (
