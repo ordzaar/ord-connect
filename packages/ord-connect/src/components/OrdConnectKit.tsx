@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 import { PostConnectButton } from "./PostConnectButton";
@@ -10,6 +12,7 @@ export interface OrdConnectKitProp {
   customStyle?: string;
   onViewProfile?: () => void;
   disableMobile?: boolean;
+  renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
 /**
@@ -25,6 +28,7 @@ export function OrdConnectKit({
   customStyle,
   onViewProfile,
   disableMobile,
+  renderAvatar,
 }: OrdConnectKitProp) {
   const { address, network, isModalOpen, openModal, closeModal } =
     useOrdConnect();
@@ -37,6 +41,7 @@ export function OrdConnectKit({
           network={network}
           onViewProfile={onViewProfile}
           onChangeWallet={openModal}
+          renderAvatar={renderAvatar}
         />
       ) : (
         <PreConnectButton openModal={openModal} customStyle={customStyle} />
@@ -46,6 +51,7 @@ export function OrdConnectKit({
         isOpen={isModalOpen}
         closeModal={closeModal}
         disableMobile={disableMobile}
+        renderAvatar={renderAvatar}
       />
     </>
   );

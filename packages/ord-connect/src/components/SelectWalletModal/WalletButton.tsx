@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import Avatar from "boring-avatars";
 
 import ChevronRightIcon from "../../assets/chevron-right.svg";
@@ -19,6 +19,7 @@ interface WalletButtonProp {
   setErrorMessage: (msg: string) => void;
   isDisabled?: boolean;
   isMobileDevice?: boolean;
+  renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
 export function WalletButton({
@@ -29,6 +30,7 @@ export function WalletButton({
   setErrorMessage,
   isDisabled,
   isMobileDevice,
+  renderAvatar,
 }: WalletButtonProp) {
   const { wallet: _connectedWallet, address: _connectedAddress } =
     useOrdConnect();
@@ -82,12 +84,16 @@ export function WalletButton({
         </div>
         {connectedWallet === wallet && connectedAddress.ordinals ? (
           <div className="wallet-option-connected-address">
-            <Avatar
-              size={16}
-              variant="beam"
-              name={connectedAddress.ordinals}
-              colors={["#1C2DCB", "#F226B8"]}
-            />
+            {renderAvatar ? (
+              renderAvatar(connectedAddress.ordinals, "small")
+            ) : (
+              <Avatar
+                size={16}
+                variant="beam"
+                name={connectedAddress.ordinals}
+                colors={["#1C2DCB", "#F226B8"]}
+              />
+            )}
             <span className="label">
               {truncateMiddle(connectedAddress.ordinals)}
             </span>
