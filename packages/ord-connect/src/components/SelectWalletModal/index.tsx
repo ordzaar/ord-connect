@@ -172,12 +172,16 @@ export function SelectWalletModal({
 
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
+    if (wallet !== Wallet.UNISAT) {
+      return undefined;
+    }
+
     let isMounted = true;
     let isConnectSuccessful = false;
     const listener = () => onConnectUnisatWallet();
 
-    if (wallet === Wallet.UNISAT && address && publicKey && format) {
-      const connectToUnisatWalletOnLoad = async () => {
+    if (address && publicKey && format) {
+      const connectToUnisatWalletOnReady = async () => {
         const isUnisatExtensionReady = await waitForUnisatExtensionReady();
         if (!isMounted) {
           return;
@@ -196,7 +200,7 @@ export function SelectWalletModal({
           window.unisat.addListener("accountsChanged", listener);
         }
       };
-      connectToUnisatWalletOnLoad();
+      connectToUnisatWalletOnReady();
     }
     return () => {
       isMounted = false;
@@ -204,7 +208,7 @@ export function SelectWalletModal({
         window.unisat.removeListener("accountsChanged", listener);
       }
     };
-  }, []);
+  }, [wallet, onConnectUnisatWallet, disconnectWallet]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
