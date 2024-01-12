@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   BrowserWalletNotInstalledError,
@@ -20,6 +20,7 @@ interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
   disableMobile?: boolean;
+  renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
@@ -31,6 +32,7 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
   disableMobile,
+  renderAvatar,
 }: SelectWalletModalProp) {
   const {
     updateAddress,
@@ -172,12 +174,16 @@ export function SelectWalletModal({
 
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
+    if (wallet !== Wallet.UNISAT) {
+      return undefined;
+    }
+
     let isMounted = true;
     let isConnectSuccessful = false;
     const listener = () => onConnectUnisatWallet();
 
-    if (wallet === Wallet.UNISAT && address && publicKey && format) {
-      const connectToUnisatWalletOnLoad = async () => {
+    if (address && publicKey && format) {
+      const connectToUnisatWalletOnReady = async () => {
         const isUnisatExtensionReady = await waitForUnisatExtensionReady();
         if (!isMounted) {
           return;
@@ -196,7 +202,7 @@ export function SelectWalletModal({
           window.unisat.addListener("accountsChanged", listener);
         }
       };
-      connectToUnisatWalletOnLoad();
+      connectToUnisatWalletOnReady();
     }
     return () => {
       isMounted = false;
@@ -204,7 +210,7 @@ export function SelectWalletModal({
         window.unisat.removeListener("accountsChanged", listener);
       }
     };
-  }, []);
+  }, [wallet, onConnectUnisatWallet, disconnectWallet]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -265,6 +271,7 @@ export function SelectWalletModal({
                             setErrorMessage={setErrorMessage}
                             isDisabled={isMobile} // disable unisat on mobile until it is supported
                             isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
                           />
                           <hr className="horizontal-separator" />
                         </>
@@ -276,6 +283,7 @@ export function SelectWalletModal({
                         icon={XverseWalletIcon}
                         setErrorMessage={setErrorMessage}
                         isMobileDevice={isMobile}
+                        renderAvatar={renderAvatar}
                       />
                     </section>
                   ) : (

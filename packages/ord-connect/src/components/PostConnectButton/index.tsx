@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
 import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 
@@ -14,6 +14,7 @@ interface PostConnectButtonProp {
   network: string;
   onViewProfile?: () => void;
   onChangeWallet?: () => void;
+  renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
 export function PostConnectButton({
@@ -21,6 +22,7 @@ export function PostConnectButton({
   network,
   onViewProfile,
   onChangeWallet,
+  renderAvatar,
 }: PostConnectButtonProp) {
   const { disconnectWallet, wallet } = useOrdConnect();
 
@@ -33,12 +35,16 @@ export function PostConnectButton({
         <>
           <Menu.Button className="ord-wallet-connected-button">
             <div className="wallet-identifier-container">
-              <Avatar
-                size={28}
-                variant="beam"
-                name={address}
-                colors={["#1C2DCB", "#F226B8"]}
-              />
+              {renderAvatar ? (
+                renderAvatar(address, "large")
+              ) : (
+                <Avatar
+                  size={28}
+                  variant="beam"
+                  name={address}
+                  colors={["#1C2DCB", "#F226B8"]}
+                />
+              )}
               <img
                 src={
                   wallet === Wallet.XVERSE ? XverseWalletIcon : UnisatWalletIcon
