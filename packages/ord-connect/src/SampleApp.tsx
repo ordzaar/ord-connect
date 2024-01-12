@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 
 import { useBalance } from "./hooks/useBalance";
-import { useRelay } from "./hooks/useRelay";
 import { useSend } from "./hooks/useSend";
 import { useSignMessage } from "./hooks/useSignMessage";
 import {
@@ -15,7 +14,6 @@ import "./style.css";
 
 function TestControls() {
   const { send, error: sendError, loading: isSending } = useSend();
-  const { relay, error: relayError, loading: isRelaying } = useRelay();
   const {
     getBalance,
     error: balanceError,
@@ -23,7 +21,7 @@ function TestControls() {
   } = useBalance();
   const { sign, error: signPsbtError } = useSign();
   const { signMsg, error: signMessageError } = useSignMessage();
-  const [txId, setTxId] = useState<string>("");
+  const [result, setResult] = useState("");
   const [balance, setBalance] = useState<number | undefined>(undefined);
 
   const { address, wallet } = useOrdConnect();
@@ -34,19 +32,15 @@ function TestControls() {
   }, [getBalance]);
 
   const handleSend = useCallback(async () => {
-    const signedPsbt = await send(
+    const txId = await send(
       "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
       1000,
       10,
     );
-    if (signedPsbt && signedPsbt.hex) {
-      const relayResult = await relay(signedPsbt.hex);
-
-      if (relayResult) {
-        setTxId(relayResult);
-      }
+    if (txId) {
+      setResult(txId);
     }
-  }, [send, relay]);
+  }, [send]);
 
   const handleSignPsbt = useCallback(async () => {
     if (!address.payments) {
@@ -100,15 +94,13 @@ function TestControls() {
           </p>
         ) : null}
         {balanceError ? <p>Wallet Balance Error: {balanceError}</p> : null}
-        {txId ? <p>Transaction ID: {txId}</p> : null}
+        {result ? <p>Transaction ID: {result}</p> : null}
         {signPsbtError ? <p>Sign Psbt Error: {signPsbtError}</p> : null}
         {signMessageError ? (
           <p>Sign Message Error: {signMessageError}</p>
         ) : null}
         {sendError ? <p>Send Error: {sendError}</p> : null}
         {isSending ? <p>Sending</p> : null}
-        {relayError ? <p>Relay Error: {relayError}</p> : null}
-        {isRelaying ? <p>Relaying</p> : null}
       </div>
     </div>
   );

@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
-import { PSBTBuilder } from "@ordzaar/ordit-sdk";
+import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 
-import signPsbt, { SerializedPsbt } from "../lib/signPsbt";
+import signPsbt from "../lib/signPsbt";
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 type SendFunction = (
   address: string,
   satoshis: number,
   feeRate: number,
-) => Promise<SerializedPsbt | null>;
+  relay?: boolean,
+) => Promise<string | null>;
 
 export function useSend() {
   const { wallet, network, address, publicKey } = useOrdConnect();
@@ -16,7 +17,7 @@ export function useSend() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const send: SendFunction = useCallback(
-    async (toAddress, satoshis, feeRate) => {
+    async (toAddress, satoshis, feeRate, relay = true) => {
       setLoading(true);
       try {
         setError(null);
@@ -51,8 +52,14 @@ export function useSend() {
           psbt: psbtBuilder.toPSBT(),
         });
 
+        if (relay) {
+          const datasource = new JsonRpcDatasource({ network });
+          const txId = await datasource.relay({ hex: signedPsbt.hex });
+          setLoading(false);
+          return txId;
+        }
         setLoading(false);
-        return signedPsbt;
+        return signedPsbt.hex;
       } catch (err) {
         setError((err as Error).message);
         setLoading(false);
