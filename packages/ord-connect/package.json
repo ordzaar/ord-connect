@@ -46,7 +46,7 @@
     "vite-plugin-node-polyfills": "^0.19.0"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^1.7.18",
     "@ordzaar/ordit-sdk": "1.2.1",
     "bitcoinjs-lib": "6.1.5",
     "boring-avatars": "^1.10.1"
