@@ -203,14 +203,16 @@
   }
 }
 
-.ord-connect-wallet-modal .wallet-option-button:nth-of-type(2) {
+.ord-connect-wallet-modal .wallet-option-button:nth-of-type(n) {
   border: 0px;
   margin-bottom: 0px;
-  border-radius: 0px 0px 20px 20px;
 }
 
 .ord-connect-wallet-modal .wallet-option-button:last-child {
   padding: 8px 16px 16px 16px;
+  border: 0px;
+  margin-bottom: 0px;
+  border-radius: 0px 0px 20px 20px;
 }
 
 .ord-connect-wallet-modal .wallet-icon {
