@@ -341,7 +341,7 @@ export function SelectWalletModal({
                             onConnect={onConnectMagicEdenWallet}
                             icon={MagicEdenWalletIcon}
                             setErrorMessage={setErrorMessage}
-                            isDisabled={isMobile} // disable unisat on mobile until it is supported
+                            isDisabled={isMobile}
                             isMobileDevice={isMobile}
                             renderAvatar={renderAvatar}
                           />
