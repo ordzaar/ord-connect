@@ -4,10 +4,12 @@ import {
   BrowserWalletNotInstalledError,
   BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
+import { getAddresses as getMagicEdenAddress } from "@ordzaar/ordit-sdk/magiceden";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
+import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
@@ -24,6 +26,7 @@ interface SelectWalletModalProp {
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
+  [Wallet.MAGICEDEN]: "https://wallet.magiceden.io/",
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
 };
@@ -71,6 +74,63 @@ export function SelectWalletModal({
     },
     [disconnectWallet],
   );
+
+  const onConnectMagicEdenWallet = useCallback(async () => {
+    if (network === "testnet") {
+      setErrorMessage("Magic Eden wallet is not supported on testnet");
+      return false;
+    }
+
+    try {
+      setErrorMessage("");
+      const magicEden = await getMagicEdenAddress(network);
+      if (!magicEden || magicEden.length < 1) {
+        disconnectWallet();
+        throw new Error("Magic Eden via Ordit returned no addresses.");
+      }
+
+      const p2sh = magicEden.find(
+        (walletAddress) => walletAddress.format === "p2sh-p2wpkh",
+      );
+      const taproot = magicEden.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+
+      if (!p2sh || !taproot) {
+        throw new Error(
+          "Magic Eden via Ordit did not return P2SH or Taproot addresses.",
+        );
+      }
+
+      updateAddress({
+        ordinals: taproot.address,
+        payments: p2sh.address,
+      });
+      updatePublicKey({
+        ordinals: taproot.publicKey,
+        payments: p2sh.publicKey,
+      });
+      updateWallet(Wallet.MAGICEDEN);
+      updateFormat({
+        ordinals: taproot.format,
+        payments: p2sh.format,
+      });
+      closeModal();
+      return true;
+    } catch (err) {
+      onError(Wallet.MAGICEDEN, err as Error);
+      return false;
+    }
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
 
   const onConnectUnisatWallet = useCallback(
     async ({ readOnly }: { readOnly?: boolean } = {}) => {
@@ -268,6 +328,17 @@ export function SelectWalletModal({
                             subtitle="Coming soon on mobile browsing"
                             onConnect={onConnectUnisatWallet}
                             icon={UnisatWalletIcon}
+                            setErrorMessage={setErrorMessage}
+                            isDisabled={isMobile} // disable unisat on mobile until it is supported
+                            isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
+                          />
+                          <hr className="horizontal-separator" />
+                          <WalletButton
+                            wallet={Wallet.MAGICEDEN}
+                            subtitle="Coming soon on mobile browsing"
+                            onConnect={onConnectMagicEdenWallet}
+                            icon={MagicEdenWalletIcon}
                             setErrorMessage={setErrorMessage}
                             isDisabled={isMobile} // disable unisat on mobile until it is supported
                             isMobileDevice={isMobile}

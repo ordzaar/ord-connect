@@ -7,6 +7,7 @@ import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
 import { truncateMiddle } from "../../utils/text-helper";
 
 const WALLET_TO_NAME: Record<Wallet, string> = {
+  [Wallet.MAGICEDEN]: "Magic Eden",
   [Wallet.UNISAT]: "UniSat Wallet",
   [Wallet.XVERSE]: "Xverse",
 } as const;

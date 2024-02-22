@@ -1,3 +1,4 @@
+import { signPsbt as signMagicEdenPsbt } from "@ordzaar/ordit-sdk/magiceden";
 import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
 import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
 import { Psbt } from "bitcoinjs-lib";
@@ -40,6 +41,24 @@ export default async function signPsbt({
 }: SignPsbtParams): Promise<SerializedPsbt> {
   const finalize = options?.finalize ?? true;
   const extractTx = options?.extractTx ?? true;
+  const getAllInputIndices = () =>
+    psbt.data.inputs.map((value, index) => index);
+
+  if (wallet === Wallet.MAGICEDEN) {
+    const signedMagicEdenPsbt = await signMagicEdenPsbt(psbt, {
+      network,
+      inputsToSign: [
+        {
+          address,
+          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+          sigHash: options?.sigHash,
+        },
+      ],
+      finalize,
+      extractTx,
+    });
+    return signedMagicEdenPsbt;
+  }
 
   if (wallet === Wallet.UNISAT) {
     const signedUnisatPsbt = await signUnisatPsbt(psbt, {
@@ -50,8 +69,6 @@ export default async function signPsbt({
   }
 
   if (wallet === Wallet.XVERSE) {
-    const getAllInputIndices = () =>
-      psbt.data.inputs.map((value, index) => index);
     const signedXversePsbt = await signXversePsbt(psbt, {
       network,
       inputsToSign: [
