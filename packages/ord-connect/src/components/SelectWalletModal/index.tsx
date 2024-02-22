@@ -77,7 +77,8 @@ export function SelectWalletModal({
 
   const onConnectMagicEdenWallet = useCallback(async () => {
     if (network === "testnet") {
-      setErrorMessage("Magic Eden wallet is not supported on testnet");
+      const unsupportedNetworkError = new Error("Magic Eden wallet is not supported on testnet");
+      onError(Wallet.MAGICEDEN, unsupportedNetworkError);
       return false;
     }
 
