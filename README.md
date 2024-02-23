@@ -8,10 +8,11 @@
 
 ## Wallet Feature Support
 
-| Wallet | Ordinal-safety | Inscription-safety |
-| ------ | -------------- | ------------------ |
-| Unisat | ✅             | ✅                 |
-| Xverse | ✅             | ✅                 |
+| Wallet  | Ordinal-safety | Inscription-safety |
+| ------- | -------------- | ------------------ |
+| Unisat  | ✅             | ✅                 |
+| Xverse  | ✅             | ✅                 |
+| Leather | ✅             | ✅                 |
 
 ## Quick Start
 

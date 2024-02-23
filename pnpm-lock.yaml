@@ -27,8 +27,8 @@ importers:
         specifier: ^1.7.18
         version: 1.7.18(react-dom@18.2.0)(react@18.2.0)
       '@ordzaar/ordit-sdk':
-        specifier: 1.3.1
-        version: 1.3.1
+        specifier: 1.4.0
+        version: 1.4.0
       bitcoinjs-lib:
         specifier: 6.1.5
         version: 6.1.5
@@ -608,8 +608,8 @@ packages:
       fastq: 1.16.0
     dev: true
 
-  /@ordzaar/ordit-sdk@1.3.1:
-    resolution: {integrity: sha512-HZZueY08wk4SjW0WRco9C2Jf2nRlmdTHxa1ulsoiJn+llHesjfSHE6O/6aHil4B3Cbn9oUVxnaj9NQi98L+mSg==}
+  /@ordzaar/ordit-sdk@1.4.0:
+    resolution: {integrity: sha512-EPg6rrVyg2JpZwlPlqNasWcVjk98WuRiW990G4sted2ZaSkGaoSZWjFeSmF7f8bERhilV2N+9CM00zI8+Qdoow==}
     dependencies:
       '@bitcoinerlab/secp256k1': 1.1.1
       bignumber.js: 9.1.2

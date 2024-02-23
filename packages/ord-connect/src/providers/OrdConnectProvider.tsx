@@ -18,6 +18,7 @@ export enum Network {
 export enum Wallet {
   UNISAT = "unisat",
   XVERSE = "xverse",
+  LEATHER = "leather",
 }
 
 export interface BiAddress<T> {
@@ -25,7 +26,7 @@ export interface BiAddress<T> {
   ordinals: T | null;
 }
 
-type BiAddressString = BiAddress<string>;
+export type BiAddressString = BiAddress<string>;
 type BiAddressFormat = BiAddress<AddressFormat>;
 
 const EMPTY_BIADDRESS_OBJECT = {

@@ -9,6 +9,7 @@ import { truncateMiddle } from "../../utils/text-helper";
 const WALLET_TO_NAME: Record<Wallet, string> = {
   [Wallet.UNISAT]: "UniSat Wallet",
   [Wallet.XVERSE]: "Xverse",
+  [Wallet.LEATHER]: "Leather",
 } as const;
 
 interface WalletButtonProp {

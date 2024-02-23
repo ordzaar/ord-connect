@@ -1,3 +1,4 @@
+import { signPsbt as signLeatherPsbt } from "@ordzaar/ordit-sdk/leather";
 import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
 import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
 import { Psbt } from "bitcoinjs-lib";
@@ -41,6 +42,9 @@ export default async function signPsbt({
   const finalize = options?.finalize ?? true;
   const extractTx = options?.extractTx ?? true;
 
+  const getAllInputIndices = () =>
+    psbt.data.inputs.map((value, index) => index);
+
   if (wallet === Wallet.UNISAT) {
     const signedUnisatPsbt = await signUnisatPsbt(psbt, {
       finalize,
@@ -50,8 +54,6 @@ export default async function signPsbt({
   }
 
   if (wallet === Wallet.XVERSE) {
-    const getAllInputIndices = () =>
-      psbt.data.inputs.map((value, index) => index);
     const signedXversePsbt = await signXversePsbt(psbt, {
       network,
       inputsToSign: [
@@ -65,6 +67,17 @@ export default async function signPsbt({
       extractTx,
     });
     return signedXversePsbt;
+  }
+
+  if (wallet === Wallet.LEATHER) {
+    const signedLeatherPsbt = await signLeatherPsbt(psbt, {
+      network,
+      finalize,
+      extractTx,
+      allowedSighash: options?.sigHash ? [options?.sigHash] : [],
+      signAtIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+    });
+    return signedLeatherPsbt;
   }
   // else throw error
   throw new Error("Invalid wallet selected");

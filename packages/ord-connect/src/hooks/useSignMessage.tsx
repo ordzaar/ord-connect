@@ -8,7 +8,13 @@ export function useSignMessage(): {
   signMsg: (address: string, message: string) => Promise<string | null>;
   error: string | null;
 } {
-  const { network, wallet, publicKey, format } = useOrdConnect();
+  const {
+    network,
+    wallet,
+    publicKey,
+    format,
+    address: walletAddresses,
+  } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -26,6 +32,7 @@ export function useSignMessage(): {
           wallet,
           message,
           network,
+          walletAddresses,
         });
 
         setIsLoading(false);
@@ -36,7 +43,7 @@ export function useSignMessage(): {
         throw err;
       }
     },
-    [format, network, publicKey, wallet],
+    [format, network, publicKey, wallet, walletAddresses],
   );
 
   return { signMsg, error, isLoading };

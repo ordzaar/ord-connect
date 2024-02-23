@@ -4,10 +4,12 @@ import {
   BrowserWalletNotInstalledError,
   BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
-import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
+import { getAddresses as getLeatherAddresses } from "@ordzaar/ordit-sdk/leather";
+import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/magiceden";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
+import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
@@ -26,6 +28,7 @@ interface SelectWalletModalProp {
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
+  [Wallet.LEATHER]: "https://leather.io/install-extension",
 };
 
 export function SelectWalletModal({
@@ -72,52 +75,49 @@ export function SelectWalletModal({
     [disconnectWallet],
   );
 
-  const onConnectUnisatWallet = useCallback(
-    async ({ readOnly }: { readOnly?: boolean } = {}) => {
-      try {
-        // Reset error message
-        setErrorMessage("");
-        const unisat = await getUnisatAddresses(network, readOnly);
+  const onConnectUnisatWallet = useCallback(async () => {
+    try {
+      // Reset error message
+      setErrorMessage("");
+      const unisat = await getUnisatAddresses(network);
 
-        if (!unisat || unisat.length < 1) {
-          disconnectWallet();
-          throw new Error("Unisat via Ordit returned no addresses.");
-        }
-
-        // Unisat only returns one wallet by default
-        const unisatWallet = unisat[0];
-        updateAddress({
-          ordinals: unisatWallet.address,
-          payments: unisatWallet.address,
-        });
-        updatePublicKey({
-          ordinals: unisatWallet.publicKey,
-          payments: unisatWallet.publicKey,
-        });
-        updateWallet(Wallet.UNISAT);
-        updateFormat({
-          ordinals: unisatWallet.format,
-          payments: unisatWallet.format,
-        });
-
-        closeModal();
-        return true;
-      } catch (err) {
-        onError(Wallet.UNISAT, err as Error);
-        return false;
+      if (!unisat || unisat.length < 1) {
+        disconnectWallet();
+        throw new Error("Unisat via Ordit returned no addresses.");
       }
-    },
-    [
-      closeModal,
-      disconnectWallet,
-      network,
-      onError,
-      updateAddress,
-      updateFormat,
-      updatePublicKey,
-      updateWallet,
-    ],
-  );
+
+      // Unisat only returns one wallet by default
+      const unisatWallet = unisat[0];
+      updateAddress({
+        ordinals: unisatWallet.address,
+        payments: unisatWallet.address,
+      });
+      updatePublicKey({
+        ordinals: unisatWallet.publicKey,
+        payments: unisatWallet.publicKey,
+      });
+      updateWallet(Wallet.UNISAT);
+      updateFormat({
+        ordinals: unisatWallet.format,
+        payments: unisatWallet.format,
+      });
+
+      closeModal();
+      return true;
+    } catch (err) {
+      onError(Wallet.UNISAT, err as Error);
+      return false;
+    }
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
   const onConnectXverseWallet = useCallback(async () => {
     try {
       setErrorMessage("");
@@ -171,6 +171,59 @@ export function SelectWalletModal({
     updatePublicKey,
     updateWallet,
   ]);
+  const onConnectLeatherWallet = useCallback(async () => {
+    try {
+      setErrorMessage("");
+      const leather = await getLeatherAddresses(network);
+      // Segwit/P2WPKH = BTC
+      // Taproot = Ordinals / Inscriptions
+      if (!leather || leather.length < 1) {
+        disconnectWallet();
+        throw new Error("Leather via Ordit returned no addresses.");
+      }
+
+      const segwit = leather.find(
+        (walletAddress) => walletAddress.format === "segwit",
+      );
+      const taproot = leather.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+
+      if (!segwit || !taproot) {
+        throw new Error(
+          "Leather via Ordit did not return P2SH or Taproot addresses.",
+        );
+      }
+
+      updateAddress({
+        ordinals: taproot.address,
+        payments: segwit.address,
+      });
+      updatePublicKey({
+        ordinals: taproot.publicKey,
+        payments: segwit.publicKey,
+      });
+      updateWallet(Wallet.LEATHER);
+      updateFormat({
+        ordinals: taproot.format,
+        payments: segwit.format,
+      });
+      closeModal();
+      return true;
+    } catch (err) {
+      onError(Wallet.LEATHER, err as Error);
+      return false;
+    }
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
 
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
@@ -193,7 +246,7 @@ export function SelectWalletModal({
           return;
         }
 
-        isConnectSuccessful = await onConnectUnisatWallet({ readOnly: true });
+        isConnectSuccessful = await onConnectUnisatWallet();
         if (!isMounted) {
           return;
         }
@@ -285,6 +338,19 @@ export function SelectWalletModal({
                         isMobileDevice={isMobile}
                         renderAvatar={renderAvatar}
                       />
+                      <hr className="horizontal-separator" />
+                      {!isMobile && ( // TODO:: remove this once leather supported on mobile devices
+                        <WalletButton
+                          wallet={Wallet.LEATHER}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectLeatherWallet}
+                          icon={LeatherWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                      )}
                     </section>
                   ) : (
                     <Dialog.Description className="unsupported-browser-message">
