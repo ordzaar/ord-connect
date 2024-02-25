@@ -92,6 +92,11 @@ export function SelectWalletModal({
         throw new Error("Magic Eden via Ordit returned no addresses.");
       }
 
+      // Magic Eden provides segwit address for sending and receiving payments
+      const segwit = magicEden.find(
+        (walletAddress) => walletAddress.format === "segwit",
+      );
+      // p2sh is used to support imported xverse wallets
       const p2sh = magicEden.find(
         (walletAddress) => walletAddress.format === "p2sh-p2wpkh",
       );
@@ -99,24 +104,29 @@ export function SelectWalletModal({
         (walletAddress) => walletAddress.format === "taproot",
       );
 
-      if (!p2sh || !taproot) {
+      // Only one Bitcoin address is needed for paymentys
+      // Default to segwit because it is the Magic Eden Wallet default option
+      // Support p2sh as a fallback for imported xverse wallets
+      const paymentAddress = segwit ?? p2sh;
+
+      if (!paymentAddress || !taproot) {
         throw new Error(
-          "Magic Eden via Ordit did not return P2SH or Taproot addresses.",
+          "Magic Eden via Ordit did not return P2SH, segwit or Taproot addresses.",
         );
       }
 
       updateAddress({
         ordinals: taproot.address,
-        payments: p2sh.address,
+        payments: paymentAddress.address,
       });
       updatePublicKey({
         ordinals: taproot.publicKey,
-        payments: p2sh.publicKey,
+        payments: paymentAddress.publicKey,
       });
       updateWallet(Wallet.MAGICEDEN);
       updateFormat({
         ordinals: taproot.format,
-        payments: p2sh.format,
+        payments: paymentAddress.format,
       });
       closeModal();
       return true;
@@ -337,17 +347,6 @@ export function SelectWalletModal({
                             renderAvatar={renderAvatar}
                           />
                           <hr className="horizontal-separator" />
-                          <WalletButton
-                            wallet={Wallet.MAGICEDEN}
-                            subtitle="Coming soon on mobile browsing"
-                            onConnect={onConnectMagicEdenWallet}
-                            icon={MagicEdenWalletIcon}
-                            setErrorMessage={setErrorMessage}
-                            isDisabled={isMobile}
-                            isMobileDevice={isMobile}
-                            renderAvatar={renderAvatar}
-                          />
-                          <hr className="horizontal-separator" />
                         </>
                       )}
                       <WalletButton
@@ -359,6 +358,19 @@ export function SelectWalletModal({
                         isMobileDevice={isMobile}
                         renderAvatar={renderAvatar}
                       />
+                      <hr className="horizontal-separator" />
+                      {!isMobile && ( // TODO:: remove this once unisat supported on mobile devices
+                        <WalletButton
+                          wallet={Wallet.MAGICEDEN}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectMagicEdenWallet}
+                          icon={MagicEdenWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                      )}
                     </section>
                   ) : (
                     <Dialog.Description className="unsupported-browser-message">
