@@ -319,7 +319,7 @@ export function SelectWalletModal({
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
                     {isSupportedDevice
-                      ? "Choose wallet to connect"
+                      ? "Choose Bitcoin wallet to connect"
                       : "Unsupported device"}
                   </Dialog.Title>
                   <button
