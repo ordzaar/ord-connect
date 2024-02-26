@@ -197,7 +197,7 @@ export function SelectWalletModal({
       );
       if (!ordinalAddress) {
         throw new Error(
-          "Leather via Ordit did not return Ordinal/Taproot addreses.",
+          "Leather via Ordit did not return a Taproot address.",
         );
       }
 
