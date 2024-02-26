@@ -87,40 +87,46 @@ export function SelectWalletModal({
     try {
       setErrorMessage("");
       const magicEdenAddresses = await getMagicEdenAddress(network);
-      if (!magicEden || magicEden.length < 1) {
+      if (!magicEdenAddresses || magicEdenAddresses.length < 1) {
         disconnectWallet();
         throw new Error("Magic Eden via Ordit returned no addresses.");
       }
 
       // Magic Eden provides a segwit address by default for sending and receiving payments
       // Imported xverse wallets will return a p2sh address for payments by default instead
-      const paymentAddress = magicEden.find(
+      const paymentAddress = magicEdenAddresses.find(
         (walletAddress) =>
           walletAddress.format === "segwit" ||
           walletAddress.format === "p2sh-p2wpkh",
       );
 
-      const ordinalAddress = magicEden.find(
+      if (!paymentAddress) {
+        throw new Error(
+          "Magic Eden via Ordit did not return a P2SH or Segwit address.",
+        );
+      }
+
+      const ordinalsAddress = magicEdenAddresses.find(
         (walletAddress) => walletAddress.format === "taproot",
       );
 
-      if (!paymentAddress || !taproot) {
+      if (!ordinalsAddress) {
         throw new Error(
-          "Magic Eden via Ordit did not return P2SH, segwit or Taproot addresses.",
+          "Magic Eden via Ordit did not return a Taproot address.",
         );
       }
 
       updateAddress({
-        ordinals: taproot.address,
+        ordinals: ordinalsAddress.address,
         payments: paymentAddress.address,
       });
       updatePublicKey({
-        ordinals: taproot.publicKey,
+        ordinals: ordinalsAddress.publicKey,
         payments: paymentAddress.publicKey,
       });
       updateWallet(Wallet.MAGICEDEN);
       updateFormat({
-        ordinals: taproot.format,
+        ordinals: ordinalsAddress.format,
         payments: paymentAddress.format,
       });
       closeModal();
