@@ -183,31 +183,36 @@ export function SelectWalletModal({
         throw new Error("Leather via Ordit returned no addresses.");
       }
 
-      const segwit = leather.find(
+      const paymentAddress = leather.find(
         (walletAddress) => walletAddress.format === "segwit",
       );
-      const taproot = leather.find(
+      if (!paymentAddress) {
+        throw new Error(
+          "Leather via Ordit did not return Payment/Segwit address.",
+        );
+      }
+
+      const ordinalAddress = leather.find(
         (walletAddress) => walletAddress.format === "taproot",
       );
-
-      if (!segwit || !taproot) {
+      if (!ordinalAddress) {
         throw new Error(
-          "Leather via Ordit did not return Segwit or Taproot addresses.",
+          "Leather via Ordit did not return Ordinal/Taproot addreses.",
         );
       }
 
       updateAddress({
-        ordinals: taproot.address,
-        payments: segwit.address,
+        ordinals: ordinalAddress.address,
+        payments: paymentAddress.address,
       });
       updatePublicKey({
-        ordinals: taproot.publicKey,
-        payments: segwit.publicKey,
+        ordinals: ordinalAddress.publicKey,
+        payments: paymentAddress.publicKey,
       });
       updateWallet(Wallet.LEATHER);
       updateFormat({
-        ordinals: taproot.format,
-        payments: segwit.format,
+        ordinals: ordinalAddress.format,
+        payments: paymentAddress.format,
       });
       closeModal();
       return true;
