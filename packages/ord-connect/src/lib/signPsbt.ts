@@ -1,3 +1,4 @@
+import { signPsbt as signLeatherPsbt } from "@ordzaar/ordit-sdk/leather";
 import { signPsbt as signMagicEdenPsbt } from "@ordzaar/ordit-sdk/magiceden";
 import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
 import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
@@ -82,6 +83,17 @@ export default async function signPsbt({
       extractTx,
     });
     return signedXversePsbt;
+  }
+
+  if (wallet === Wallet.LEATHER) {
+    const signedLeatherPsbt = await signLeatherPsbt(psbt, {
+      network,
+      finalize,
+      extractTx,
+      allowedSighash: options?.sigHash ? [options?.sigHash] : [],
+      signAtIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+    });
+    return signedLeatherPsbt;
   }
   // else throw error
   throw new Error("Invalid wallet selected");

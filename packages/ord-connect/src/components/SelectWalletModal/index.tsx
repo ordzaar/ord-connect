@@ -4,11 +4,13 @@ import {
   BrowserWalletNotInstalledError,
   BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
+import { getAddresses as getLeatherAddresses } from "@ordzaar/ordit-sdk/leather";
 import { getAddresses as getMagicEdenAddress } from "@ordzaar/ordit-sdk/magiceden";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
+import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
@@ -29,6 +31,7 @@ const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
   [Wallet.MAGICEDEN]: "https://wallet.magiceden.io/",
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
+  [Wallet.LEATHER]: "https://leather.io/install-extension",
 };
 
 export function SelectWalletModal({
@@ -245,6 +248,58 @@ export function SelectWalletModal({
     updatePublicKey,
     updateWallet,
   ]);
+  const onConnectLeatherWallet = useCallback(async () => {
+    try {
+      setErrorMessage("");
+      const leather = await getLeatherAddresses(network);
+      if (!leather || leather.length < 1) {
+        disconnectWallet();
+        throw new Error("Leather via Ordit returned no addresses.");
+      }
+
+      const paymentAddress = leather.find(
+        (walletAddress) => walletAddress.format === "segwit",
+      );
+      if (!paymentAddress) {
+        throw new Error("Leather via Ordit did not return a Segwit address.");
+      }
+
+      const ordinalAddress = leather.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+      if (!ordinalAddress) {
+        throw new Error("Leather via Ordit did not return a Taproot address.");
+      }
+
+      updateAddress({
+        ordinals: ordinalAddress.address,
+        payments: paymentAddress.address,
+      });
+      updatePublicKey({
+        ordinals: ordinalAddress.publicKey,
+        payments: paymentAddress.publicKey,
+      });
+      updateWallet(Wallet.LEATHER);
+      updateFormat({
+        ordinals: ordinalAddress.format,
+        payments: paymentAddress.format,
+      });
+      closeModal();
+      return true;
+    } catch (err) {
+      onError(Wallet.LEATHER, err as Error);
+      return false;
+    }
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
 
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
@@ -366,6 +421,19 @@ export function SelectWalletModal({
                           subtitle="Coming soon on mobile browsing"
                           onConnect={onConnectMagicEdenWallet}
                           icon={MagicEdenWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                      )}
+                      <hr className="horizontal-separator" />
+                      {!isMobile && (
+                        <WalletButton
+                          wallet={Wallet.LEATHER}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectLeatherWallet}
+                          icon={LeatherWalletIcon}
                           setErrorMessage={setErrorMessage}
                           isDisabled={isMobile}
                           isMobileDevice={isMobile}

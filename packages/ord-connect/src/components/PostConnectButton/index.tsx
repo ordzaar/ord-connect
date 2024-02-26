@@ -3,6 +3,7 @@ import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 
 import ChevronDownIcon from "../../assets/chevron-down.svg";
+import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import MagicEdenIcon from "../../assets/magiceden-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
@@ -14,6 +15,7 @@ const WALLET_TO_ICON: Record<Wallet, string> = {
   [Wallet.MAGICEDEN]: MagicEdenIcon,
   [Wallet.UNISAT]: UnisatWalletIcon,
   [Wallet.XVERSE]: XverseWalletIcon,
+  [Wallet.LEATHER]: LeatherWalletIcon,
 } as const;
 
 interface PostConnectButtonProp {

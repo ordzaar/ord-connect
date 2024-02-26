@@ -8,17 +8,31 @@ export function useSignMessage(): {
   signMsg: (address: string, message: string) => Promise<string | null>;
   error: string | null;
 } {
-  const { network, wallet, publicKey, format } = useOrdConnect();
+  const {
+    network,
+    wallet,
+    publicKey,
+    format,
+    address: walletAddresses,
+  } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const signMsg = useCallback(
     async (address: string, message: string) => {
       setIsLoading(true);
+
       try {
         setError(null);
         if (!format || !publicKey || !wallet) {
           throw new Error("No wallet is connected");
+        }
+
+        if (
+          walletAddresses.ordinals !== address &&
+          walletAddresses.payments !== address
+        ) {
+          throw new Error("Address supplied is not connected address");
         }
 
         const signedMessage = await signMessage({
@@ -26,6 +40,10 @@ export function useSignMessage(): {
           wallet,
           message,
           network,
+          format:
+            walletAddresses.ordinals === address
+              ? format.ordinals!
+              : format.payments!,
         });
 
         setIsLoading(false);
@@ -36,7 +54,7 @@ export function useSignMessage(): {
         throw err;
       }
     },
-    [format, network, publicKey, wallet],
+    [format, network, publicKey, wallet, walletAddresses],
   );
 
   return { signMsg, error, isLoading };

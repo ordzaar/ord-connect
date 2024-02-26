@@ -13,6 +13,7 @@
 | Unisat     | ✅             | ✅                 |
 | Xverse     | ✅             | ✅                 |
 | Magic Eden | ✅             | ✅                 |
+| Leather    | ✅             | ✅                 |
 
 ## Quick Start
 

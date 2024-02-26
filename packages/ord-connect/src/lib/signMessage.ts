@@ -1,3 +1,8 @@
+import { AddressFormat } from "@ordzaar/ordit-sdk";
+import {
+  LeatherAddressType,
+  signMessage as signLeatherMessage,
+} from "@ordzaar/ordit-sdk/leather";
 import { signMessage as signMagicEdenMessage } from "@ordzaar/ordit-sdk/magiceden";
 import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
 import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
@@ -9,6 +14,19 @@ interface SignMessageParams {
   wallet: Wallet;
   address: string;
   network: Network;
+  format: AddressFormat;
+}
+
+function leatherPaymentTypeFromFormat(
+  format: AddressFormat,
+): LeatherAddressType {
+  if (format === "segwit") {
+    return LeatherAddressType.P2WPKH;
+  }
+  if (format === "taproot") {
+    return LeatherAddressType.P2TR;
+  }
+  throw new Error("Leather payment address format is not supported");
 }
 
 /**
@@ -22,6 +40,7 @@ export default async function signMessage({
   wallet,
   address,
   network,
+  format,
 }: SignMessageParams): Promise<string | null> {
   if (wallet === Wallet.MAGICEDEN) {
     const { base64 } = await signMagicEdenMessage(message, address, network);
@@ -35,6 +54,15 @@ export default async function signMessage({
 
   if (wallet === Wallet.XVERSE) {
     const { base64 } = await signXverseMessage(message, address, network);
+    return base64;
+  }
+
+  if (wallet === Wallet.LEATHER) {
+    const paymentType = leatherPaymentTypeFromFormat(format);
+    const { base64 } = await signLeatherMessage(message, {
+      paymentType,
+      network,
+    });
     return base64;
   }
 

@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
-    "@ordzaar/ordit-sdk": "1.3.1",
     "bitcoinjs-lib": "6.1.5",
     "boring-avatars": "^1.10.1"
   },
@@ -60,7 +59,7 @@
     ]
   },
   "peerDependencies": {
-    "@ordzaar/ordit-sdk": "1.3.1",
+    "@ordzaar/ordit-sdk": "1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

@@ -10,6 +10,7 @@ const WALLET_TO_NAME: Record<Wallet, string> = {
   [Wallet.MAGICEDEN]: "Magic Eden",
   [Wallet.UNISAT]: "UniSat",
   [Wallet.XVERSE]: "Xverse",
+  [Wallet.LEATHER]: "Leather",
 } as const;
 
 interface WalletButtonProp {
