@@ -1,6 +1,6 @@
 # ord-connect
 
-<img src="preview.png" alt="Preview" width="605" height="350"/>
+<img src="preview.png" alt="Preview" width="513" height="525"/>
 
 ## Introduction
 
