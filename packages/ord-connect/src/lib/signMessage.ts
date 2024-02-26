@@ -3,6 +3,7 @@ import {
   LeatherAddressType,
   signMessage as signLeatherMessage,
 } from "@ordzaar/ordit-sdk/leather";
+import { signMessage as signMagicEdenMessage } from "@ordzaar/ordit-sdk/magiceden";
 import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
 import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
 
@@ -41,6 +42,11 @@ export default async function signMessage({
   network,
   format,
 }: SignMessageParams): Promise<string | null> {
+  if (wallet === Wallet.MAGICEDEN) {
+    const { base64 } = await signMagicEdenMessage(message, address, network);
+    return base64;
+  }
+
   if (wallet === Wallet.UNISAT) {
     const { base64 } = await signUnisatMessage(message, "bip322-simple");
     return base64;

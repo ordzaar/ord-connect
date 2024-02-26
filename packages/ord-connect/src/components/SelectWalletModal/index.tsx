@@ -5,11 +5,13 @@ import {
   BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
 import { getAddresses as getLeatherAddresses } from "@ordzaar/ordit-sdk/leather";
+import { getAddresses as getMagicEdenAddress } from "@ordzaar/ordit-sdk/magiceden";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
 import LeatherWalletIcon from "../../assets/leather-wallet.svg";
+import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
@@ -26,6 +28,7 @@ interface SelectWalletModalProp {
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
+  [Wallet.MAGICEDEN]: "https://wallet.magiceden.io/",
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
   [Wallet.LEATHER]: "https://leather.io/install-extension",
@@ -74,6 +77,77 @@ export function SelectWalletModal({
     },
     [disconnectWallet],
   );
+
+  const onConnectMagicEdenWallet = useCallback(async () => {
+    if (network === "testnet") {
+      const unsupportedNetworkError = new Error(
+        "Magic Eden wallet is not supported on testnet",
+      );
+      onError(Wallet.MAGICEDEN, unsupportedNetworkError);
+      return false;
+    }
+
+    try {
+      setErrorMessage("");
+      const magicEdenAddresses = await getMagicEdenAddress(network);
+      if (!magicEdenAddresses || magicEdenAddresses.length < 1) {
+        disconnectWallet();
+        throw new Error("Magic Eden via Ordit returned no addresses.");
+      }
+
+      // Magic Eden provides a segwit address by default for sending and receiving payments
+      // Imported xverse wallets will return a p2sh address for payments by default instead
+      const paymentAddress = magicEdenAddresses.find(
+        (walletAddress) =>
+          walletAddress.format === "segwit" ||
+          walletAddress.format === "p2sh-p2wpkh",
+      );
+
+      if (!paymentAddress) {
+        throw new Error(
+          "Magic Eden via Ordit did not return a P2SH or Segwit address.",
+        );
+      }
+
+      const ordinalsAddress = magicEdenAddresses.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+
+      if (!ordinalsAddress) {
+        throw new Error(
+          "Magic Eden via Ordit did not return a Taproot address.",
+        );
+      }
+
+      updateAddress({
+        ordinals: ordinalsAddress.address,
+        payments: paymentAddress.address,
+      });
+      updatePublicKey({
+        ordinals: ordinalsAddress.publicKey,
+        payments: paymentAddress.publicKey,
+      });
+      updateWallet(Wallet.MAGICEDEN);
+      updateFormat({
+        ordinals: ordinalsAddress.format,
+        payments: paymentAddress.format,
+      });
+      closeModal();
+      return true;
+    } catch (err) {
+      onError(Wallet.MAGICEDEN, err as Error);
+      return false;
+    }
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
 
   const onConnectUnisatWallet = useCallback(
     async ({ readOnly }: { readOnly?: boolean } = {}) => {
@@ -187,18 +261,14 @@ export function SelectWalletModal({
         (walletAddress) => walletAddress.format === "segwit",
       );
       if (!paymentAddress) {
-        throw new Error(
-          "Leather via Ordit did not return a Segwit address.",
-        );
+        throw new Error("Leather via Ordit did not return a Segwit address.");
       }
 
       const ordinalAddress = leather.find(
         (walletAddress) => walletAddress.format === "taproot",
       );
       if (!ordinalAddress) {
-        throw new Error(
-          "Leather via Ordit did not return a Taproot address.",
-        );
+        throw new Error("Leather via Ordit did not return a Taproot address.");
       }
 
       updateAddress({
@@ -305,7 +375,7 @@ export function SelectWalletModal({
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
                     {isSupportedDevice
-                      ? "Choose wallet to connect"
+                      ? "Choose Bitcoin wallet to connect"
                       : "Unsupported device"}
                   </Dialog.Title>
                   <button
@@ -344,6 +414,19 @@ export function SelectWalletModal({
                         isMobileDevice={isMobile}
                         renderAvatar={renderAvatar}
                       />
+                      <hr className="horizontal-separator" />
+                      {!isMobile && (
+                        <WalletButton
+                          wallet={Wallet.MAGICEDEN}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectMagicEdenWallet}
+                          icon={MagicEdenWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                      )}
                       <hr className="horizontal-separator" />
                       {!isMobile && (
                         <WalletButton
