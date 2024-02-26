@@ -92,22 +92,19 @@ export function SelectWalletModal({
         throw new Error("Magic Eden via Ordit returned no addresses.");
       }
 
-      // Magic Eden provides segwit address for sending and receiving payments
-      const segwit = magicEden.find(
-        (walletAddress) => walletAddress.format === "segwit",
+      // Magic Eden provides a segwit address by default for sending and receiving payments
+      // Imported xverse wallets will return a p2sh address for payments
+      // Payment address defaults to segwit because it is the Magic Eden Wallet default option
+      // TODO: Support importing Unisat wallet
+      const paymentAddress = magicEden.find(
+        (walletAddress) =>
+          walletAddress.format === "segwit" ||
+          walletAddress.format === "p2sh-p2wpkh",
       );
-      // p2sh is used to support imported xverse wallets
-      const p2sh = magicEden.find(
-        (walletAddress) => walletAddress.format === "p2sh-p2wpkh",
-      );
+
       const taproot = magicEden.find(
         (walletAddress) => walletAddress.format === "taproot",
       );
-
-      // Only one Bitcoin address is needed for paymentys
-      // Default to segwit because it is the Magic Eden Wallet default option
-      // Support p2sh as a fallback for imported xverse wallets
-      const paymentAddress = segwit ?? p2sh;
 
       if (!paymentAddress || !taproot) {
         throw new Error(
@@ -359,7 +356,7 @@ export function SelectWalletModal({
                         renderAvatar={renderAvatar}
                       />
                       <hr className="horizontal-separator" />
-                      {!isMobile && ( // TODO:: remove this once unisat supported on mobile devices
+                      {!isMobile && (
                         <WalletButton
                           wallet={Wallet.MAGICEDEN}
                           subtitle="Coming soon on mobile browsing"
