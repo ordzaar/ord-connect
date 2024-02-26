@@ -100,7 +100,7 @@ export function SelectWalletModal({
           walletAddress.format === "p2sh-p2wpkh",
       );
 
-      const taproot = magicEden.find(
+      const ordinalAddress = magicEden.find(
         (walletAddress) => walletAddress.format === "taproot",
       );
 
