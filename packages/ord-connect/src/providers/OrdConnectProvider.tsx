@@ -18,6 +18,7 @@ export enum Network {
 export enum Wallet {
   UNISAT = "unisat",
   XVERSE = "xverse",
+  MAGICEDEN = "magiceden",
 }
 
 export interface BiAddress<T> {

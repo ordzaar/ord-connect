@@ -4,14 +4,15 @@
 
 ## Introduction
 
-**ord-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io) and [Xverse](https://www.xverse.app). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
+**ord-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We currently support [Unisat](https://unisat.io), [Xverse](https://www.xverse.app) and [Magic Eden Wallet](https://wallet.magiceden.io/). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
 
 ## Wallet Feature Support
 
-| Wallet | Ordinal-safety | Inscription-safety |
-| ------ | -------------- | ------------------ |
-| Unisat | ✅             | ✅                 |
-| Xverse | ✅             | ✅                 |
+| Wallet     | Ordinal-safety | Inscription-safety |
+| ---------- | -------------- | ------------------ |
+| Unisat     | ✅             | ✅                 |
+| Xverse     | ✅             | ✅                 |
+| Magic Eden | ✅             | ✅                 |
 
 ## Quick Start
 
