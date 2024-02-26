@@ -188,7 +188,7 @@ export function SelectWalletModal({
       );
       if (!paymentAddress) {
         throw new Error(
-          "Leather via Ordit did not return Payment/Segwit address.",
+          "Leather via Ordit did not return a Segwit address.",
         );
       }
 
