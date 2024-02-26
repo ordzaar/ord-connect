@@ -53,7 +53,7 @@ importers:
         version: 6.21.0(eslint@8.57.0)(typescript@5.3.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.6.0
-        version: 3.6.0(vite@5.0.12)
+        version: 3.6.0(vite@5.1.4)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -73,20 +73,20 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
       vite:
-        specifier: ^5.0.11
-        version: 5.0.12(@types/node@20.10.5)
+        specifier: ^5.1.4
+        version: 5.1.4(@types/node@20.10.5)
       vite-plugin-css-injected-by-js:
         specifier: ^3.4.0
-        version: 3.4.0(vite@5.0.12)
+        version: 3.4.0(vite@5.1.4)
       vite-plugin-dts:
         specifier: ^3.7.3
-        version: 3.7.3(@types/node@20.10.5)(typescript@5.3.3)(vite@5.0.12)
+        version: 3.7.3(@types/node@20.10.5)(typescript@5.3.3)(vite@5.1.4)
       vite-plugin-eslint:
         specifier: ^1.8.1
-        version: 1.8.1(eslint@8.57.0)(vite@5.0.12)
+        version: 1.8.1(eslint@8.57.0)(vite@5.1.4)
       vite-plugin-node-polyfills:
         specifier: ^0.21.0
-        version: 0.21.0(vite@5.0.12)
+        version: 0.21.0(vite@5.1.4)
 
 packages:
 
@@ -1232,13 +1232,13 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-react-swc@3.6.0(vite@5.0.12):
+  /@vitejs/plugin-react-swc@3.6.0(vite@5.1.4):
     resolution: {integrity: sha512-XFRbsGgpGxGzEV5i5+vRiro1bwcIaZDIdBRP16qwm+jP68ue/S8FJTBEgOeojtVDYrbSua3XFp71kC8VJE6v+g==}
     peerDependencies:
       vite: ^4 || ^5
     dependencies:
       '@swc/core': 1.4.2
-      vite: 5.0.12(@types/node@20.10.5)
+      vite: 5.1.4(@types/node@20.10.5)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -4656,15 +4656,15 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /vite-plugin-css-injected-by-js@3.4.0(vite@5.0.12):
+  /vite-plugin-css-injected-by-js@3.4.0(vite@5.1.4):
     resolution: {integrity: sha512-wS5+UYtJXQ/vNornsqTQxOLBVO/UjXU54ZsYMeX0mj2OrbStMQ4GLgvneVDQGPwyGJcm/ntBPawc2lA7xx+Lpg==}
     peerDependencies:
       vite: '>2.0.0-0'
     dependencies:
-      vite: 5.0.12(@types/node@20.10.5)
+      vite: 5.1.4(@types/node@20.10.5)
     dev: true
 
-  /vite-plugin-dts@3.7.3(@types/node@20.10.5)(typescript@5.3.3)(vite@5.0.12):
+  /vite-plugin-dts@3.7.3(@types/node@20.10.5)(typescript@5.3.3)(vite@5.1.4):
     resolution: {integrity: sha512-26eTlBYdpjRLWCsTJebM8vkCieE+p9gP3raf+ecDnzzK5E3FG6VE1wcy55OkRpfWWVlVvKkYFe6uvRHYWx7Nog==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -4680,7 +4680,7 @@ packages:
       debug: 4.3.4
       kolorist: 1.8.0
       typescript: 5.3.3
-      vite: 5.0.12(@types/node@20.10.5)
+      vite: 5.1.4(@types/node@20.10.5)
       vue-tsc: 1.8.27(typescript@5.3.3)
     transitivePeerDependencies:
       - '@types/node'
@@ -4688,7 +4688,7 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-eslint@1.8.1(eslint@8.57.0)(vite@5.0.12):
+  /vite-plugin-eslint@1.8.1(eslint@8.57.0)(vite@5.1.4):
     resolution: {integrity: sha512-PqdMf3Y2fLO9FsNPmMX+//2BF5SF8nEWspZdgl4kSt7UvHDRHVVfHvxsD7ULYzZrJDGRxR81Nq7TOFgwMnUang==}
     peerDependencies:
       eslint: '>=7'
@@ -4698,23 +4698,23 @@ packages:
       '@types/eslint': 8.56.0
       eslint: 8.57.0
       rollup: 2.79.1
-      vite: 5.0.12(@types/node@20.10.5)
+      vite: 5.1.4(@types/node@20.10.5)
     dev: true
 
-  /vite-plugin-node-polyfills@0.21.0(vite@5.0.12):
+  /vite-plugin-node-polyfills@0.21.0(vite@5.1.4):
     resolution: {integrity: sha512-Sk4DiKnmxN8E0vhgEhzLudfJQfaT8k4/gJ25xvUPG54KjLJ6HAmDKbr4rzDD/QWEY+Lwg80KE85fGYBQihEPQA==}
     peerDependencies:
       vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
     dependencies:
       '@rollup/plugin-inject': 5.0.5
       node-stdlib-browser: 1.2.0
-      vite: 5.0.12(@types/node@20.10.5)
+      vite: 5.1.4(@types/node@20.10.5)
     transitivePeerDependencies:
       - rollup
     dev: true
 
-  /vite@5.0.12(@types/node@20.10.5):
-    resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
+  /vite@5.1.4(@types/node@20.10.5):
+    resolution: {integrity: sha512-n+MPqzq+d9nMVTKyewqw6kSt+R3CkvF9QAKY8obiQn8g1fwTscKxyfaYnC632HtBXAQGc1Yjomphwn1dtwGAHg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
