@@ -178,8 +178,6 @@ export function SelectWalletModal({
     try {
       setErrorMessage("");
       const leather = await getLeatherAddresses(network);
-      // Segwit/P2WPKH = BTC
-      // Taproot = Ordinals / Inscriptions
       if (!leather || leather.length < 1) {
         disconnectWallet();
         throw new Error("Leather via Ordit returned no addresses.");
@@ -194,7 +192,7 @@ export function SelectWalletModal({
 
       if (!segwit || !taproot) {
         throw new Error(
-          "Leather via Ordit did not return P2SH or Taproot addresses.",
+          "Leather via Ordit did not return Segwit or Taproot addresses.",
         );
       }
 
@@ -342,7 +340,7 @@ export function SelectWalletModal({
                         renderAvatar={renderAvatar}
                       />
                       <hr className="horizontal-separator" />
-                      {!isMobile && ( // TODO:: remove this once leather supported on mobile devices
+                      {!isMobile && (
                         <WalletButton
                           wallet={Wallet.LEATHER}
                           subtitle="Coming soon on mobile browsing"
