@@ -86,7 +86,7 @@ export function SelectWalletModal({
 
     try {
       setErrorMessage("");
-      const magicEden = await getMagicEdenAddress(network);
+      const magicEdenAddresses = await getMagicEdenAddress(network);
       if (!magicEden || magicEden.length < 1) {
         disconnectWallet();
         throw new Error("Magic Eden via Ordit returned no addresses.");
