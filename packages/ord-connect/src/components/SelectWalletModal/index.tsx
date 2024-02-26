@@ -5,7 +5,7 @@ import {
   BrowserWalletRequestCancelledByUserError,
 } from "@ordzaar/ordit-sdk";
 import { getAddresses as getLeatherAddresses } from "@ordzaar/ordit-sdk/leather";
-import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/magiceden";
+import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
@@ -75,49 +75,52 @@ export function SelectWalletModal({
     [disconnectWallet],
   );
 
-  const onConnectUnisatWallet = useCallback(async () => {
-    try {
-      // Reset error message
-      setErrorMessage("");
-      const unisat = await getUnisatAddresses(network);
+  const onConnectUnisatWallet = useCallback(
+    async ({ readOnly }: { readOnly?: boolean } = {}) => {
+      try {
+        // Reset error message
+        setErrorMessage("");
+        const unisat = await getUnisatAddresses(network, readOnly);
 
-      if (!unisat || unisat.length < 1) {
-        disconnectWallet();
-        throw new Error("Unisat via Ordit returned no addresses.");
+        if (!unisat || unisat.length < 1) {
+          disconnectWallet();
+          throw new Error("Unisat via Ordit returned no addresses.");
+        }
+
+        // Unisat only returns one wallet by default
+        const unisatWallet = unisat[0];
+        updateAddress({
+          ordinals: unisatWallet.address,
+          payments: unisatWallet.address,
+        });
+        updatePublicKey({
+          ordinals: unisatWallet.publicKey,
+          payments: unisatWallet.publicKey,
+        });
+        updateWallet(Wallet.UNISAT);
+        updateFormat({
+          ordinals: unisatWallet.format,
+          payments: unisatWallet.format,
+        });
+
+        closeModal();
+        return true;
+      } catch (err) {
+        onError(Wallet.UNISAT, err as Error);
+        return false;
       }
-
-      // Unisat only returns one wallet by default
-      const unisatWallet = unisat[0];
-      updateAddress({
-        ordinals: unisatWallet.address,
-        payments: unisatWallet.address,
-      });
-      updatePublicKey({
-        ordinals: unisatWallet.publicKey,
-        payments: unisatWallet.publicKey,
-      });
-      updateWallet(Wallet.UNISAT);
-      updateFormat({
-        ordinals: unisatWallet.format,
-        payments: unisatWallet.format,
-      });
-
-      closeModal();
-      return true;
-    } catch (err) {
-      onError(Wallet.UNISAT, err as Error);
-      return false;
-    }
-  }, [
-    closeModal,
-    disconnectWallet,
-    network,
-    onError,
-    updateAddress,
-    updateFormat,
-    updatePublicKey,
-    updateWallet,
-  ]);
+    },
+    [
+      closeModal,
+      disconnectWallet,
+      network,
+      onError,
+      updateAddress,
+      updateFormat,
+      updatePublicKey,
+      updateWallet,
+    ],
+  );
   const onConnectXverseWallet = useCallback(async () => {
     try {
       setErrorMessage("");
@@ -246,7 +249,7 @@ export function SelectWalletModal({
           return;
         }
 
-        isConnectSuccessful = await onConnectUnisatWallet();
+        isConnectSuccessful = await onConnectUnisatWallet({ readOnly: true });
         if (!isMounted) {
           return;
         }
