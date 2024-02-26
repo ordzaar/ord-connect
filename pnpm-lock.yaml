@@ -76,8 +76,8 @@ importers:
         specifier: ^5.0.11
         version: 5.0.12(@types/node@20.10.5)
       vite-plugin-css-injected-by-js:
-        specifier: ^3.3.1
-        version: 3.3.1(vite@5.0.12)
+        specifier: ^3.4.0
+        version: 3.4.0(vite@5.0.12)
       vite-plugin-dts:
         specifier: ^3.7.3
         version: 3.7.3(@types/node@20.10.5)(typescript@5.3.3)(vite@5.0.12)
@@ -4656,8 +4656,8 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /vite-plugin-css-injected-by-js@3.3.1(vite@5.0.12):
-    resolution: {integrity: sha512-PjM/X45DR3/V1K1fTRs8HtZHEQ55kIfdrn+dzaqNBFrOYO073SeSNCxp4j7gSYhV9NffVHaEnOL4myoko0ePAg==}
+  /vite-plugin-css-injected-by-js@3.4.0(vite@5.0.12):
+    resolution: {integrity: sha512-wS5+UYtJXQ/vNornsqTQxOLBVO/UjXU54ZsYMeX0mj2OrbStMQ4GLgvneVDQGPwyGJcm/ntBPawc2lA7xx+Lpg==}
     peerDependencies:
       vite: '>2.0.0-0'
     dependencies:
