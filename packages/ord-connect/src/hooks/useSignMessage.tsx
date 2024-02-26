@@ -1,27 +1,7 @@
 import { useCallback, useState } from "react";
-import { AddressFormat } from "@ordzaar/ordit-sdk";
 
 import signMessage from "../lib/signMessage.ts";
-import {
-  BiAddressFormat,
-  BiAddressString,
-  useOrdConnect,
-} from "../providers/OrdConnectProvider";
-
-function getAddressFormat(
-  address: string,
-  walletAddresses: BiAddressString,
-  walletFormats: BiAddressFormat,
-): AddressFormat {
-  const keys = Object.keys(walletAddresses) as (keyof BiAddressString)[];
-  for (let i = 0; i < keys.length; i += 1) {
-    if (address === walletAddresses[keys[i]]) {
-      return walletFormats[keys[i]]!;
-    }
-  }
-
-  throw new Error("Address does not exist");
-}
+import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 export function useSignMessage(): {
   isLoading: boolean;
@@ -48,12 +28,22 @@ export function useSignMessage(): {
           throw new Error("No wallet is connected");
         }
 
+        if (
+          walletAddresses.ordinals !== address &&
+          walletAddresses.payments !== address
+        ) {
+          throw new Error("Address supplied is not connected address");
+        }
+
         const signedMessage = await signMessage({
           address,
           wallet,
           message,
           network,
-          format: getAddressFormat(address, walletAddresses, format),
+          format:
+            walletAddresses.ordinals === address
+              ? format.ordinals!
+              : format.payments!,
         });
 
         setIsLoading(false);
