@@ -93,9 +93,7 @@ export function SelectWalletModal({
       }
 
       // Magic Eden provides a segwit address by default for sending and receiving payments
-      // Imported xverse wallets will return a p2sh address for payments
-      // Payment address defaults to segwit because it is the Magic Eden Wallet default option
-      // TODO: Support importing Unisat wallet
+      // Imported xverse wallets will return a p2sh address for payments by default instead
       const paymentAddress = magicEden.find(
         (walletAddress) =>
           walletAddress.format === "segwit" ||
