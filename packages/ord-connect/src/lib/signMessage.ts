@@ -1,3 +1,4 @@
+import { AddressFormat } from "@ordzaar/ordit-sdk";
 import {
   LeatherAddressType,
   signMessage as signLeatherMessage,
@@ -5,18 +6,26 @@ import {
 import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
 import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
 
-import {
-  BiAddressString,
-  Network,
-  Wallet,
-} from "../providers/OrdConnectProvider";
+import { Network, Wallet } from "../providers/OrdConnectProvider";
 
 interface SignMessageParams {
   message: string;
   wallet: Wallet;
   address: string;
   network: Network;
-  walletAddresses: BiAddressString;
+  format: AddressFormat;
+}
+
+function leatherPaymentTypeFromFormat(
+  format: AddressFormat,
+): LeatherAddressType {
+  if (format === "segwit") {
+    return LeatherAddressType.P2WPKH;
+  }
+  if (format === "taproot") {
+    return LeatherAddressType.P2TR;
+  }
+  throw new Error("Leather payment address format is not supported");
 }
 
 /**
@@ -30,7 +39,7 @@ export default async function signMessage({
   wallet,
   address,
   network,
-  walletAddresses,
+  format,
 }: SignMessageParams): Promise<string | null> {
   if (wallet === Wallet.UNISAT) {
     const { base64 } = await signUnisatMessage(message, "bip322-simple");
@@ -43,10 +52,7 @@ export default async function signMessage({
   }
 
   if (wallet === Wallet.LEATHER) {
-    const paymentType =
-      walletAddresses.ordinals === address
-        ? LeatherAddressType.P2TR
-        : LeatherAddressType.P2WPKH;
+    const paymentType = leatherPaymentTypeFromFormat(format);
     const { base64 } = await signLeatherMessage(message, {
       paymentType,
       network,
