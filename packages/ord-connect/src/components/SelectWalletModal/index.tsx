@@ -414,8 +414,8 @@ export function SelectWalletModal({
                         isMobileDevice={isMobile}
                         renderAvatar={renderAvatar}
                       />
-                      <hr className="horizontal-separator" />
-                      {!isMobile && (
+                      {/* <hr className="horizontal-separator" /> */}
+                      {false && (
                         <WalletButton
                           wallet={Wallet.MAGICEDEN}
                           subtitle="Coming soon on mobile browsing"
