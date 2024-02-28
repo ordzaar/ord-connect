@@ -19,4 +19,4 @@ jobs:
   Bot:
     runs-on: ubuntu-latest
     steps:
-      - uses: BirthdayResearch/oss-governance-bot@37c8583c6b8596d173b68ffaed543e2485f4f193 # v3.0.0
+      - uses: BirthdayResearch/oss-governance-bot@3abd2d1fd2376ba9990fbc795e7a4c54254e9c61 # v4.0.0
