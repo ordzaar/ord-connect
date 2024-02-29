@@ -6,7 +6,7 @@
   "bugs": "https://github.com/ordzaar/ord-connect/issues",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "publish": "node ./scripts/publish.js",
     "dev": "turbo run dev",
     "build": "turbo run build",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@ordzaar/standard-prettier": "^1.4.1",
     "@ordzaar/standard-web-linter": "^1.4.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "turbo": "^1.12.4"
   },
   "lint-staged": {
