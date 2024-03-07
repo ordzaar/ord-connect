@@ -428,19 +428,17 @@ export function SelectWalletModal({
                             renderAvatar={renderAvatar}
                           />
                           <hr className="horizontal-separator" />
+                          <WalletButton
+                            wallet={Wallet.LEATHER}
+                            subtitle="Coming soon on mobile browsing"
+                            onConnect={onConnectLeatherWallet}
+                            icon={LeatherWalletIcon}
+                            setErrorMessage={setErrorMessage}
+                            isDisabled={isMobile}
+                            isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
+                          />
                         </>
-                      )}
-                      {!isMobile && (
-                        <WalletButton
-                          wallet={Wallet.LEATHER}
-                          subtitle="Coming soon on mobile browsing"
-                          onConnect={onConnectLeatherWallet}
-                          icon={LeatherWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isDisabled={isMobile}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
                       )}
                     </section>
                   ) : (
