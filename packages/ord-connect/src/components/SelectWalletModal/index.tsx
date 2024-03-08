@@ -414,31 +414,31 @@ export function SelectWalletModal({
                         isMobileDevice={isMobile}
                         renderAvatar={renderAvatar}
                       />
-                      <hr className="horizontal-separator" />
                       {!isMobile && (
-                        <WalletButton
-                          wallet={Wallet.MAGICEDEN}
-                          subtitle="Coming soon on mobile browsing"
-                          onConnect={onConnectMagicEdenWallet}
-                          icon={MagicEdenWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isDisabled={isMobile}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
-                      )}
-                      <hr className="horizontal-separator" />
-                      {!isMobile && (
-                        <WalletButton
-                          wallet={Wallet.LEATHER}
-                          subtitle="Coming soon on mobile browsing"
-                          onConnect={onConnectLeatherWallet}
-                          icon={LeatherWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isDisabled={isMobile}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
+                        <>
+                          <hr className="horizontal-separator" />
+                          <WalletButton
+                            wallet={Wallet.MAGICEDEN}
+                            subtitle="Coming soon on mobile browsing"
+                            onConnect={onConnectMagicEdenWallet}
+                            icon={MagicEdenWalletIcon}
+                            setErrorMessage={setErrorMessage}
+                            isDisabled={isMobile}
+                            isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
+                          />
+                          <hr className="horizontal-separator" />
+                          <WalletButton
+                            wallet={Wallet.LEATHER}
+                            subtitle="Coming soon on mobile browsing"
+                            onConnect={onConnectLeatherWallet}
+                            icon={LeatherWalletIcon}
+                            setErrorMessage={setErrorMessage}
+                            isDisabled={isMobile}
+                            isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
+                          />
+                        </>
                       )}
                     </section>
                   ) : (
