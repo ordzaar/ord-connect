@@ -195,6 +195,7 @@ export function SelectWalletModal({
       updateWallet,
     ],
   );
+
   const onConnectXverseWallet = useCallback(async () => {
     try {
       setErrorMessage("");
@@ -206,31 +207,40 @@ export function SelectWalletModal({
         throw new Error("Xverse via Ordit returned no addresses.");
       }
 
-      const p2sh = xverse.find(
-        (walletAddress) => walletAddress.format === "p2sh-p2wpkh",
-      );
-      const taproot = xverse.find(
-        (walletAddress) => walletAddress.format === "taproot",
+      // Xverse provides a nested segwit address by default for sending and receiving payments
+      // Ledger wallets on Xverse will return a native segwit address for payments instead
+      const paymentAddress = xverse.find(
+        (walletAddress) =>
+          walletAddress.format === "p2sh-p2wpkh" ||
+          walletAddress.format === "segwit",
       );
 
-      if (!p2sh || !taproot) {
+      if (!paymentAddress) {
         throw new Error(
-          "Xverse via Ordit did not return P2SH or Taproot addresses.",
+          "Xverse via Ordit did not return a P2SH or Segwit address.",
         );
       }
 
+      const ordinalsAddress = xverse.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+
+      if (!ordinalsAddress) {
+        throw new Error("Xverse via Ordit did not return a Taproot address.");
+      }
+
       updateAddress({
-        ordinals: taproot.address,
-        payments: p2sh.address,
+        ordinals: ordinalsAddress.address,
+        payments: paymentAddress.address,
       });
       updatePublicKey({
-        ordinals: taproot.publicKey,
-        payments: p2sh.publicKey,
+        ordinals: ordinalsAddress.publicKey,
+        payments: paymentAddress.publicKey,
       });
       updateWallet(Wallet.XVERSE);
       updateFormat({
-        ordinals: taproot.format,
-        payments: p2sh.format,
+        ordinals: ordinalsAddress.format,
+        payments: paymentAddress.format,
       });
       closeModal();
       return true;
@@ -248,6 +258,7 @@ export function SelectWalletModal({
     updatePublicKey,
     updateWallet,
   ]);
+
   const onConnectLeatherWallet = useCallback(async () => {
     try {
       setErrorMessage("");
