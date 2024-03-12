@@ -6,12 +6,14 @@ import {
 } from "@ordzaar/ordit-sdk";
 import { getAddresses as getLeatherAddresses } from "@ordzaar/ordit-sdk/leather";
 import { getAddresses as getMagicEdenAddress } from "@ordzaar/ordit-sdk/magiceden";
+import { getAddresses as getOKXAddresses } from "@ordzaar/ordit-sdk/okx";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
 import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
+import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
@@ -32,6 +34,7 @@ const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
   [Wallet.LEATHER]: "https://leather.io/install-extension",
+  [Wallet.OKX]: "https://www.okx.com/web3",
 };
 
 export function SelectWalletModal({
@@ -312,6 +315,46 @@ export function SelectWalletModal({
     updateWallet,
   ]);
 
+  const onConnectOKXWallet = useCallback(async () => {
+    try {
+      setErrorMessage("");
+      const okx = await getOKXAddresses(network);
+      if (!okx || okx.length < 1) {
+        disconnectWallet();
+        throw new Error("OKX via Ordit returned no addresses.");
+      }
+
+      const okxwallet = okx[0];
+      updateAddress({
+        ordinals: okxwallet.address,
+        payments: okxwallet.address,
+      });
+      updatePublicKey({
+        ordinals: okxwallet.publicKey,
+        payments: okxwallet.publicKey,
+      });
+      updateWallet(Wallet.OKX);
+      updateFormat({
+        ordinals: okxwallet.format,
+        payments: okxwallet.format,
+      });
+      closeModal();
+      return true;
+    } catch (err) {
+      onError(Wallet.OKX, err as Error);
+      return false;
+    }
+  }, [
+    closeModal,
+    disconnectWallet,
+    network,
+    onError,
+    updateAddress,
+    updateFormat,
+    updatePublicKey,
+    updateWallet,
+  ]);
+
   // Reconnect address change listener if there there is already a connected wallet
   useEffect(() => {
     if (wallet !== Wallet.UNISAT) {
@@ -446,6 +489,16 @@ export function SelectWalletModal({
                             icon={LeatherWalletIcon}
                             setErrorMessage={setErrorMessage}
                             isDisabled={isMobile}
+                            isMobileDevice={isMobile}
+                            renderAvatar={renderAvatar}
+                          />
+                          <hr className="horizontal-separator" />
+                          <WalletButton
+                            wallet={Wallet.OKX}
+                            subtitle="Available on OKX"
+                            onConnect={onConnectOKXWallet}
+                            icon={OKXWalletIcon}
+                            setErrorMessage={setErrorMessage}
                             isMobileDevice={isMobile}
                             renderAvatar={renderAvatar}
                           />

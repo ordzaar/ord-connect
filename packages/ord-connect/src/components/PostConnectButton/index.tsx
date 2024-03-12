@@ -6,6 +6,7 @@ import ChevronDownIcon from "../../assets/chevron-down.svg";
 import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import MagicEdenIcon from "../../assets/magiceden-wallet.svg";
+import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
@@ -16,6 +17,7 @@ const WALLET_TO_ICON: Record<Wallet, string> = {
   [Wallet.UNISAT]: UnisatWalletIcon,
   [Wallet.XVERSE]: XverseWalletIcon,
   [Wallet.LEATHER]: LeatherWalletIcon,
+  [Wallet.OKX]: OKXWalletIcon,
 } as const;
 
 interface PostConnectButtonProp {
