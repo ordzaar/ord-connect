@@ -20,6 +20,7 @@ export enum Wallet {
   XVERSE = "xverse",
   MAGICEDEN = "magiceden",
   LEATHER = "leather",
+  OKX = "okx",
 }
 
 export interface BiAddress<T> {
