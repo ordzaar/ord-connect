@@ -52,7 +52,7 @@ export default async function signPsbt({
       inputsToSign: [
         {
           address,
-          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+          signingIndexes: options?.signingIndexes ?? getAllInputIndices(),
           sigHash: options?.sigHash,
         },
       ],

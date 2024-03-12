@@ -324,19 +324,19 @@ export function SelectWalletModal({
         throw new Error("OKX via Ordit returned no addresses.");
       }
 
-      const okxwallet = okx[0];
+      const okxWallet = okx[0];
       updateAddress({
-        ordinals: okxwallet.address,
-        payments: okxwallet.address,
+        ordinals: okxWallet.address,
+        payments: okxWallet.address,
       });
       updatePublicKey({
-        ordinals: okxwallet.publicKey,
-        payments: okxwallet.publicKey,
+        ordinals: okxWallet.publicKey,
+        payments: okxWallet.publicKey,
       });
       updateWallet(Wallet.OKX);
       updateFormat({
-        ordinals: okxwallet.format,
-        payments: okxwallet.format,
+        ordinals: okxWallet.format,
+        payments: okxWallet.format,
       });
       closeModal();
       return true;
