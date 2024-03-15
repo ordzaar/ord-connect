@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import BigNumber from "bignumber.js";
 import {
   ADDRESS_FORMAT_TO_TYPE,
   AddressType,
@@ -32,7 +33,9 @@ export function useBalance() {
       const datasource = new JsonRpcDatasource({ network });
 
       const totalBalance = await datasource.getBalance({ address });
-      const totalAmountInSats = Math.round(totalBalance * 100_000_000);
+      const totalAmountInSats = Number(
+        new BigNumber(totalBalance).multipliedBy(100_000_000).toFixed(0, 5),
+      );
 
       setLoading(false);
       return totalAmountInSats;
