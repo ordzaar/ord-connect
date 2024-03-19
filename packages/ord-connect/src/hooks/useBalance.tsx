@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import BigNumber from "bignumber.js";
 import {
   ADDRESS_FORMAT_TO_TYPE,
   AddressType,
@@ -30,19 +31,14 @@ export function useBalance() {
       )[0];
 
       const datasource = new JsonRpcDatasource({ network });
-      const { spendableUTXOs } = await datasource.getUnspents({
-        address,
-        type: "spendable",
-      });
 
-      const totalSatsAvailable = spendableUTXOs.reduce(
-        (total: number, spendable: { safeToSpend: boolean; sats: number }) =>
-          spendable.safeToSpend ? total + spendable.sats : total,
-        0,
+      const totalBalance = await datasource.getBalance({ address });
+      const totalAmountInSats = Number(
+        new BigNumber(totalBalance).multipliedBy(100_000_000).toFixed(0, 5),
       );
 
       setLoading(false);
-      return totalSatsAvailable;
+      return totalAmountInSats;
     } catch (err) {
       setError((err as Error).message);
       setLoading(false);

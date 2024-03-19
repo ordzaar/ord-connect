@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
+    "bignumber.js": "^9.1.2",
     "bitcoinjs-lib": "6.1.5",
     "boring-avatars": "^1.10.1"
   },
