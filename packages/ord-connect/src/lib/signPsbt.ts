@@ -1,9 +1,9 @@
+import { Psbt } from "bitcoinjs-lib";
 import { signPsbt as signLeatherPsbt } from "@ordzaar/ordit-sdk/leather";
 import { signPsbt as signMagicEdenPsbt } from "@ordzaar/ordit-sdk/magiceden";
 import { signPsbt as signOKXPsbt } from "@ordzaar/ordit-sdk/okx";
 import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
 import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
-import { Psbt } from "bitcoinjs-lib";
 
 import { Network, Wallet } from "../providers/OrdConnectProvider";
 
