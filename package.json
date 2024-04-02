@@ -17,7 +17,7 @@
     "@ordzaar/standard-prettier": "^1.4.10",
     "@ordzaar/standard-web-linter": "^1.4.10",
     "husky": "^9.0.11",
-    "turbo": "^1.12.5"
+    "turbo": "^1.13.1"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
