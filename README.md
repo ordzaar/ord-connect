@@ -1,6 +1,6 @@
 # ord-connect
 
-<img src="preview_wallets.png" alt="Preview" width="450" height="525"/>
+<img src="preview_wallets.png" alt="Preview" width="420" height="525"/>
 
 ## Introduction
 
