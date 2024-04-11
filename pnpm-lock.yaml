@@ -36,8 +36,8 @@ importers:
         specifier: 6.1.5
         version: 6.1.5
       boring-avatars:
-        specifier: ^1.10.1
-        version: 1.10.1
+        specifier: ^1.10.2
+        version: 1.10.2
     devDependencies:
       '@types/node':
         specifier: ^20.12.2
@@ -1752,8 +1752,8 @@ packages:
     resolution: {integrity: sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==}
     dev: true
 
-  /boring-avatars@1.10.1:
-    resolution: {integrity: sha512-WcgHDeLrazCR03CDPEvCchLsUecZAZvs4F6FnMiGlTEjyQQf15Q5TRl4EUaAQ1dacvhPq7lC9EOTWkCojQ6few==}
+  /boring-avatars@1.10.2:
+    resolution: {integrity: sha512-uQyvmNeW6loz4Yytj7aDo0IhhuByW/YyOHtqwb3kQ/x48hum22hROA2Wn3qzrLR5JsoZ+FHjPO6z6LrXrWjegg==}
     dev: false
 
   /brace-expansion@1.1.11:
