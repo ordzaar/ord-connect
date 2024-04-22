@@ -27,8 +27,8 @@ importers:
         specifier: ^1.7.19
         version: 1.7.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ordzaar/ordit-sdk':
-        specifier: ^1.5.2
-        version: 1.5.2
+        specifier: ^1.5.3
+        version: 1.5.3
       bignumber.js:
         specifier: ^9.1.2
         version: 9.1.2
@@ -404,8 +404,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@ordzaar/ordit-sdk@1.5.2':
-    resolution: {integrity: sha512-oqjxUM/ro5wq9bSH9yz3Zcb31D5l1nOhoDsOLOUKoBYXxohD7H3McbwLYQscqlWRtpX64SezCzCL3szLkcmAiQ==}
+  '@ordzaar/ordit-sdk@1.5.3':
+    resolution: {integrity: sha512-TbvXoc+OjDmCvf4y+XEGcpZDWxshX9Faf85Yo+Sfgv0Wa46Cn0YZvWpWiCTNFq42OjsI7tnXs8qtZxWAZ8RG+A==}
 
   '@ordzaar/standard-prettier@1.4.18':
     resolution: {integrity: sha512-6yn6R9jscnSpcBobIvaZ8hohPsUJfbzf1qxyPjhNYauhcjDe8jDbbZRxZpn5IARBN9k5oeRRVXSrV4g42U3sUw==}
@@ -3042,7 +3042,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
-  '@ordzaar/ordit-sdk@1.5.2':
+  '@ordzaar/ordit-sdk@1.5.3':
     dependencies:
       '@bitcoinerlab/secp256k1': 1.1.1
       '@wallet-standard/core': 1.0.3
