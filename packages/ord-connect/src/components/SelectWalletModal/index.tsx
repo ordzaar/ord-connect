@@ -25,7 +25,6 @@ import { WalletButton } from "./WalletButton";
 interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
-  disableMobile?: boolean;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
@@ -40,7 +39,6 @@ const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
 export function SelectWalletModal({
   isOpen,
   closeModal,
-  disableMobile,
   renderAvatar,
 }: SelectWalletModalProp) {
   const {
@@ -57,7 +55,7 @@ export function SelectWalletModal({
   } = useOrdConnect();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isMobile = isMobileUserAgent();
-  const isSupportedDevice = !disableMobile || !isMobile;
+  const isSupportedDevice = !isMobile;
 
   const onError = useCallback(
     (

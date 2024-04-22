@@ -9,9 +9,8 @@ import { SelectWalletModal } from "./SelectWalletModal";
 import "./style.css";
 
 export interface OrdConnectKitProp {
-  customStyle?: string;
+  hideConnectButton?: boolean;
   onViewProfile?: () => void;
-  disableMobile?: boolean;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
@@ -20,37 +19,43 @@ export interface OrdConnectKitProp {
  *
  * @component
  * @param {Object} props - Props for the OrdConnectKit component.
- * @param {string} [props.customStyle] - Custom CSS style for the button.
+ * @param {boolean} [props.hideConnectButton] - Hides the connect and connected status button.
+ * @param {Function} [props.renderAvatar] - Render prop for rendering wallet profile avatar when connected.
  * @param {Function} [props.onViewProfile] - Callback function to handle viewing wallet profile.
  * @returns {JSX.Element} OrdConnectKit React component.
  */
 export function OrdConnectKit({
-  customStyle,
+  hideConnectButton,
   onViewProfile,
-  disableMobile,
   renderAvatar,
 }: OrdConnectKitProp) {
   const { address, network, isModalOpen, openModal, closeModal } =
     useOrdConnect();
 
+  const renderConnectButton = () => {
+    if (hideConnectButton) {
+      return null;
+    }
+
+    return address?.ordinals ? (
+      <PostConnectButton
+        address={address.ordinals}
+        network={network}
+        onViewProfile={onViewProfile}
+        onChangeWallet={openModal}
+        renderAvatar={renderAvatar}
+      />
+    ) : (
+      <PreConnectButton openModal={openModal} />
+    );
+  };
+
   return (
     <>
-      {address?.ordinals ? (
-        <PostConnectButton
-          address={address.ordinals}
-          network={network}
-          onViewProfile={onViewProfile}
-          onChangeWallet={openModal}
-          renderAvatar={renderAvatar}
-        />
-      ) : (
-        <PreConnectButton openModal={openModal} customStyle={customStyle} />
-      )}
-
+      {renderConnectButton()}
       <SelectWalletModal
         isOpen={isModalOpen}
         closeModal={closeModal}
-        disableMobile={disableMobile}
         renderAvatar={renderAvatar}
       />
     </>
