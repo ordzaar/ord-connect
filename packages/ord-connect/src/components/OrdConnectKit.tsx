@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+import useHasMounted from "../hooks/useHasMounted";
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 import { PostConnectButton } from "./PostConnectButton";
@@ -32,6 +33,8 @@ export function OrdConnectKit({
   const { address, network, isModalOpen, openModal, closeModal } =
     useOrdConnect();
 
+  const hasMounted = useHasMounted();
+
   const renderConnectButton = () => {
     if (hideConnectButton) {
       return null;
@@ -50,7 +53,7 @@ export function OrdConnectKit({
     );
   };
 
-  return (
+  return hasMounted ? (
     <>
       {renderConnectButton()}
       <SelectWalletModal
@@ -59,5 +62,5 @@ export function OrdConnectKit({
         renderAvatar={renderAvatar}
       />
     </>
-  );
+  ) : null;
 }
