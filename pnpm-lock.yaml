@@ -9,10 +9,10 @@ importers:
   .:
     devDependencies:
       '@ordzaar/standard-prettier':
-        specifier: ^1.4.18
+        specifier: ^1.4.19
         version: 1.4.19(@typescript-eslint/eslint-plugin@7.6.0)(@typescript-eslint/parser@7.6.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.1)(typescript@5.4.5)
       '@ordzaar/standard-web-linter':
-        specifier: ^1.4.18
+        specifier: ^1.4.19
         version: 1.4.19(@typescript-eslint/eslint-plugin@7.6.0)(@typescript-eslint/parser@7.6.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.5)
       husky:
         specifier: ^9.0.11
