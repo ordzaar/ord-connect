@@ -40,7 +40,7 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
-    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "^3.9.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-node-polyfills": "^0.21.0"
