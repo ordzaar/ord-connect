@@ -24,17 +24,7 @@ export function useSendV2() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const send: SendFunction = useCallback(
-    async ({
-      toAddress,
-      satoshis,
-      feeRate,
-      relay = true,
-    }: {
-      toAddress: string;
-      satoshis: number;
-      feeRate: number;
-      relay?: boolean;
-    }) => {
+    async ({ toAddress, satoshis, feeRate, relay = true }: SendParams) => {
       setIsLoading(true);
 
       try {
