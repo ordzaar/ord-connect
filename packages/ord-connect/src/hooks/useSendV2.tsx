@@ -61,7 +61,9 @@ export function useSendV2() {
         if (relay) {
           const datasource = new JsonRpcDatasource({ network });
           const txId = await datasource.relay({ hex: signedPsbt.hex });
+
           setLoading(false);
+
           return {
             txId,
           };
