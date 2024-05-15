@@ -4,12 +4,14 @@ import { JsonRpcDatasource, PSBTBuilder } from "@ordzaar/ordit-sdk";
 import signPsbt from "../lib/signPsbt";
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
-type SendFunction = (
-  address: string,
-  satoshis: number,
-  feeRate: number,
-  relay?: boolean,
-) => Promise<SendResponse>;
+type SendFunction = (sendParams: SendParams) => Promise<SendResponse>;
+
+type SendParams = {
+  toAddress: string;
+  satoshis: number;
+  feeRate: number;
+  relay?: boolean;
+};
 
 type SendResponse = {
   txId?: string;
@@ -19,11 +21,21 @@ type SendResponse = {
 
 export function useSendV2() {
   const { wallet, network, address, publicKey } = useOrdConnect();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const send: SendFunction = useCallback(
-    async (toAddress, satoshis, feeRate, relay = true) => {
-      setLoading(true);
+    async ({
+      toAddress,
+      satoshis,
+      feeRate,
+      relay = true,
+    }: {
+      toAddress: string;
+      satoshis: number;
+      feeRate: number;
+      relay?: boolean;
+    }) => {
+      setIsLoading(true);
 
       try {
         if (
@@ -61,21 +73,19 @@ export function useSendV2() {
         if (relay) {
           const datasource = new JsonRpcDatasource({ network });
           const txId = await datasource.relay({ hex: signedPsbt.hex });
-
-          setLoading(false);
-
+          setIsLoading(false);
           return {
             txId,
           };
         }
 
-        setLoading(false);
+        setIsLoading(false);
 
         return {
           signedPsbtHex: signedPsbt.hex,
         };
       } catch (err) {
-        setLoading(false);
+        setIsLoading(false);
         return {
           error: (err as Error).message,
         };
@@ -84,5 +94,5 @@ export function useSendV2() {
     [address, network, publicKey, wallet],
   );
 
-  return { send, loading };
+  return { send, isLoading };
 }
