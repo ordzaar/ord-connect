@@ -25,7 +25,6 @@ import { WalletButton } from "./WalletButton";
 interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
-  disableMobile?: boolean;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
@@ -40,7 +39,6 @@ const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
 export function SelectWalletModal({
   isOpen,
   closeModal,
-  disableMobile,
   renderAvatar,
 }: SelectWalletModalProp) {
   const {
@@ -57,7 +55,6 @@ export function SelectWalletModal({
   } = useOrdConnect();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isMobile = isMobileUserAgent();
-  const isSupportedDevice = !disableMobile || !isMobile;
 
   const onError = useCallback(
     (
@@ -428,9 +425,7 @@ export function SelectWalletModal({
               <Dialog.Panel className="panel">
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
-                    {isSupportedDevice
-                      ? "Choose Bitcoin wallet to connect"
-                      : "Unsupported device"}
+                    Choose Bitcoin wallet to connect
                   </Dialog.Title>
                   <button
                     type="button"
@@ -442,74 +437,68 @@ export function SelectWalletModal({
                 </section>
 
                 <section className="panel-content-container">
-                  {isSupportedDevice ? (
-                    <section className="panel-content-inner-container">
-                      {!isMobile && ( // TODO:: remove this once unisat supported on mobile devices
-                        <>
-                          <WalletButton
-                            wallet={Wallet.UNISAT}
-                            subtitle="Coming soon on mobile browsing"
-                            onConnect={onConnectUnisatWallet}
-                            icon={UnisatWalletIcon}
-                            setErrorMessage={setErrorMessage}
-                            isDisabled={isMobile} // disable unisat on mobile until it is supported
-                            isMobileDevice={isMobile}
-                            renderAvatar={renderAvatar}
-                          />
-                          <hr className="horizontal-separator" />
-                        </>
-                      )}
-                      <WalletButton
-                        wallet={Wallet.XVERSE}
-                        subtitle="Available on Xverse app"
-                        onConnect={onConnectXverseWallet}
-                        icon={XverseWalletIcon}
-                        setErrorMessage={setErrorMessage}
-                        isMobileDevice={isMobile}
-                        renderAvatar={renderAvatar}
-                      />
-                      {!isMobile && (
-                        <>
-                          <hr className="horizontal-separator" />
-                          <WalletButton
-                            wallet={Wallet.MAGICEDEN}
-                            subtitle="Coming soon on mobile browsing"
-                            onConnect={onConnectMagicEdenWallet}
-                            icon={MagicEdenWalletIcon}
-                            setErrorMessage={setErrorMessage}
-                            isDisabled={isMobile}
-                            isMobileDevice={isMobile}
-                            renderAvatar={renderAvatar}
-                          />
-                          <hr className="horizontal-separator" />
-                          <WalletButton
-                            wallet={Wallet.LEATHER}
-                            subtitle="Coming soon on mobile browsing"
-                            onConnect={onConnectLeatherWallet}
-                            icon={LeatherWalletIcon}
-                            setErrorMessage={setErrorMessage}
-                            isDisabled={isMobile}
-                            isMobileDevice={isMobile}
-                            renderAvatar={renderAvatar}
-                          />
-                          <hr className="horizontal-separator" />
-                          <WalletButton
-                            wallet={Wallet.OKX}
-                            subtitle="Available on OKX"
-                            onConnect={onConnectOKXWallet}
-                            icon={OKXWalletIcon}
-                            setErrorMessage={setErrorMessage}
-                            isMobileDevice={isMobile}
-                            renderAvatar={renderAvatar}
-                          />
-                        </>
-                      )}
-                    </section>
-                  ) : (
-                    <Dialog.Description className="unsupported-browser-message">
-                      This website does not support mobile devices.
-                    </Dialog.Description>
-                  )}
+                  <section className="panel-content-inner-container">
+                    {!isMobile && ( // TODO: remove this once unisat supported on mobile devices
+                      <>
+                        <WalletButton
+                          wallet={Wallet.UNISAT}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectUnisatWallet}
+                          icon={UnisatWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile} // disable unisat on mobile until it is supported
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                        <hr className="horizontal-separator" />
+                      </>
+                    )}
+                    <WalletButton
+                      wallet={Wallet.XVERSE}
+                      subtitle="Available on Xverse app"
+                      onConnect={onConnectXverseWallet}
+                      icon={XverseWalletIcon}
+                      setErrorMessage={setErrorMessage}
+                      isMobileDevice={isMobile}
+                      renderAvatar={renderAvatar}
+                    />
+                    {!isMobile && (
+                      <>
+                        <hr className="horizontal-separator" />
+                        <WalletButton
+                          wallet={Wallet.MAGICEDEN}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectMagicEdenWallet}
+                          icon={MagicEdenWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                        <hr className="horizontal-separator" />
+                        <WalletButton
+                          wallet={Wallet.LEATHER}
+                          subtitle="Coming soon on mobile browsing"
+                          onConnect={onConnectLeatherWallet}
+                          icon={LeatherWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isDisabled={isMobile}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                        <hr className="horizontal-separator" />
+                        <WalletButton
+                          wallet={Wallet.OKX}
+                          subtitle="Available on OKX"
+                          onConnect={onConnectOKXWallet}
+                          icon={OKXWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                      </>
+                    )}
+                  </section>
                   <p className="error-message">{errorMessage}</p>
                 </section>
               </Dialog.Panel>
