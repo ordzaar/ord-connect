@@ -24,6 +24,7 @@ export function useSendV2() {
   const send: SendFunction = useCallback(
     async (toAddress, satoshis, feeRate, relay = true) => {
       setLoading(true);
+
       try {
         if (
           !address ||
@@ -47,6 +48,7 @@ export function useSendV2() {
             },
           ],
         });
+
         await psbtBuilder.prepare();
 
         const signedPsbt = await signPsbt({
@@ -64,7 +66,9 @@ export function useSendV2() {
             txId,
           };
         }
+
         setLoading(false);
+
         return {
           signedPsbtHex: signedPsbt.hex,
         };
