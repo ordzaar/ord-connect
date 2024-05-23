@@ -12,6 +12,8 @@ import "./style.css";
 export interface OrdConnectKitProp {
   hideConnectButton?: boolean;
   onViewProfile?: () => void;
+  onChangeWalletClick?: () => void;
+  onDisconnectWalletClick?: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
@@ -22,16 +24,26 @@ export interface OrdConnectKitProp {
  * @param {Object} props - Props for the OrdConnectKit component.
  * @param {boolean} [props.hideConnectButton] - Hides the connect and connected status button.
  * @param {Function} [props.renderAvatar] - Render prop for rendering wallet profile avatar when connected.
- * @param {Function} [props.onViewProfile] - Callback function to handle viewing wallet profile.
+ * @param {Function} [props.onViewProfile] - Callback function to handle clicking view wallet profile.
+ * @param {Function} [props.onChangeWalletClick] - Callback function to handle clicking change wallet.
+ * @param {Function} [props.onDisconnectWalletClick] - Callback function to handle clicking disconnect wallet.
  * @returns {JSX.Element} OrdConnectKit React component.
  */
 export function OrdConnectKit({
   hideConnectButton,
   onViewProfile,
+  onChangeWalletClick,
+  onDisconnectWalletClick,
   renderAvatar,
 }: OrdConnectKitProp) {
-  const { address, network, isModalOpen, openModal, closeModal } =
-    useOrdConnect();
+  const {
+    address,
+    disconnectWallet,
+    network,
+    isModalOpen,
+    openModal,
+    closeModal,
+  } = useOrdConnect();
 
   const hasMounted = useHasMounted();
 
@@ -45,7 +57,14 @@ export function OrdConnectKit({
         address={address.ordinals}
         network={network}
         onViewProfile={onViewProfile}
-        onChangeWallet={openModal}
+        onChangeWallet={() => {
+          openModal();
+          onChangeWalletClick?.();
+        }}
+        onDisconnectWallet={() => {
+          disconnectWallet();
+          onDisconnectWalletClick?.();
+        }}
         renderAvatar={renderAvatar}
       />
     ) : (

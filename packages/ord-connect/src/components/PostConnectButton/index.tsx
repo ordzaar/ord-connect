@@ -25,6 +25,7 @@ interface PostConnectButtonProp {
   network: string;
   onViewProfile?: () => void;
   onChangeWallet?: () => void;
+  onDisconnectWallet?: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
@@ -33,9 +34,10 @@ export function PostConnectButton({
   network,
   onViewProfile,
   onChangeWallet,
+  onDisconnectWallet,
   renderAvatar,
 }: PostConnectButtonProp) {
-  const { disconnectWallet, wallet } = useOrdConnect();
+  const { wallet } = useOrdConnect();
 
   return (
     <Menu
@@ -93,9 +95,7 @@ export function PostConnectButton({
               <Menu.Item
                 as="button"
                 className="dropdown-button"
-                onClick={() => {
-                  onViewProfile?.();
-                }}
+                onClick={() => onViewProfile?.()}
               >
                 <span className="label">View profile</span>
                 <span className="value">{truncateMiddle(address)}</span>
@@ -103,9 +103,7 @@ export function PostConnectButton({
               <Menu.Item
                 as="button"
                 className="dropdown-button"
-                onClick={() => {
-                  onChangeWallet?.();
-                }}
+                onClick={() => onChangeWallet?.()}
               >
                 <span className="change-wallet-label">Change wallet</span>
               </Menu.Item>
@@ -113,7 +111,7 @@ export function PostConnectButton({
               <Menu.Item
                 as="button"
                 className="dropdown-button"
-                onClick={disconnectWallet}
+                onClick={() => onDisconnectWallet?.()}
               >
                 <span className="label">Disconnect wallet</span>
                 <img src={LogoutIcon} className="logout-icon" alt="logout" />
