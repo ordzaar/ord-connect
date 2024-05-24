@@ -42,11 +42,11 @@ export function PostConnectButton({
   const getNetworkDisplayName = () => {
     switch (network) {
       case "mainnet":
-        return "MainNet";
+        return "Mainnet";
       case "testnet":
-        return "TestNet";
+        return "Testnet";
       case "signet":
-        return "SigNet";
+        return "Signet";
       default:
         return network;
     }
