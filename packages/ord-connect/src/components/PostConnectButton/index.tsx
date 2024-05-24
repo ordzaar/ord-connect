@@ -39,6 +39,19 @@ export function PostConnectButton({
 }: PostConnectButtonProp) {
   const { wallet } = useOrdConnect();
 
+  const getNetworkDisplayName = () => {
+    switch (network) {
+      case "mainnet":
+        return "MainNet";
+      case "testnet":
+        return "TestNet";
+      case "signet":
+        return "SigNet";
+      default:
+        return network;
+    }
+  };
+
   return (
     <Menu
       as="section"
@@ -68,9 +81,7 @@ export function PostConnectButton({
               <p className="address">{truncateMiddle(address)}</p>
               <section className="network-container">
                 <div className="status-indicator" />
-                <p className="network">
-                  {network === "mainnet" ? "MainNet" : "TestNet"}
-                </p>
+                <p className="network">{getNetworkDisplayName()}</p>
               </section>
             </section>
             <img
