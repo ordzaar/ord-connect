@@ -9,7 +9,11 @@ import MagicEdenIcon from "../../assets/magiceden-wallet.svg";
 import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
+import {
+  Network,
+  useOrdConnect,
+  Wallet,
+} from "../../providers/OrdConnectProvider";
 import { truncateMiddle } from "../../utils/text-helper";
 
 const WALLET_TO_ICON: Record<Wallet, string> = {
@@ -29,6 +33,12 @@ interface PostConnectButtonProp {
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
 }
 
+const NETWORK_DISPLAY_NAME = {
+  [Network.MAINNET]: "Mainnet",
+  [Network.TESTNET]: "Testnet",
+  [Network.SIGNET]: "Signet",
+} as const;
+
 export function PostConnectButton({
   address,
   network,
@@ -38,19 +48,6 @@ export function PostConnectButton({
   renderAvatar,
 }: PostConnectButtonProp) {
   const { wallet } = useOrdConnect();
-
-  const getNetworkDisplayName = () => {
-    switch (network) {
-      case "mainnet":
-        return "Mainnet";
-      case "testnet":
-        return "Testnet";
-      case "signet":
-        return "Signet";
-      default:
-        return network;
-    }
-  };
 
   return (
     <Menu
@@ -81,7 +78,9 @@ export function PostConnectButton({
               <p className="address">{truncateMiddle(address)}</p>
               <section className="network-container">
                 <div className="status-indicator" />
-                <p className="network">{getNetworkDisplayName()}</p>
+                <p className="network">
+                  {NETWORK_DISPLAY_NAME[network as Network] ?? network}
+                </p>
               </section>
             </section>
             <img
