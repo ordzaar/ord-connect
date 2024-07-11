@@ -11,6 +11,7 @@ type SendParams = {
   satoshis: number;
   feeRate: number;
   relay?: boolean;
+  rbf?: boolean;
 };
 
 type SendResponse = {
@@ -24,7 +25,13 @@ export function useSendV2() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const send: SendFunction = useCallback(
-    async ({ toAddress, satoshis, feeRate, relay = true }: SendParams) => {
+    async ({
+      toAddress,
+      satoshis,
+      feeRate,
+      relay = true,
+      rbf = false,
+    }: SendParams) => {
       setIsLoading(true);
 
       try {
@@ -50,6 +57,8 @@ export function useSendV2() {
             },
           ],
         });
+
+        psbtBuilder.setRBF(rbf);
 
         await psbtBuilder.prepare();
 
