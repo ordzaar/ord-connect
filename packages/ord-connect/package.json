@@ -41,7 +41,7 @@
     "typescript": "^5.4.5",
     "vite": "^5.3.3",
     "vite-plugin-css-injected-by-js": "^3.5.1",
-    "vite-plugin-dts": "^3.9.0",
+    "vite-plugin-dts": "^3.9.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-node-polyfills": "^0.21.0"
   },
