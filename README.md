@@ -10,11 +10,11 @@
 
 | Wallet     | Ordinal-safety | Inscription-safety |
 | ---------- | -------------- | ------------------ |
+| OKX        | ✅             | ✅                 |
 | Unisat     | ✅             | ✅                 |
 | Xverse     | ✅             | ✅                 |
 | Magic Eden | ✅             | ✅                 |
 | Leather    | ✅             | ✅                 |
-| OKX        | ✅             | ✅                 |
 
 ## Quick Start
 
