@@ -29,11 +29,11 @@ interface SelectWalletModalProp {
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
+  [Wallet.OKX]: "https://www.okx.com/web3",
   [Wallet.MAGICEDEN]: "https://wallet.magiceden.io/",
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
   [Wallet.LEATHER]: "https://leather.io/install-extension",
-  [Wallet.OKX]: "https://www.okx.com/web3",
 };
 
 export function SelectWalletModal({
@@ -441,6 +441,16 @@ export function SelectWalletModal({
                     {!isMobile && ( // TODO: remove this once unisat supported on mobile devices
                       <>
                         <WalletButton
+                          wallet={Wallet.OKX}
+                          subtitle="Available on OKX"
+                          onConnect={onConnectOKXWallet}
+                          icon={OKXWalletIcon}
+                          setErrorMessage={setErrorMessage}
+                          isMobileDevice={isMobile}
+                          renderAvatar={renderAvatar}
+                        />
+                        <hr className="horizontal-separator" />
+                        <WalletButton
                           wallet={Wallet.UNISAT}
                           subtitle="Coming soon on mobile browsing"
                           onConnect={onConnectUnisatWallet}
@@ -483,16 +493,6 @@ export function SelectWalletModal({
                           icon={LeatherWalletIcon}
                           setErrorMessage={setErrorMessage}
                           isDisabled={isMobile}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
-                        <hr className="horizontal-separator" />
-                        <WalletButton
-                          wallet={Wallet.OKX}
-                          subtitle="Available on OKX"
-                          onConnect={onConnectOKXWallet}
-                          icon={OKXWalletIcon}
-                          setErrorMessage={setErrorMessage}
                           isMobileDevice={isMobile}
                           renderAvatar={renderAvatar}
                         />
