@@ -10,10 +10,9 @@ export { useSign } from "./hooks/useSign";
 export { useSignMessage } from "./hooks/useSignMessage";
 export type {
   BiAddress,
-  OrdConnectProviderProps,
-} from "./providers/OrdConnectProvider";
-export {
   Network,
   OrdConnectProvider,
+  OrdConnectProviderProps,
   useOrdConnect,
+  Wallet,
 } from "./providers/OrdConnectProvider";
