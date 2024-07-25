@@ -16,4 +16,5 @@ export {
   Network,
   OrdConnectProvider,
   useOrdConnect,
+  Wallet,
 } from "./providers/OrdConnectProvider";
