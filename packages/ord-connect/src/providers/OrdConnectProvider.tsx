@@ -65,6 +65,7 @@ const FORMAT = "format";
 
 export type OrdConnectProviderProps = {
   initialNetwork: Network;
+  ssr?: boolean;
 };
 
 /**
@@ -88,11 +89,13 @@ export type OrdConnectProviderProps = {
  *
  * @param props - Props object.
  * @param props.initialNetwork - Initial network state if network is not set.
+ * @param props.ssr - Enable SSR.
  * @returns Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
   children,
   initialNetwork,
+  ssr = false,
 }: PropsWithChildren<OrdConnectProviderProps>) {
   if (!initialNetwork) {
     throw new Error("Initial network cannot be empty");
@@ -102,17 +105,20 @@ export function OrdConnectProvider({
   const [address, setAddress] = useLocalStorage<BiAddressString>(
     ADDRESS,
     EMPTY_BIADDRESS_OBJECT,
+    { initializeWithValue: !ssr },
   );
 
   const [wallet, setWallet] = useLocalStorage<Wallet | null>(WALLET, null);
   const [publicKey, setPublicKey] = useLocalStorage<BiAddressString>(
     PUBLIC_KEY,
     EMPTY_BIADDRESS_OBJECT,
+    { initializeWithValue: !ssr },
   );
 
   const [format, setFormat] = useLocalStorage<BiAddressFormat>(
     FORMAT,
     EMPTY_BIADDRESS_OBJECT,
+    { initializeWithValue: !ssr },
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
