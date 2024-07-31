@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 const KEY_PREFIX = "ord-connect";
 
@@ -43,18 +49,23 @@ function setItemToLocalStorage<T>(_key: string, value: T) {
 export function useLocalStorage<T>(
   key: string,
   initialValue: T,
+  options: { initializeWithValue?: boolean } = {},
 ): [T, Dispatch<SetStateAction<T>>] {
-  const [state, setInnerState] = useState<T>(() => {
-    if (typeof window === "undefined") {
-      return initialValue;
-    }
-
+  const { initializeWithValue = true } = options;
+  const readValue = useCallback(() => {
     const value = getItemFromLocalStorage<T>(key);
     if (!value) {
       setItemToLocalStorage(key, initialValue);
       return initialValue;
     }
     return value;
+  }, [initialValue, key]);
+
+  const [state, setInnerState] = useState<T>(() => {
+    if (initializeWithValue) {
+      return readValue();
+    }
+    return initialValue;
   });
 
   const setState: Dispatch<SetStateAction<T>> = useCallback(
@@ -64,6 +75,11 @@ export function useLocalStorage<T>(
     },
     [key],
   );
+
+  useEffect(() => {
+    setInnerState(readValue());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   return [state, setState];
 }

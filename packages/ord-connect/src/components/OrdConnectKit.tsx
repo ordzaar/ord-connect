@@ -68,18 +68,20 @@ export function OrdConnectKit({
         renderAvatar={renderAvatar}
       />
     ) : (
-      <PreConnectButton openModal={openModal} />
+      <PreConnectButton disabled={!hasMounted} openModal={openModal} />
     );
   };
 
-  return hasMounted ? (
+  return (
     <>
       {renderConnectButton()}
-      <SelectWalletModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        renderAvatar={renderAvatar}
-      />
+      {hasMounted ? (
+        <SelectWalletModal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          renderAvatar={renderAvatar}
+        />
+      ) : null}
     </>
-  ) : null;
+  );
 }
