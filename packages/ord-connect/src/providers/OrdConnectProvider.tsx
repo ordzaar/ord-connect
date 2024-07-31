@@ -108,7 +108,9 @@ export function OrdConnectProvider({
     { initializeWithValue: !ssr },
   );
 
-  const [wallet, setWallet] = useLocalStorage<Wallet | null>(WALLET, null);
+  const [wallet, setWallet] = useLocalStorage<Wallet | null>(WALLET, null, {
+    initializeWithValue: !ssr,
+  });
   const [publicKey, setPublicKey] = useLocalStorage<BiAddressString>(
     PUBLIC_KEY,
     EMPTY_BIADDRESS_OBJECT,
