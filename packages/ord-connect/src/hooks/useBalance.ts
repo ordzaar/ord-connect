@@ -34,7 +34,9 @@ export function useBalance() {
 
       const totalBalance = await datasource.getBalance({ address });
       const totalAmountInSats = Number(
-        new BigNumber(totalBalance).multipliedBy(100_000_000).toFixed(0, 5),
+        new BigNumber(totalBalance)
+          .multipliedBy(100_000_000)
+          .toFixed(0, BigNumber.ROUND_HALF_DOWN),
       );
 
       setLoading(false);
@@ -42,7 +44,7 @@ export function useBalance() {
     } catch (err) {
       setError((err as Error).message);
       setLoading(false);
-      return 0; // Returning 0 as default value in case of an error
+      throw err;
     }
   }, [format, network, publicKey]);
 
