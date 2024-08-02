@@ -27,8 +27,13 @@ function TestControls() {
   const { address, wallet } = useOrdConnect();
 
   const handleCheckBalance = useCallback(async () => {
-    const walletBalance = await getBalance();
-    setBalance(walletBalance);
+    try {
+      const walletBalance = await getBalance();
+      setBalance(walletBalance);
+    } catch (err) {
+      console.log("Failed to fetch balance", err);
+      setBalance(undefined);
+    }
   }, [getBalance]);
 
   const handleSend = useCallback(async () => {
