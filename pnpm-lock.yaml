@@ -9,11 +9,11 @@ importers:
   .:
     devDependencies:
       '@ordzaar/standard-prettier':
-        specifier: ^1.8.3
-        version: 1.8.3(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint-plugin-jsx-a11y@6.9.0(eslint@8.57.0))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.0))(eslint-plugin-react@7.35.0(eslint@8.57.0))(typescript@5.5.4)
+        specifier: ^1.8.4
+        version: 1.8.4(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint-plugin-jsx-a11y@6.9.0(eslint@8.57.0))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.0))(eslint-plugin-react@7.35.0(eslint@8.57.0))(typescript@5.5.4)
       '@ordzaar/standard-web-linter':
-        specifier: ^1.8.3
-        version: 1.8.3(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
+        specifier: ^1.8.4
+        version: 1.8.4(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
       husky:
         specifier: ^9.1.2
         version: 9.1.2
@@ -401,16 +401,16 @@ packages:
   '@ordzaar/ordit-sdk@1.7.4':
     resolution: {integrity: sha512-MDyR3aaOKEnJGEnzh52YB80lx0CSvSXAIu2Z/uVT3GC9PJBTNcnfXzfcSoz+eXKU9W8TivCoXTWXp/jZ2ZiwrQ==}
 
-  '@ordzaar/standard-prettier@1.8.3':
-    resolution: {integrity: sha512-q3P6yt9qRFfMgtTCa+bDnN8XIcWJ1S0n3J3Uj4y0QF38f9NzI9612maMhqJ8FQERVdHJY3AkXWUVRBi2dTnoTQ==}
+  '@ordzaar/standard-prettier@1.8.4':
+    resolution: {integrity: sha512-0tbZcGa2TnkWHTPt4Q+fXaG/mXMWENCqEjzJPMP2c0nsIHiILOBhMFcCwAvXDFDWmPGTYgFGNitwjVNxmxAB1g==}
 
-  '@ordzaar/standard-typescript@1.8.3':
-    resolution: {integrity: sha512-Sr7NSwg3oFcOxN8l19+3EMq0+HIVsc94NTLPfIaqJFij8NX89UESXDFAvvKANiKqCvIxOXsaTvDKo8gGasCPkw==}
+  '@ordzaar/standard-typescript@1.8.4':
+    resolution: {integrity: sha512-DeOhlNtnmwBzL3InsNsOdtZVPqmpGabnxt5/Mjc9bUxJCd3QXRwgO8hMlYF7sNPiQXeewMYSRgxCD39mVzjTRQ==}
     peerDependencies:
-      typescript: 5.5.3
+      typescript: 5.5.4
 
-  '@ordzaar/standard-web-linter@1.8.3':
-    resolution: {integrity: sha512-jgOIsyU6MzQMooFjDvGj7t+UJS7HliT38F0Sk3wZVc1z8Q9UJSjRYAOD0c4oD3mvWLH/HeX20RwYqaYukoHF1Q==}
+  '@ordzaar/standard-web-linter@1.8.4':
+    resolution: {integrity: sha512-4UpNV40M+j9O2kJ/iVseYgDjC/8aJVGdu+0QhPs9mvOVrsOB160gbNxsuN9JEQASXs1OTwiYQG3wC9tP1ki68Q==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -1417,8 +1417,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
-  eslint-plugin-n@17.9.0:
-    resolution: {integrity: sha512-CPSaXDXdrT4nsrOrO4mT4VB6FMUkoySRkHWuuJJHVqsIEjIeZgMY1H7AzSwPbDScikBmLN82KeM1u7ixV7PzGg==}
+  eslint-plugin-n@17.10.1:
+    resolution: {integrity: sha512-hm/q37W6efDptJXdwirsm6A257iY6ZNtpoSG0wEzFzjJ3AhL7OhEIhdSR2e4OdYfHO5EDeqlCfFrjf9q208IPw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.23.0'
@@ -1710,6 +1710,11 @@ packages:
 
   husky@9.1.2:
     resolution: {integrity: sha512-1/aDMXZdhr1VdJJTLt6e7BipM0Jd9qkpubPiIplon1WmCeOy3nnzsCMeBqS9AsL5ioonl8F8y/F2CLOmk19/Pw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  husky@9.1.4:
+    resolution: {integrity: sha512-bho94YyReb4JV7LYWRWxZ/xr6TtOTt8cMfmQ39MQYJ7f/YE268s3GdghGwi+y4zAeqewE5zYLvuhV0M0ijsDEA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3121,16 +3126,16 @@ snapshots:
       - utf-8-validate
       - valibot
 
-  '@ordzaar/standard-prettier@1.8.3(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint-plugin-jsx-a11y@6.9.0(eslint@8.57.0))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.0))(eslint-plugin-react@7.35.0(eslint@8.57.0))(typescript@5.5.4)':
+  '@ordzaar/standard-prettier@1.8.4(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint-plugin-jsx-a11y@6.9.0(eslint@8.57.0))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.0))(eslint-plugin-react@7.35.0(eslint@8.57.0))(typescript@5.5.4)':
     dependencies:
-      '@ordzaar/standard-typescript': 1.8.3(typescript@5.5.4)
+      '@ordzaar/standard-typescript': 1.8.4(typescript@5.5.4)
       eslint: 8.57.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint-plugin-jsx-a11y@6.9.0(eslint@8.57.0))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.0))(eslint-plugin-react@7.35.0(eslint@8.57.0))(eslint@8.57.0)
       eslint-config-airbnb-typescript: 18.0.0(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint@8.57.0)
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
       eslint-plugin-prettier: 5.2.1(@types/eslint@8.56.11)(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@8.57.0)
-      husky: 9.1.2
+      husky: 9.1.4
       lint-staged: 15.2.7
       prettier: 3.3.3
     transitivePeerDependencies:
@@ -3144,13 +3149,13 @@ snapshots:
       - supports-color
       - typescript
 
-  '@ordzaar/standard-typescript@1.8.3(typescript@5.5.4)':
+  '@ordzaar/standard-typescript@1.8.4(typescript@5.5.4)':
     dependencies:
       typescript: 5.5.4
 
-  '@ordzaar/standard-web-linter@1.8.3(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)':
+  '@ordzaar/standard-web-linter@1.8.4(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)':
     dependencies:
-      '@ordzaar/standard-typescript': 1.8.3(typescript@5.5.4)
+      '@ordzaar/standard-typescript': 1.8.4(typescript@5.5.4)
       eslint: 8.57.0
       eslint-config-airbnb: 19.0.4(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint-plugin-jsx-a11y@6.9.0(eslint@8.57.0))(eslint-plugin-react-hooks@4.6.2(eslint@8.57.0))(eslint-plugin-react@7.35.0(eslint@8.57.0))(eslint@8.57.0)
       eslint-config-airbnb-typescript: 18.0.0(@typescript-eslint/eslint-plugin@7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0))(eslint@8.57.0)
@@ -3159,12 +3164,12 @@ snapshots:
       eslint-plugin-cypress: 3.4.0(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@8.57.0)
-      eslint-plugin-n: 17.9.0(eslint@8.57.0)
+      eslint-plugin-n: 17.10.1(eslint@8.57.0)
       eslint-plugin-prettier: 5.2.1(@types/eslint@8.56.11)(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.35.0(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@8.57.0)
-      husky: 9.1.2
+      husky: 9.1.4
       lint-staged: 15.2.7
       next: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       prettier: 3.3.3
@@ -4483,7 +4488,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-n@17.9.0(eslint@8.57.0):
+  eslint-plugin-n@17.10.1(eslint@8.57.0):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
       enhanced-resolve: 5.17.1
@@ -4849,6 +4854,8 @@ snapshots:
   human-signals@5.0.0: {}
 
   husky@9.1.2: {}
+
+  husky@9.1.4: {}
 
   ieee754@1.2.1: {}
 
