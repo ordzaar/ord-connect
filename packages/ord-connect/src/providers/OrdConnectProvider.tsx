@@ -3,6 +3,7 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -168,6 +169,10 @@ export function OrdConnectProvider({
       disconnectWallet,
     ],
   );
+
+  useEffect(() => {
+    setNetwork(initialNetwork);
+  }, [initialNetwork]);
 
   return (
     <OrdConnectContext.Provider value={context}>
