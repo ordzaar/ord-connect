@@ -67,7 +67,7 @@ function TestControls() {
 
     const signed = await signMsg(
       address.ordinals,
-      "Authenticate this message to access all the functionalities of Ordzaar. By using Ordzaar implies your consent to our user agreement.\n\nDomain: ordzaar.com\n\nBlockchain: Bitcoin \n\nAccount:\ntb1q82avu57rf0xe4wgrkudwa0ewrh7mfrsejkum3h\n\nNonce: 4NfCJ3FEDQ",
+      "This is a test message which will not be used anywhere.",
     );
     console.log(signed);
   }, [address.ordinals, signMsg]);
