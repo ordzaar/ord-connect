@@ -16,7 +16,11 @@ import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
 import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
-import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
+import {
+  Network,
+  useOrdConnect,
+  Wallet,
+} from "../../providers/OrdConnectProvider";
 import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
@@ -438,11 +442,11 @@ export function SelectWalletModal({
 
                 <section className="panel-content-container">
                   <section className="panel-content-inner-container">
-                    {!isMobile && ( // TODO: remove this once unisat supported on mobile devices
+                    {!isMobile || (isMobile && network === Network.MAINNET) ? (
                       <>
                         <WalletButton
                           wallet={Wallet.OKX}
-                          subtitle="Available on OKX"
+                          subtitle="Available on OKX app"
                           onConnect={onConnectOKXWallet}
                           icon={OKXWalletIcon}
                           setErrorMessage={setErrorMessage}
@@ -450,6 +454,10 @@ export function SelectWalletModal({
                           renderAvatar={renderAvatar}
                         />
                         <hr className="horizontal-separator" />
+                      </>
+                    ) : null}
+                    {!isMobile && ( // TODO: remove this once unisat supported on mobile devices
+                      <>
                         <WalletButton
                           wallet={Wallet.UNISAT}
                           subtitle="Coming soon on mobile browsing"
