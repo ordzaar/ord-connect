@@ -90,7 +90,7 @@ export function WalletButton({
             {subtitle}
           </span>
         </div>
-        {hasConnectedWallet ? (
+        {connectedWallet === wallet && connectedAddress.ordinals ? (
           <div className="wallet-option-connected-address">
             {renderAvatar ? (
               renderAvatar(connectedAddress.ordinals, "small")
