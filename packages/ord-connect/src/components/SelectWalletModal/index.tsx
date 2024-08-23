@@ -35,6 +35,7 @@ import { WalletButton, WalletButtonProp } from "./WalletButton";
 
 interface WalletListItemProp extends WalletButtonProp {
   isAvailable: boolean;
+  order: number;
 }
 
 interface SelectWalletModalProp {
@@ -422,6 +423,7 @@ export function SelectWalletModal({
         isMobileDevice: isMobile,
         renderAvatar,
         isAvailable: !isMobile || (isMobile && network === Network.MAINNET),
+        order: 20,
       },
       {
         wallet: Wallet.UNISAT,
@@ -432,6 +434,7 @@ export function SelectWalletModal({
         isMobileDevice: isMobile,
         renderAvatar,
         isAvailable: !isMobile,
+        order: 21,
       },
       {
         wallet: Wallet.XVERSE,
@@ -442,6 +445,7 @@ export function SelectWalletModal({
         isMobileDevice: isMobile,
         renderAvatar,
         isAvailable: true,
+        order: 22,
       },
       {
         wallet: Wallet.MAGICEDEN,
@@ -453,6 +457,7 @@ export function SelectWalletModal({
         isMobileDevice: isMobile,
         renderAvatar,
         isAvailable: !isMobile,
+        order: 23,
       },
       {
         wallet: Wallet.LEATHER,
@@ -464,42 +469,25 @@ export function SelectWalletModal({
         isMobileDevice: isMobile,
         renderAvatar,
         isAvailable: !isMobile,
+        order: 24,
       },
     ];
 
     if (!walletsOrder) {
-      return walletList;
+      return walletList.sort((a, b) => a.order - b.order);
     }
 
-    const newList = walletsOrder.reduce<WalletListItemProp[]>(
-      (list, walletItem) => {
-        const foundWallet = walletList.find(
-          (data) => data.wallet === walletItem,
-        );
-        const alreadyExist = list.some((data) => data.wallet === walletItem);
-        if (foundWallet && !alreadyExist) {
-          list.push(foundWallet);
-        }
-        return list;
-      },
-      [],
-    );
-
-    if (newList.length >= Object.keys(Wallet).length) {
-      return newList;
-    }
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const walletItem of walletList) {
-      const alreadyExist = newList.some(
-        (data) => data.wallet === walletItem.wallet,
+    const updatedList = walletList.map((walletItem) => {
+      const foundIndex = walletsOrder.findIndex(
+        (data) => data === walletItem.wallet,
       );
-      if (!alreadyExist) {
-        newList.push(walletItem);
+      if (foundIndex >= 0) {
+        return { ...walletItem, order: foundIndex };
       }
-    }
+      return walletItem;
+    });
 
-    return newList;
+    return updatedList.sort((a, b) => a.order - b.order);
   }, [
     walletsOrder,
     isMobile,
