@@ -1,4 +1,11 @@
-import { Fragment, ReactNode, useCallback, useEffect, useState } from "react";
+import {
+  Fragment,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   BrowserWalletNotInstalledError,
@@ -24,12 +31,20 @@ import {
 import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
-import { WalletButton } from "./WalletButton";
+import { WalletButton, WalletButtonProp } from "./WalletButton";
+
+interface WalletListItemProp extends WalletButtonProp {
+  isAvailable: boolean;
+}
+
+export type WalletOrderType = [Wallet, Wallet?, Wallet?, Wallet?, Wallet?];
 
 interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
+  preferredWallet?: Wallet;
+  walletsOrder?: WalletOrderType;
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
@@ -44,6 +59,8 @@ export function SelectWalletModal({
   isOpen,
   closeModal,
   renderAvatar,
+  preferredWallet,
+  walletsOrder,
 }: SelectWalletModalProp) {
   const {
     updateAddress,
@@ -396,6 +413,107 @@ export function SelectWalletModal({
     };
   }, [wallet, onConnectUnisatWallet, disconnectWallet]);
 
+  const orderedWalletList = useMemo<WalletListItemProp[]>(() => {
+    const walletList: WalletListItemProp[] = [
+      {
+        wallet: Wallet.OKX,
+        subtitle: "Available on OKX app",
+        onConnect: onConnectOKXWallet,
+        icon: OKXWalletIcon,
+        setErrorMessage,
+        isMobileDevice: isMobile,
+        renderAvatar,
+        isAvailable: !isMobile || (isMobile && network === Network.MAINNET),
+      },
+      {
+        wallet: Wallet.UNISAT,
+        subtitle: "Coming soon on mobile browsing",
+        onConnect: onConnectUnisatWallet,
+        icon: UnisatWalletIcon,
+        setErrorMessage,
+        isMobileDevice: isMobile,
+        renderAvatar,
+        isAvailable: !isMobile,
+      },
+      {
+        wallet: Wallet.XVERSE,
+        subtitle: "Available on Xverse app",
+        onConnect: onConnectXverseWallet,
+        icon: XverseWalletIcon,
+        setErrorMessage,
+        isMobileDevice: isMobile,
+        renderAvatar,
+        isAvailable: true,
+      },
+      {
+        wallet: Wallet.MAGICEDEN,
+        subtitle: "Coming soon on mobile browsing",
+        onConnect: onConnectMagicEdenWallet,
+        icon: MagicEdenWalletIcon,
+        setErrorMessage,
+        isDisabled: isMobile,
+        isMobileDevice: isMobile,
+        renderAvatar,
+        isAvailable: !isMobile,
+      },
+      {
+        wallet: Wallet.LEATHER,
+        subtitle: "Coming soon on mobile browsing",
+        onConnect: onConnectLeatherWallet,
+        icon: LeatherWalletIcon,
+        setErrorMessage,
+        isDisabled: isMobile,
+        isMobileDevice: isMobile,
+        renderAvatar,
+        isAvailable: !isMobile,
+      },
+    ];
+
+    if (!walletsOrder) {
+      return walletList;
+    }
+
+    const newList = walletsOrder.reduce<WalletListItemProp[]>(
+      (list, walletItem) => {
+        const foundWallet = walletList.find(
+          (data) => data.wallet === walletItem,
+        );
+        const alreadyExist = list.some((data) => data.wallet === walletItem);
+        if (foundWallet && !alreadyExist) {
+          list.push(foundWallet);
+        }
+        return list;
+      },
+      [],
+    );
+
+    if (newList.length >= Object.keys(Wallet).length) {
+      return newList;
+    }
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const walletItem of walletList) {
+      const alreadyExist = newList.some(
+        (data) => data.wallet === walletItem.wallet,
+      );
+      if (!alreadyExist) {
+        newList.push(walletItem);
+      }
+    }
+
+    return newList;
+  }, [
+    walletsOrder,
+    isMobile,
+    network,
+    onConnectLeatherWallet,
+    onConnectMagicEdenWallet,
+    onConnectOKXWallet,
+    onConnectUnisatWallet,
+    onConnectXverseWallet,
+    renderAvatar,
+  ]);
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -442,69 +560,34 @@ export function SelectWalletModal({
 
                 <section className="panel-content-container">
                   <section className="panel-content-inner-container">
-                    {!isMobile || (isMobile && network === Network.MAINNET) ? (
-                      <>
-                        <WalletButton
-                          wallet={Wallet.OKX}
-                          subtitle="Available on OKX app"
-                          onConnect={onConnectOKXWallet}
-                          icon={OKXWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
-                        <hr className="horizontal-separator" />
-                      </>
-                    ) : null}
-                    {!isMobile && ( // TODO: remove this once unisat supported on mobile devices
-                      <>
-                        <WalletButton
-                          wallet={Wallet.UNISAT}
-                          subtitle="Coming soon on mobile browsing"
-                          onConnect={onConnectUnisatWallet}
-                          icon={UnisatWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isDisabled={isMobile} // disable unisat on mobile until it is supported
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
-                        <hr className="horizontal-separator" />
-                      </>
-                    )}
-                    <WalletButton
-                      wallet={Wallet.XVERSE}
-                      subtitle="Available on Xverse app"
-                      onConnect={onConnectXverseWallet}
-                      icon={XverseWalletIcon}
-                      setErrorMessage={setErrorMessage}
-                      isMobileDevice={isMobile}
-                      renderAvatar={renderAvatar}
-                    />
-                    {!isMobile && (
-                      <>
-                        <hr className="horizontal-separator" />
-                        <WalletButton
-                          wallet={Wallet.MAGICEDEN}
-                          subtitle="Coming soon on mobile browsing"
-                          onConnect={onConnectMagicEdenWallet}
-                          icon={MagicEdenWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isDisabled={isMobile}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
-                        <hr className="horizontal-separator" />
-                        <WalletButton
-                          wallet={Wallet.LEATHER}
-                          subtitle="Coming soon on mobile browsing"
-                          onConnect={onConnectLeatherWallet}
-                          icon={LeatherWalletIcon}
-                          setErrorMessage={setErrorMessage}
-                          isDisabled={isMobile}
-                          isMobileDevice={isMobile}
-                          renderAvatar={renderAvatar}
-                        />
-                      </>
+                    {orderedWalletList.map(
+                      (walletItem: WalletListItemProp, index: number) => {
+                        if (!walletItem.isAvailable) {
+                          return null;
+                        }
+
+                        const isLastItem =
+                          index === orderedWalletList.length - 1;
+                        return (
+                          <>
+                            <WalletButton
+                              wallet={walletItem.wallet}
+                              subtitle={walletItem.subtitle}
+                              onConnect={walletItem.onConnect}
+                              icon={walletItem.icon}
+                              setErrorMessage={walletItem.setErrorMessage}
+                              isMobileDevice={walletItem.isMobileDevice}
+                              renderAvatar={walletItem.renderAvatar}
+                              isPreferred={
+                                preferredWallet === walletItem.wallet
+                              }
+                            />
+                            {!isLastItem && (
+                              <hr className="horizontal-separator" />
+                            )}
+                          </>
+                        );
+                      },
                     )}
                   </section>
                   <p className="error-message">{errorMessage}</p>

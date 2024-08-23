@@ -7,6 +7,7 @@ import {
   Network,
   OrdConnectProvider,
   useOrdConnect,
+  Wallet,
 } from "./providers/OrdConnectProvider";
 import { OrdConnectKit, useSign } from "./index";
 
@@ -117,6 +118,8 @@ export function SampleApp() {
       <OrdConnectProvider initialNetwork={Network.TESTNET}>
         <OrdConnectKit
           onViewProfile={() => console.log("View profile clicked")}
+          preferredWallet={Wallet.XVERSE}
+          walletsOrder={[Wallet.XVERSE, Wallet.MAGICEDEN, Wallet.OKX]}
         />
         <TestControls />
       </OrdConnectProvider>
