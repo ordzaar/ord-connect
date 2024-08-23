@@ -474,7 +474,7 @@ export function SelectWalletModal({
     ];
 
     if (!walletsOrder) {
-      return walletList.sort((a, b) => a.order - b.order);
+      return walletList;
     }
 
     const updatedList = walletList.map((walletItem) => {
