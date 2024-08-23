@@ -283,3 +283,14 @@
   font-size: 14px;
   line-height: 20px;
 }
+
+.ord-connect-wallet-modal .preferred-label {
+  padding: 4px 12px 4px 12px;
+  color: #000000b2;
+  background-color: #ffbf18;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+  border-radius: 100px;
+  margin-right: 10px;
+}

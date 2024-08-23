@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import useHasMounted from "../hooks/useHasMounted";
-import { useOrdConnect } from "../providers/OrdConnectProvider";
+import { useOrdConnect, Wallet } from "../providers/OrdConnectProvider";
 
 import { PostConnectButton } from "./PostConnectButton";
 import { PreConnectButton } from "./PreConnectButton";
@@ -15,6 +15,8 @@ export interface OrdConnectKitProp {
   onChangeWalletClick?: () => void;
   onDisconnectWalletClick?: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
+  preferredWallet?: Wallet;
+  walletsOrder?: Wallet[];
 }
 
 /**
@@ -27,6 +29,8 @@ export interface OrdConnectKitProp {
  * @param {Function} [props.onViewProfile] - Callback function to handle clicking view wallet profile.
  * @param {Function} [props.onChangeWalletClick] - Callback function to handle clicking change wallet.
  * @param {Function} [props.onDisconnectWalletClick] - Callback function to handle clicking disconnect wallet.
+ * @param {Wallet} [props.preferredWallet] - Displays "Preferred" label beside desired wallet.
+ * @param {Wallet[]} [props.walletsOrder] - Customize wallets display order in select wallet pop up.
  * @returns {JSX.Element} OrdConnectKit React component.
  */
 export function OrdConnectKit({
@@ -35,6 +39,8 @@ export function OrdConnectKit({
   onChangeWalletClick,
   onDisconnectWalletClick,
   renderAvatar,
+  preferredWallet,
+  walletsOrder,
 }: OrdConnectKitProp) {
   const {
     address,
@@ -80,6 +86,8 @@ export function OrdConnectKit({
           isOpen={isModalOpen}
           closeModal={closeModal}
           renderAvatar={renderAvatar}
+          preferredWallet={preferredWallet}
+          walletsOrder={walletsOrder}
         />
       ) : null}
     </>

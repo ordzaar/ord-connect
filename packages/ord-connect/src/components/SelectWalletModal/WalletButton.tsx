@@ -14,7 +14,7 @@ const WALLET_TO_NAME: Record<Wallet, string> = {
   [Wallet.OKX]: "OKX",
 } as const;
 
-interface WalletButtonProp {
+export interface WalletButtonProp {
   wallet: Wallet;
   subtitle: string;
   onConnect: () => Promise<boolean>;
@@ -23,6 +23,7 @@ interface WalletButtonProp {
   isDisabled?: boolean;
   isMobileDevice?: boolean;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
+  isPreferred?: boolean;
 }
 
 export function WalletButton({
@@ -34,6 +35,7 @@ export function WalletButton({
   isDisabled,
   isMobileDevice,
   renderAvatar,
+  isPreferred,
 }: WalletButtonProp) {
   const { wallet: _connectedWallet, address: _connectedAddress } =
     useOrdConnect();
@@ -66,6 +68,9 @@ export function WalletButton({
       setLoading(false);
     }
   }, [onConnect, setErrorMessage]);
+
+  const hasConnectedWallet =
+    connectedWallet === wallet && connectedAddress.ordinals;
 
   return (
     <button
@@ -102,6 +107,11 @@ export function WalletButton({
             </span>
           </div>
         ) : null}
+
+        {!hasConnectedWallet && isPreferred ? (
+          <span className="preferred-label">Preferred</span>
+        ) : null}
+
         {loading ? (
           <img
             src={LoadingIcon}
