@@ -5,7 +5,7 @@ import { useOrdConnect, Wallet } from "../providers/OrdConnectProvider";
 
 import { PostConnectButton } from "./PostConnectButton";
 import { PreConnectButton } from "./PreConnectButton";
-import { SelectWalletModal, WalletOrderType } from "./SelectWalletModal";
+import { SelectWalletModal } from "./SelectWalletModal";
 
 import "./style.css";
 
@@ -16,7 +16,7 @@ export interface OrdConnectKitProp {
   onDisconnectWalletClick?: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
   preferredWallet?: Wallet;
-  walletsOrder?: WalletOrderType;
+  walletsOrder?: Wallet[];
 }
 
 /**
@@ -30,7 +30,7 @@ export interface OrdConnectKitProp {
  * @param {Function} [props.onChangeWalletClick] - Callback function to handle clicking change wallet.
  * @param {Function} [props.onDisconnectWalletClick] - Callback function to handle clicking disconnect wallet.
  * @param {Wallet} [props.preferredWallet] - Displays "Preferred" label beside desired wallet.
- * @param {WalletOrderType} [props.walletsOrder] - Customize wallets display order in select wallet pop up.
+ * @param {Wallet[]} [props.walletsOrder] - Customize wallets display order in select wallet pop up.
  * @returns {JSX.Element} OrdConnectKit React component.
  */
 export function OrdConnectKit({

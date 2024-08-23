@@ -37,14 +37,12 @@ interface WalletListItemProp extends WalletButtonProp {
   isAvailable: boolean;
 }
 
-export type WalletOrderType = [Wallet, Wallet?, Wallet?, Wallet?, Wallet?];
-
 interface SelectWalletModalProp {
   isOpen: boolean;
   closeModal: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
   preferredWallet?: Wallet;
-  walletsOrder?: WalletOrderType;
+  walletsOrder?: Wallet[];
 }
 
 const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
