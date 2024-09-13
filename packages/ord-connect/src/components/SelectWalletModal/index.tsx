@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useEffect, useMemo, useState } from "react";
+import { Fragment, ReactNode, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
@@ -13,7 +13,6 @@ import {
   Wallet,
 } from "../../providers/OrdConnectProvider";
 import { isMobileUserAgent } from "../../utils/mobile-detector";
-import { waitForUnisatExtensionReady } from "../../utils/unisat";
 
 import { useConnect } from "./hooks/useConnect";
 import { WalletButton, WalletButtonProps } from "./WalletButton";
@@ -46,50 +45,7 @@ export function SelectWalletModal({
     onClose: closeModal,
     onError: (error) => setErrorMessage(error),
   });
-  const { network, wallet, format, address, publicKey, disconnectWallet } =
-    useOrdConnect();
-
-  // Reconnect address change listener if there there is already a connected wallet
-  useEffect(() => {
-    if (wallet !== Wallet.UNISAT) {
-      return undefined;
-    }
-
-    let isMounted = true;
-    let isConnectSuccessful = false;
-    const listener = () => connectWallet(Wallet.UNISAT);
-
-    if (address && publicKey && format) {
-      const connectToUnisatWalletOnReady = async () => {
-        const isUnisatExtensionReady = await waitForUnisatExtensionReady();
-        if (!isMounted) {
-          return;
-        }
-        if (!isUnisatExtensionReady) {
-          disconnectWallet();
-          return;
-        }
-
-        isConnectSuccessful = await connectWallet(Wallet.UNISAT, {
-          readOnly: true,
-        });
-        if (!isMounted) {
-          return;
-        }
-
-        if (isConnectSuccessful) {
-          window.unisat.addListener("accountsChanged", listener);
-        }
-      };
-      connectToUnisatWalletOnReady();
-    }
-    return () => {
-      isMounted = false;
-      if (isConnectSuccessful) {
-        window.unisat.removeListener("accountsChanged", listener);
-      }
-    };
-  }, [wallet, connectWallet, disconnectWallet]);
+  const { network } = useOrdConnect();
 
   const isMobile = isMobileUserAgent();
   const orderedWalletList = useMemo<WalletListItemProp[]>(() => {

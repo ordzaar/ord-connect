@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   BrowserWalletNotInstalledError,
   BrowserWalletRequestCancelledByUserError,
@@ -15,6 +16,7 @@ import {
   useOrdConnect,
   Wallet,
 } from "../../../providers/OrdConnectProvider";
+import { waitForUnisatExtensionReady } from "../../../utils/unisat";
 
 type ConnectedWalletType = {
   address: BiAddressString;
@@ -221,6 +223,10 @@ export function useConnect({
     updatePublicKey,
     updateFormat,
     disconnectWallet,
+    address: connectedAddress,
+    publicKey: connectedPublicKey,
+    format: connectedFormat,
+    wallet: connectedWallet,
   } = useOrdConnect();
 
   const onError = (
@@ -269,6 +275,48 @@ export function useConnect({
       return false;
     }
   };
+
+  // Reconnect address change listener if a connected wallet exists
+  useEffect(() => {
+    if (connectedWallet !== Wallet.UNISAT) {
+      return undefined;
+    }
+
+    let isMounted = true;
+    let isConnectSuccessful = false;
+    const listener = () => onConnect(Wallet.UNISAT);
+
+    if (connectedAddress && connectedPublicKey && connectedFormat) {
+      const connectToUnisatWalletOnReady = async () => {
+        const isUnisatExtensionReady = await waitForUnisatExtensionReady();
+        if (!isMounted) {
+          return;
+        }
+        if (!isUnisatExtensionReady) {
+          disconnectWallet();
+          return;
+        }
+
+        isConnectSuccessful = await onConnect(Wallet.UNISAT, {
+          readOnly: true,
+        });
+        if (!isMounted) {
+          return;
+        }
+
+        if (isConnectSuccessful) {
+          window.unisat.addListener("accountsChanged", listener);
+        }
+      };
+      connectToUnisatWalletOnReady();
+    }
+    return () => {
+      isMounted = false;
+      if (isConnectSuccessful) {
+        window.unisat.removeListener("accountsChanged", listener);
+      }
+    };
+  }, [connectedWallet]);
 
   return { connectWallet: onConnect };
 }
