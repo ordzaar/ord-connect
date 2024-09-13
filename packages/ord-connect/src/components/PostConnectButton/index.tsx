@@ -88,7 +88,7 @@ export function PostConnectButton({
               className={`dropdown-button ${
                 open ? "close-dropdown-button" : "expand-dropdown-button"
               }`}
-              alt="ord connect dropdown"
+              alt=""
             />
           </Menu.Button>
 
@@ -124,7 +124,7 @@ export function PostConnectButton({
                 onClick={() => onDisconnectWallet?.()}
               >
                 <span className="label">Disconnect wallet</span>
-                <img src={LogoutIcon} className="logout-icon" alt="logout" />
+                <img src={LogoutIcon} className="logout-icon" alt="" />
               </Menu.Item>
             </Menu.Items>
           </Transition>
