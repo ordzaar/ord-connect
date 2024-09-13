@@ -7,6 +7,7 @@
   border-radius: 40px;
   padding: 10px 16px;
   border: 0px;
+  cursor: pointer;
 }
 
 .ord-connect-wallet-button:disabled {

@@ -1,9 +1,10 @@
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useState } from "react";
 import Avatar from "boring-avatars";
 
 import ChevronRightIcon from "../../assets/chevron-right.svg";
 import LoadingIcon from "../../assets/loading.svg";
 import { useOrdConnect, Wallet } from "../../providers/OrdConnectProvider";
+import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { truncateMiddle } from "../../utils/text-helper";
 
 const WALLET_TO_NAME: Record<Wallet, string> = {
@@ -14,14 +15,12 @@ const WALLET_TO_NAME: Record<Wallet, string> = {
   [Wallet.OKX]: "OKX",
 } as const;
 
-export interface WalletButtonProp {
+export interface WalletButtonProps {
   wallet: Wallet;
   subtitle: string;
   onConnect: () => Promise<boolean>;
+  onError: (error: string) => void;
   icon: string;
-  setErrorMessage: (msg: string) => void;
-  isDisabled?: boolean;
-  isMobileDevice?: boolean;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
   isPreferred?: boolean;
 }
@@ -30,27 +29,19 @@ export function WalletButton({
   wallet,
   subtitle,
   onConnect,
+  onError,
   icon,
-  setErrorMessage,
-  isDisabled,
-  isMobileDevice,
   renderAvatar,
   isPreferred,
-}: WalletButtonProp) {
-  const { wallet: _connectedWallet, address: _connectedAddress } =
+}: WalletButtonProps) {
+  const isMobile = isMobileUserAgent();
+  const { wallet: connectedWallet, address: connectedAddress } =
     useOrdConnect();
-
-  // Introduce an initial state because otherwise while the modal is closing,
-  // the connected address is suddenly updated in the dialog
-  const [{ connectedWallet, connectedAddress }] = useState({
-    connectedWallet: _connectedWallet,
-    connectedAddress: _connectedAddress,
-  });
 
   const [loading, setLoading] = useState(false);
   const walletName = WALLET_TO_NAME[wallet];
 
-  const handleWalletConnectClick = useCallback(async () => {
+  const handleWalletConnectClick = async () => {
     setLoading(true);
     const result = await Promise.race([
       onConnect()
@@ -61,13 +52,13 @@ export function WalletButton({
       }),
     ]);
     if (result === "timeout") {
-      setErrorMessage(
+      onError(
         "No wallet pop-up? The extension is not responding. Try reloading your browser.",
       );
     } else {
       setLoading(false);
     }
-  }, [onConnect, setErrorMessage]);
+  };
 
   const hasConnectedWallet =
     connectedWallet === wallet && connectedAddress.ordinals;
@@ -77,7 +68,6 @@ export function WalletButton({
       type="button"
       className="wallet-option-button"
       onClick={handleWalletConnectClick}
-      disabled={isDisabled}
     >
       <div className="option-wrapper">
         <img className="wallet-icon" src={icon} alt="" />
@@ -85,7 +75,7 @@ export function WalletButton({
           <span className="wallet-option-label">{walletName}</span>
           <span
             className="wallet-option-subtitle"
-            style={{ display: isMobileDevice ? "block" : "none" }}
+            style={{ display: isMobile ? "block" : "none" }}
           >
             {subtitle}
           </span>
@@ -116,15 +106,16 @@ export function WalletButton({
           <img
             src={LoadingIcon}
             width={24}
+            height={24}
             alt={`${walletName} extension is loading`}
           />
         ) : (
           <img
             src={ChevronRightIcon}
-            alt="Chevron Right"
+            alt=""
             width={24}
             height={24}
-            className="chveron-btn"
+            className="chevron-btn"
           />
         )}
       </div>

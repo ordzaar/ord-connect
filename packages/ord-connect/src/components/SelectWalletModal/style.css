@@ -136,7 +136,7 @@
   cursor: pointer;
 }
 
-.ord-connect-wallet-modal .wallet-option-button:disabled .chveron-btn {
+.ord-connect-wallet-modal .wallet-option-button:disabled .chevron-btn {
   opacity: 0.3;
 }
 

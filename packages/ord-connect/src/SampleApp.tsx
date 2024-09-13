@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
@@ -27,7 +27,7 @@ function TestControls() {
 
   const { address, wallet } = useOrdConnect();
 
-  const handleCheckBalance = useCallback(async () => {
+  const handleCheckBalance = async () => {
     try {
       const walletBalance = await getBalance();
       setBalance(walletBalance);
@@ -35,9 +35,9 @@ function TestControls() {
       console.log("Failed to fetch balance", err);
       setBalance(undefined);
     }
-  }, [getBalance]);
+  };
 
-  const handleSend = useCallback(async () => {
+  const handleSend = async () => {
     const txId = await send(
       "tb1qgypdud5xr0x0wugf5yv62z03ytkwxusjwsr9kq",
       1000,
@@ -46,9 +46,9 @@ function TestControls() {
     if (txId) {
       setResult(txId);
     }
-  }, [send]);
+  };
 
-  const handleSignPsbt = useCallback(async () => {
+  const handleSignPsbt = async () => {
     if (!address.payments) {
       throw new Error("No payment address");
     }
@@ -59,9 +59,9 @@ function TestControls() {
       { extractTx: false },
     );
     console.log(signed);
-  }, [address.payments, sign]);
+  };
 
-  const handleSignMessage = useCallback(async () => {
+  const handleSignMessage = async () => {
     if (!address.ordinals) {
       throw new Error("No payment address");
     }
@@ -71,7 +71,7 @@ function TestControls() {
       "This is a test message which will not be used anywhere.",
     );
     console.log(signed);
-  }, [address.ordinals, signMsg]);
+  };
 
   return (
     <div className="controls">
