@@ -25,6 +25,11 @@ export enum Wallet {
   OKX = "okx",
 }
 
+export enum Chain {
+  BITCOIN = "bitcoin",
+  FRACTAL_BITCOIN = "fractal-bitcoin",
+}
+
 export interface BiAddress<T> {
   payments: T | null;
   ordinals: T | null;
@@ -53,6 +58,7 @@ interface OrdConnectContextType {
   format: BiAddressFormat;
   updateFormat: (format: BiAddressFormat) => void;
   disconnectWallet: () => void;
+  chain: Chain;
 }
 
 const OrdConnectContext = createContext<OrdConnectContextType | undefined>(
@@ -66,6 +72,7 @@ const FORMAT = "format";
 
 export type OrdConnectProviderProps = {
   initialNetwork: Network;
+  chain?: Chain;
   ssr?: boolean;
 };
 
@@ -96,6 +103,7 @@ export type OrdConnectProviderProps = {
 export function OrdConnectProvider({
   children,
   initialNetwork,
+  chain = Chain.BITCOIN,
   ssr = false,
 }: PropsWithChildren<OrdConnectProviderProps>) {
   if (!initialNetwork) {
@@ -151,6 +159,7 @@ export function OrdConnectProvider({
       format,
       updateFormat: setFormat,
       disconnectWallet,
+      chain,
     }),
     [
       address,
@@ -167,6 +176,7 @@ export function OrdConnectProvider({
       format,
       setFormat,
       disconnectWallet,
+      chain,
     ],
   );
 

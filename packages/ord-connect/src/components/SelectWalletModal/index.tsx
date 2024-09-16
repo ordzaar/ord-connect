@@ -8,6 +8,7 @@ import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import {
+  Chain,
   Network,
   useOrdConnect,
   Wallet,
@@ -17,15 +18,16 @@ import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { useConnect } from "./hooks/useConnect";
 import { WalletButton, WalletButtonProps } from "./WalletButton";
 
-type WalletListItemProp = Omit<
+type WalletListItemProps = Omit<
   WalletButtonProps,
   "onError" | "renderAvatar"
 > & {
   hidden?: boolean;
   order: number;
+  chains: Chain[];
 };
 
-interface SelectWalletModalProp {
+interface SelectWalletModalProps {
   isOpen: boolean;
   closeModal: () => void;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
@@ -33,23 +35,28 @@ interface SelectWalletModalProp {
   walletsOrder?: Wallet[];
 }
 
+const CHAIN_TO_NAME = {
+  [Chain.BITCOIN]: "Bitcoin",
+  [Chain.FRACTAL_BITCOIN]: "Fractal Bitcoin",
+} as const;
+
 export function SelectWalletModal({
   isOpen,
   closeModal,
   renderAvatar,
   preferredWallet,
   walletsOrder,
-}: SelectWalletModalProp) {
+}: SelectWalletModalProps) {
   const [errorMessage, setErrorMessage] = useState("");
   const { connectWallet } = useConnect({
     onClose: closeModal,
     onError: (error) => setErrorMessage(error),
   });
-  const { network } = useOrdConnect();
+  const { network, chain } = useOrdConnect();
 
   const isMobile = isMobileUserAgent();
-  const orderedWalletList = useMemo<WalletListItemProp[]>(() => {
-    const walletList: WalletListItemProp[] = [
+  const orderedWalletList = useMemo<WalletListItemProps[]>(() => {
+    const ALL_WALLETS: WalletListItemProps[] = [
       {
         wallet: Wallet.OKX,
         subtitle: "Available on OKX app",
@@ -57,6 +64,7 @@ export function SelectWalletModal({
         icon: OKXWalletIcon,
         hidden: isMobile && network !== Network.MAINNET,
         order: 20,
+        chains: [Chain.BITCOIN],
       },
       {
         wallet: Wallet.UNISAT,
@@ -65,6 +73,7 @@ export function SelectWalletModal({
         icon: UnisatWalletIcon,
         hidden: isMobile,
         order: 21,
+        chains: [Chain.BITCOIN, Chain.FRACTAL_BITCOIN],
       },
       {
         wallet: Wallet.XVERSE,
@@ -72,6 +81,7 @@ export function SelectWalletModal({
         onConnect: () => connectWallet(Wallet.XVERSE),
         icon: XverseWalletIcon,
         order: 22,
+        chains: [Chain.BITCOIN],
       },
       {
         wallet: Wallet.MAGICEDEN,
@@ -80,6 +90,7 @@ export function SelectWalletModal({
         icon: MagicEdenWalletIcon,
         hidden: isMobile,
         order: 23,
+        chains: [Chain.BITCOIN],
       },
       {
         wallet: Wallet.LEATHER,
@@ -88,8 +99,13 @@ export function SelectWalletModal({
         icon: LeatherWalletIcon,
         hidden: isMobile,
         order: 24,
+        chains: [Chain.BITCOIN],
       },
     ];
+
+    const walletList = ALL_WALLETS.filter((walletItem) =>
+      walletItem.chains.includes(chain),
+    );
 
     if (!walletsOrder) {
       return walletList;
@@ -106,7 +122,7 @@ export function SelectWalletModal({
     });
 
     return updatedList.sort((a, b) => a.order - b.order);
-  }, [walletsOrder, isMobile, network, connectWallet]);
+  }, [isMobile, network, walletsOrder, connectWallet, chain]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -141,7 +157,7 @@ export function SelectWalletModal({
               <Dialog.Panel className="panel">
                 <section className="panel-title-container">
                   <Dialog.Title as="h3" className="panel-title">
-                    Choose Bitcoin wallet to connect
+                    Choose {CHAIN_TO_NAME[chain]} wallet to connect
                   </Dialog.Title>
                   <button
                     type="button"

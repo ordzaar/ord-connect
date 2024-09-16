@@ -29,11 +29,11 @@ Just two simple steps:
 2.  Import ord-connect into your dApp:
 
     ```javascript
-    import { Network, OrdConnectProvider, OrdConnectKit } from "@ordzaar/ord-connect";
+    import { Chain, Network, OrdConnectProvider, OrdConnectKit } from "@ordzaar/ord-connect";
 
     export default function YourReactComponent() {
       return (
-        <OrdConnectProvider initialNetwork={Network.TESTNET}>
+        <OrdConnectProvider initialNetwork={Network.TESTNET} chain={Chain.BITCOIN}>
           <OrdConnectKit />
         </OrdConnectProvider>
       );
