@@ -13,6 +13,7 @@ export type {
   OrdConnectProviderProps,
 } from "./providers/OrdConnectProvider";
 export {
+  Chain,
   Network,
   OrdConnectProvider,
   useOrdConnect,

@@ -59,6 +59,7 @@ interface OrdConnectContextType {
   updateFormat: (format: BiAddressFormat) => void;
   disconnectWallet: () => void;
   chain: Chain;
+  updateChain: (chain: Chain) => void;
 }
 
 const OrdConnectContext = createContext<OrdConnectContextType | undefined>(
@@ -71,7 +72,7 @@ const PUBLIC_KEY = "publicKey";
 const FORMAT = "format";
 
 export type OrdConnectProviderProps = {
-  initialNetwork: Network;
+  network: Network;
   chain?: Chain;
   ssr?: boolean;
 };
@@ -96,20 +97,22 @@ export type OrdConnectProviderProps = {
  * }
  *
  * @param props - Props object.
- * @param props.initialNetwork - Initial network state if network is not set.
+ * @param props.network - Network.
+ * @param props.chain - Chain.
  * @param props.ssr - Enable SSR.
  * @returns Provider component for OrdConnect.
  */
 export function OrdConnectProvider({
   children,
-  initialNetwork,
-  chain = Chain.BITCOIN,
+  network: _network,
+  chain: _chain = Chain.BITCOIN,
   ssr = false,
 }: PropsWithChildren<OrdConnectProviderProps>) {
-  if (!initialNetwork) {
-    throw new Error("Initial network cannot be empty");
+  if (!_network) {
+    throw new Error("Network cannot be empty");
   }
-  const [network, setNetwork] = useState(initialNetwork);
+  const [network, setNetwork] = useState(_network);
+  const [chain, setChain] = useState(_chain);
 
   const [address, setAddress] = useLocalStorage<BiAddressString>(
     ADDRESS,
@@ -160,6 +163,7 @@ export function OrdConnectProvider({
       updateFormat: setFormat,
       disconnectWallet,
       chain,
+      updateChain: setChain,
     }),
     [
       address,
@@ -177,12 +181,20 @@ export function OrdConnectProvider({
       setFormat,
       disconnectWallet,
       chain,
+      setChain,
     ],
   );
 
   useEffect(() => {
-    setNetwork(initialNetwork);
-  }, [initialNetwork]);
+    setNetwork(_network);
+  }, [_network]);
+
+  useEffect(() => {
+    if (chain !== _chain) {
+      disconnectWallet();
+      setChain(_chain);
+    }
+  }, [_chain, chain, disconnectWallet]);
 
   return (
     <OrdConnectContext.Provider value={context}>

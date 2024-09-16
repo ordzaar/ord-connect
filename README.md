@@ -33,7 +33,7 @@ Just two simple steps:
 
     export default function YourReactComponent() {
       return (
-        <OrdConnectProvider initialNetwork={Network.TESTNET} chain={Chain.BITCOIN}>
+        <OrdConnectProvider network={Network.TESTNET} chain={Chain.BITCOIN}>
           <OrdConnectKit />
         </OrdConnectProvider>
       );
