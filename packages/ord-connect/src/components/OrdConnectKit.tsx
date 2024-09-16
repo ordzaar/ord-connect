@@ -9,7 +9,7 @@ import { SelectWalletModal } from "./SelectWalletModal";
 
 import "./style.css";
 
-export interface OrdConnectKitProp {
+export interface OrdConnectKitProps {
   hideConnectButton?: boolean;
   onViewProfile?: () => void;
   onChangeWalletClick?: () => void;
@@ -41,7 +41,7 @@ export function OrdConnectKit({
   renderAvatar,
   preferredWallet,
   walletsOrder,
-}: OrdConnectKitProp) {
+}: OrdConnectKitProps) {
   const {
     address,
     disconnectWallet,

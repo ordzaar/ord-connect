@@ -1,6 +1,6 @@
-import type { OrdConnectKitProp } from "../OrdConnectKit";
+import type { OrdConnectKitProps } from "../OrdConnectKit";
 
-interface PreConnectButtonProp extends OrdConnectKitProp {
+interface PreConnectButtonProps extends OrdConnectKitProps {
   openModal: () => void;
   disabled?: boolean;
 }
@@ -8,7 +8,7 @@ interface PreConnectButtonProp extends OrdConnectKitProp {
 export function PreConnectButton({
   openModal,
   disabled,
-}: PreConnectButtonProp) {
+}: PreConnectButtonProps) {
   return (
     <button
       type="button"

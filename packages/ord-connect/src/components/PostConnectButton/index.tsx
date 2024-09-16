@@ -24,7 +24,7 @@ const WALLET_TO_ICON: Record<Wallet, string> = {
   [Wallet.OKX]: OKXWalletIcon,
 } as const;
 
-interface PostConnectButtonProp {
+interface PostConnectButtonProps {
   address: string;
   network: string;
   onViewProfile?: () => void;
@@ -46,7 +46,7 @@ export function PostConnectButton({
   onChangeWallet,
   onDisconnectWallet,
   renderAvatar,
-}: PostConnectButtonProp) {
+}: PostConnectButtonProps) {
   const { wallet } = useOrdConnect();
 
   return (
