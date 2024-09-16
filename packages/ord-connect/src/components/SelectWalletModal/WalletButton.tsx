@@ -19,7 +19,6 @@ export interface WalletButtonProps {
   wallet: Wallet;
   subtitle: string;
   onConnect: () => Promise<boolean>;
-  onError: (error: string) => void;
   icon: string;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
   isPreferred?: boolean;
@@ -29,7 +28,6 @@ export function WalletButton({
   wallet,
   subtitle,
   onConnect,
-  onError,
   icon,
   renderAvatar,
   isPreferred,
@@ -43,21 +41,12 @@ export function WalletButton({
 
   const handleWalletConnectClick = async () => {
     setLoading(true);
-    const result = await Promise.race([
-      onConnect()
-        .then(() => setLoading(false))
-        .catch(() => setLoading(false)),
-      new Promise<string>((resolve) => {
-        setTimeout(() => resolve("timeout"), 5000);
-      }),
-    ]);
-    if (result === "timeout") {
-      onError(
-        "No wallet pop-up? The extension is not responding. Try reloading your browser.",
-      );
-    } else {
-      setLoading(false);
+    try {
+      await onConnect();
+    } catch (e) {
+      // intentionally empty
     }
+    setLoading(false);
   };
 
   const hasConnectedWallet =

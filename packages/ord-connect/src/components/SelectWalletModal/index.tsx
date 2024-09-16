@@ -183,9 +183,29 @@ export function SelectWalletModal({
                             subtitle={walletItem.subtitle}
                             onConnect={async () => {
                               setErrorMessage("");
-                              return walletItem.onConnect();
+                              // catch clause not required
+                              const walletConnectPromise = walletItem
+                                .onConnect()
+                                .then((res) => {
+                                  if (res) {
+                                    setErrorMessage("");
+                                  }
+                                  return res;
+                                });
+                              const result = await Promise.race([
+                                walletConnectPromise,
+                                new Promise<string>((resolve) => {
+                                  setTimeout(() => resolve("timeout"), 5000);
+                                }),
+                              ]);
+                              if (typeof result === "string") {
+                                setErrorMessage(
+                                  "No wallet pop-up? The extension is not responding. Try reloading your browser.",
+                                );
+                                return walletConnectPromise;
+                              }
+                              return result;
                             }}
-                            onError={(err) => setErrorMessage(err)}
                             icon={walletItem.icon}
                             renderAvatar={renderAvatar}
                             isPreferred={preferredWallet === walletItem.wallet}
