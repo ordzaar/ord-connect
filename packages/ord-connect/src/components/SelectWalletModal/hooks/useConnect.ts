@@ -12,6 +12,7 @@ import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 import {
   BiAddressFormat,
   BiAddressString,
+  Chain,
   Network,
   useOrdConnect,
   Wallet,
@@ -33,12 +34,16 @@ const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
 };
 
 const connectWallet = async (
-  { network, wallet }: { network: Network; wallet: string },
+  {
+    network,
+    wallet,
+    chain = Chain.BITCOIN,
+  }: { network: Network; wallet: string; chain?: Chain },
   { readOnly = false } = {},
 ): Promise<ConnectedWalletType> => {
   switch (wallet) {
     case Wallet.UNISAT: {
-      const unisat = await getUnisatAddresses(network, readOnly);
+      const unisat = await getUnisatAddresses(network, chain, { readOnly });
       if (!unisat || unisat.length < 1) {
         throw new Error("Unisat via Ordit returned no addresses");
       }
@@ -227,6 +232,7 @@ export function useConnect({
     publicKey: connectedPublicKey,
     format: connectedFormat,
     wallet: connectedWallet,
+    chain,
   } = useOrdConnect();
 
   const onError = (
@@ -252,7 +258,7 @@ export function useConnect({
   const onConnect = async (wallet: Wallet, { readOnly = false } = {}) => {
     try {
       const { address, publicKey, format } = await connectWallet(
-        { network, wallet },
+        { network, wallet, chain },
         { readOnly },
       );
       updateAddress({

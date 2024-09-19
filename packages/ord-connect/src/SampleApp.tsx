@@ -4,6 +4,7 @@ import { useBalance } from "./hooks/useBalance";
 import { useSend } from "./hooks/useSend";
 import { useSignMessage } from "./hooks/useSignMessage";
 import {
+  Chain,
   Network,
   OrdConnectProvider,
   useOrdConnect,
@@ -115,7 +116,7 @@ function TestControls() {
 export function SampleApp() {
   return (
     <div className="app">
-      <OrdConnectProvider initialNetwork={Network.TESTNET}>
+      <OrdConnectProvider network={Network.TESTNET} chain={Chain.BITCOIN}>
         <OrdConnectKit
           onViewProfile={() => console.log("View profile clicked")}
           preferredWallet={Wallet.XVERSE}

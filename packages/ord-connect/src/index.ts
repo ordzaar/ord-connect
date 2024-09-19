@@ -1,6 +1,6 @@
 import "./components/style.css";
 
-export type { OrdConnectKitProp } from "./components/OrdConnectKit";
+export type { OrdConnectKitProps } from "./components/OrdConnectKit";
 export { OrdConnectKit } from "./components/OrdConnectKit";
 export { SelectWalletModal } from "./components/SelectWalletModal";
 export { useBalance } from "./hooks/useBalance";
@@ -13,6 +13,7 @@ export type {
   OrdConnectProviderProps,
 } from "./providers/OrdConnectProvider";
 export {
+  Chain,
   Network,
   OrdConnectProvider,
   useOrdConnect,
