@@ -15,8 +15,8 @@ importers:
         specifier: ^1.8.10
         version: 1.8.10(@types/eslint@8.56.11)(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(eslint@8.57.1)(typescript@5.5.4))(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
       husky:
-        specifier: ^9.1.2
-        version: 9.1.2
+        specifier: ^9.1.6
+        version: 9.1.6
       turbo:
         specifier: ^2.1.2
         version: 2.1.2
@@ -1714,11 +1714,6 @@ packages:
   human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
-
-  husky@9.1.2:
-    resolution: {integrity: sha512-1/aDMXZdhr1VdJJTLt6e7BipM0Jd9qkpubPiIplon1WmCeOy3nnzsCMeBqS9AsL5ioonl8F8y/F2CLOmk19/Pw==}
-    engines: {node: '>=18'}
-    hasBin: true
 
   husky@9.1.6:
     resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
@@ -4810,8 +4805,6 @@ snapshots:
   https-browserify@1.0.0: {}
 
   human-signals@5.0.0: {}
-
-  husky@9.1.2: {}
 
   husky@9.1.6: {}
 
