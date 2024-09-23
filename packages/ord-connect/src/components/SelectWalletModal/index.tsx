@@ -85,10 +85,9 @@ export function SelectWalletModal({
       },
       {
         wallet: Wallet.MAGICEDEN,
-        subtitle: "Coming soon on mobile browsing",
+        subtitle: "Available on Magic Eden Wallet app",
         onConnect: () => connectWallet(Wallet.MAGICEDEN),
         icon: MagicEdenWalletIcon,
-        hidden: isMobile,
         order: 23,
         chains: [Chain.BITCOIN],
       },
