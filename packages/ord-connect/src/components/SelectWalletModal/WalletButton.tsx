@@ -17,7 +17,6 @@ const WALLET_TO_NAME: Record<Wallet, string> = {
 
 export interface WalletButtonProps {
   wallet: Wallet;
-  subtitle: string;
   onConnect: () => Promise<boolean>;
   icon: string;
   renderAvatar?: (address: string, size: "large" | "small") => ReactNode;
@@ -26,7 +25,6 @@ export interface WalletButtonProps {
 
 export function WalletButton({
   wallet,
-  subtitle,
   onConnect,
   icon,
   renderAvatar,
@@ -61,13 +59,10 @@ export function WalletButton({
       <div className="option-wrapper">
         <img className="wallet-icon" src={icon} alt="" />
         <div className="wallet-option">
-          <span className="wallet-option-label">{walletName}</span>
-          <span
-            className="wallet-option-subtitle"
-            style={{ display: isMobile ? "block" : "none" }}
-          >
-            {subtitle}
-          </span>
+          <p className="wallet-option-label">{walletName}</p>
+          <p className="wallet-option-subtitle">
+            {isMobile ? "Available on app" : ""}
+          </p>
         </div>
         {connectedWallet === wallet && connectedAddress.ordinals ? (
           <div className="wallet-option-connected-address">
@@ -75,7 +70,7 @@ export function WalletButton({
               renderAvatar(connectedAddress.ordinals, "small")
             ) : (
               <Avatar
-                size={16}
+                size={isMobile ? 12 : 16}
                 variant="beam"
                 name={connectedAddress.ordinals}
                 colors={["#1C2DCB", "#F226B8"]}
@@ -94,16 +89,16 @@ export function WalletButton({
         {loading ? (
           <img
             src={LoadingIcon}
-            width={24}
-            height={24}
+            width={isMobile ? 20 : 24}
+            height={isMobile ? 20 : 24}
             alt={`${walletName} extension is loading`}
           />
         ) : (
           <img
             src={ChevronRightIcon}
             alt=""
-            width={24}
-            height={24}
+            width={isMobile ? 20 : 24}
+            height={isMobile ? 20 : 24}
             className="chevron-btn"
           />
         )}
