@@ -11,8 +11,17 @@ body {
   margin: 8px;
 }
 
-.controls {
+.test-container {
   align-self: flex-start;
   display: flex;
   flex-direction: column;
+  margin-top: 16px;
+}
+
+.controls {
+  display: flex;
+}
+
+.details {
+  word-break: break-word;
 }

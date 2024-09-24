@@ -75,8 +75,8 @@ function TestControls() {
   };
 
   return (
-    <div className="controls">
-      <div>
+    <div className="test-container">
+      <div className="controls">
         <button type="button" onClick={handleCheckBalance}>
           Check balance
         </button>
@@ -90,7 +90,7 @@ function TestControls() {
           Sign message
         </button>
       </div>
-      <div>
+      <div className="details">
         {wallet ? <p>Wallet: {wallet}</p> : null}
         {address?.ordinals ? (
           <p>Connected Address: {address.ordinals ?? ""}</p>
