@@ -102,8 +102,8 @@ export function SelectWalletModal({
       },
     ];
 
-    const walletList = ALL_WALLETS.filter((walletItem) =>
-      walletItem.chains.includes(chain),
+    const walletList = ALL_WALLETS.filter(
+      (walletItem) => walletItem.chains.includes(chain) && !walletItem.hidden,
     );
 
     if (!walletsOrder) {
@@ -170,10 +170,6 @@ export function SelectWalletModal({
                 <section className="panel-content-container">
                   <section className="panel-content-inner-container">
                     {orderedWalletList.map((walletItem, index) => {
-                      if (walletItem.hidden) {
-                        return null;
-                      }
-
                       const isLastItem = index === orderedWalletList.length - 1;
                       return (
                         <Fragment key={walletItem.wallet}>
