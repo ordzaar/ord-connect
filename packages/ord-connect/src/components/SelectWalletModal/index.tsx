@@ -59,7 +59,6 @@ export function SelectWalletModal({
     const ALL_WALLETS: WalletListItemProps[] = [
       {
         wallet: Wallet.OKX,
-        subtitle: "Available on OKX app",
         onConnect: () => connectWallet(Wallet.OKX),
         icon: OKXWalletIcon,
         hidden: isMobile && network !== Network.MAINNET,
@@ -68,7 +67,6 @@ export function SelectWalletModal({
       },
       {
         wallet: Wallet.UNISAT,
-        subtitle: "Coming soon on mobile browsing",
         onConnect: () => connectWallet(Wallet.UNISAT),
         icon: UnisatWalletIcon,
         hidden: isMobile,
@@ -77,7 +75,6 @@ export function SelectWalletModal({
       },
       {
         wallet: Wallet.XVERSE,
-        subtitle: "Available on Xverse app",
         onConnect: () => connectWallet(Wallet.XVERSE),
         icon: XverseWalletIcon,
         order: 22,
@@ -85,16 +82,13 @@ export function SelectWalletModal({
       },
       {
         wallet: Wallet.MAGICEDEN,
-        subtitle: "Coming soon on mobile browsing",
         onConnect: () => connectWallet(Wallet.MAGICEDEN),
         icon: MagicEdenWalletIcon,
-        hidden: isMobile,
         order: 23,
         chains: [Chain.BITCOIN],
       },
       {
         wallet: Wallet.LEATHER,
-        subtitle: "Coming soon on mobile browsing",
         onConnect: () => connectWallet(Wallet.LEATHER),
         icon: LeatherWalletIcon,
         hidden: isMobile,
@@ -103,8 +97,8 @@ export function SelectWalletModal({
       },
     ];
 
-    const walletList = ALL_WALLETS.filter((walletItem) =>
-      walletItem.chains.includes(chain),
+    const walletList = ALL_WALLETS.filter(
+      (walletItem) => walletItem.chains.includes(chain) && !walletItem.hidden,
     );
 
     if (!walletsOrder) {
@@ -171,16 +165,11 @@ export function SelectWalletModal({
                 <section className="panel-content-container">
                   <section className="panel-content-inner-container">
                     {orderedWalletList.map((walletItem, index) => {
-                      if (walletItem.hidden) {
-                        return null;
-                      }
-
                       const isLastItem = index === orderedWalletList.length - 1;
                       return (
                         <Fragment key={walletItem.wallet}>
                           <WalletButton
                             wallet={walletItem.wallet}
-                            subtitle={walletItem.subtitle}
                             onConnect={async () => {
                               setErrorMessage("");
                               // catch clause not required
