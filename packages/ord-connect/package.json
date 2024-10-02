@@ -1,7 +1,7 @@
 {
   "name": "@ordzaar/ord-connect",
   "version": "0.0.0",
-  "description": "React component library for Bitcoin Ordinals and Sado Protocol Connections",
+  "description": "React component library for Bitcoin Ordinals",
   "repository": "https://github.com/ordzaar/ord-connect",
   "bugs": "https://github.com/ordzaar/ord-connect/issues",
   "license": "MIT",
