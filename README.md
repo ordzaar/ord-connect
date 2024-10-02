@@ -4,7 +4,7 @@
 
 ## Introduction
 
-**ord-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions via [Sado Protocol Connections](https://sado.space) with your decentralized application (dApp). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
+**ord-connect** is a React component library that allows you to easily integrate Bitcoin Ordinals & Inscriptions with your decentralized application (dApp). We stand as the pioneering walletkit to support ordinal-aware transactions, ensuring you never inadvertently spend a rare ordinal!
 
 ## Wallet Feature Support
 
