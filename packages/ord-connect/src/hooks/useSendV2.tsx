@@ -21,7 +21,7 @@ type SendResponse = {
 };
 
 export function useSendV2() {
-  const { wallet, network, address, publicKey } = useOrdConnect();
+  const { wallet, network, address, publicKey, chain } = useOrdConnect();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const send: SendFunction = useCallback(
@@ -49,6 +49,7 @@ export function useSendV2() {
           address: address.payments,
           feeRate,
           network,
+          chain,
           publicKey: publicKey.payments,
           outputs: [
             {
@@ -70,7 +71,7 @@ export function useSendV2() {
         });
 
         if (relay) {
-          const datasource = new JsonRpcDatasource({ network });
+          const datasource = new JsonRpcDatasource({ network, chain });
           const txId = await datasource.relay({ hex: signedPsbt.hex });
           setIsLoading(false);
           return {
