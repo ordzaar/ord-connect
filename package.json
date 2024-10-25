@@ -14,13 +14,18 @@
     "lint": "turbo run lint -- --fix"
   },
   "devDependencies": {
-    "@ordzaar/standard-prettier": "^1.8.10",
-    "@ordzaar/standard-web-linter": "^1.8.10",
+    "@ordzaar/standard-prettier": "^2.1.2",
+    "@ordzaar/standard-web-linter": "^2.1.2",
     "husky": "^9.1.6",
-    "turbo": "^2.1.2"
+    "turbo": "^2.2.3"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
   },
-  "packageManager": "pnpm@9.10.0"
+  "packageManager": "pnpm@9.12.2",
+  "pnpm": {
+    "overrides": {
+      "eslint-plugin-react-hooks": "5.0.0"
+    }
+  }
 }
