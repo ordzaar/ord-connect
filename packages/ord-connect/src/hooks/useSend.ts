@@ -12,7 +12,7 @@ type SendFunction = (
 ) => Promise<string | null>;
 
 export function useSend() {
-  const { wallet, network, address, publicKey } = useOrdConnect();
+  const { wallet, network, address, publicKey, chain } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -35,6 +35,7 @@ export function useSend() {
           address: address.payments,
           feeRate,
           network,
+          chain,
           publicKey: publicKey.payments,
           outputs: [
             {
@@ -53,7 +54,7 @@ export function useSend() {
         });
 
         if (relay) {
-          const datasource = new JsonRpcDatasource({ network });
+          const datasource = new JsonRpcDatasource({ network, chain });
           const txId = await datasource.relay({ hex: signedPsbt.hex });
           setLoading(false);
           return txId;

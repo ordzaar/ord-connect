@@ -10,7 +10,7 @@ import {
 import { useOrdConnect } from "../providers/OrdConnectProvider";
 
 export function useBalance() {
-  const { network, publicKey, format } = useOrdConnect();
+  const { network, publicKey, format, chain } = useOrdConnect();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,6 +21,7 @@ export function useBalance() {
       if (!format || !format.payments || !publicKey || !publicKey.payments) {
         throw new Error("No wallet is connected");
       }
+
       const { address } = getAddressesFromPublicKey(
         publicKey.payments,
         network,
@@ -28,11 +29,16 @@ export function useBalance() {
           AddressType,
           "p2wsh"
         >,
+        chain,
       )[0];
 
-      const datasource = new JsonRpcDatasource({ network });
+      const datasource = new JsonRpcDatasource({
+        chain,
+        network,
+      });
 
       const totalBalance = await datasource.getBalance({ address });
+
       const totalAmountInSats = Number(
         new BigNumber(totalBalance)
           .multipliedBy(100_000_000)
