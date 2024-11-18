@@ -18,8 +18,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2(@types/eslint@8.56.12)(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3))(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
       husky:
-        specifier: ^9.1.6
-        version: 9.1.6
+        specifier: ^9.1.7
+        version: 9.1.7
       turbo:
         specifier: ^2.2.3
         version: 2.2.3
@@ -1781,8 +1781,8 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  husky@9.1.6:
-    resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3228,7 +3228,7 @@ snapshots:
       eslint-config-prettier: 9.1.0(eslint@8.57.1)
       eslint-plugin-prettier: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@8.57.1)
-      husky: 9.1.6
+      husky: 9.1.7
       lint-staged: 15.2.10
       prettier: 3.3.3
     transitivePeerDependencies:
@@ -3262,7 +3262,7 @@ snapshots:
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0(eslint@8.57.1)
       eslint-plugin-simple-import-sort: 12.1.1(eslint@8.57.1)
-      husky: 9.1.6
+      husky: 9.1.7
       lint-staged: 15.2.10
       next: 14.2.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       prettier: 3.3.3
@@ -4921,7 +4921,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  husky@9.1.6: {}
+  husky@9.1.7: {}
 
   ieee754@1.2.1: {}
 
