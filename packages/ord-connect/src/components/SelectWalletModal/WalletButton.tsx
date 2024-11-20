@@ -8,11 +8,7 @@ import { isMobileUserAgent } from "../../utils/mobile-detector";
 import { truncateMiddle } from "../../utils/text-helper";
 
 const WALLET_TO_NAME: Record<Wallet, string> = {
-  [Wallet.MAGICEDEN]: "Magic Eden",
   [Wallet.UNISAT]: "UniSat",
-  [Wallet.XVERSE]: "Xverse",
-  [Wallet.LEATHER]: "Leather",
-  [Wallet.OKX]: "OKX",
 } as const;
 
 export interface WalletButtonProps {

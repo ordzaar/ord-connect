@@ -1,9 +1,5 @@
 import { Psbt } from "bitcoinjs-lib";
-import { signPsbt as signLeatherPsbt } from "@ordzaar/ordit-sdk/leather";
-import { signPsbt as signMagicEdenPsbt } from "@ordzaar/ordit-sdk/magiceden";
-import { signPsbt as signOKXPsbt } from "@ordzaar/ordit-sdk/okx";
 import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
-import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
 
 import { Network, Wallet } from "../providers/OrdConnectProvider";
 
@@ -42,9 +38,7 @@ export interface SerializedPsbt {
  * @param options
  */
 export default async function signPsbt({
-  address,
   wallet,
-  network,
   psbt,
   options,
 }: SignPsbtParams): Promise<SerializedPsbt> {
@@ -54,24 +48,6 @@ export default async function signPsbt({
 
   const finalize = options?.finalize ?? true;
   const extractTx = options?.extractTx ?? true;
-  const getAllInputIndices = () =>
-    psbt.data.inputs.map((value, index) => index);
-
-  if (wallet === Wallet.MAGICEDEN) {
-    const signedMagicEdenPsbt = await signMagicEdenPsbt(psbt, {
-      network,
-      inputsToSign: options?.inputsToSign ?? [
-        {
-          address,
-          signingIndexes: options?.signingIndexes ?? getAllInputIndices(),
-          sigHash: options?.sigHash,
-        },
-      ],
-      finalize,
-      extractTx,
-    });
-    return signedMagicEdenPsbt;
-  }
 
   if (wallet === Wallet.UNISAT) {
     const signedUnisatPsbt = await signUnisatPsbt(psbt, {
@@ -79,49 +55,6 @@ export default async function signPsbt({
       extractTx,
     });
     return signedUnisatPsbt;
-  }
-
-  if (wallet === Wallet.XVERSE) {
-    const signedXversePsbt = await signXversePsbt(psbt, {
-      network,
-      inputsToSign: options?.inputsToSign ?? [
-        {
-          address,
-          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
-          sigHash: options?.sigHash,
-        },
-      ],
-      finalize,
-      extractTx,
-    });
-    return signedXversePsbt;
-  }
-
-  if (wallet === Wallet.LEATHER) {
-    const signedLeatherPsbt = await signLeatherPsbt(psbt, {
-      network,
-      finalize,
-      extractTx,
-      allowedSighash: options?.sigHash ? [options?.sigHash] : [],
-      signAtIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
-    });
-    return signedLeatherPsbt;
-  }
-
-  if (wallet === Wallet.OKX) {
-    const signedOKXPsbt = await signOKXPsbt(psbt, {
-      finalize,
-      extractTx,
-      network,
-      inputsToSign: options?.inputsToSign ?? [
-        {
-          address,
-          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
-          sigHash: options?.sigHash,
-        },
-      ],
-    });
-    return signedOKXPsbt;
   }
 
   // else throw error
