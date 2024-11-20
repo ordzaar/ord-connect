@@ -3,12 +3,8 @@ import Avatar from "boring-avatars";
 import { Menu, Transition } from "@headlessui/react";
 
 import ChevronDownIcon from "../../assets/chevron-down.svg";
-import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import LogoutIcon from "../../assets/logout.svg";
-import MagicEdenIcon from "../../assets/magiceden-wallet.svg";
-import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
-import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import {
   Network,
   useOrdConnect,
@@ -17,11 +13,7 @@ import {
 import { truncateMiddle } from "../../utils/text-helper";
 
 const WALLET_TO_ICON: Record<Wallet, string> = {
-  [Wallet.MAGICEDEN]: MagicEdenIcon,
   [Wallet.UNISAT]: UnisatWalletIcon,
-  [Wallet.XVERSE]: XverseWalletIcon,
-  [Wallet.LEATHER]: LeatherWalletIcon,
-  [Wallet.OKX]: OKXWalletIcon,
 } as const;
 
 interface PostConnectButtonProps {

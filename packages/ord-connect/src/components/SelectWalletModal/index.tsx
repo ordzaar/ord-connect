@@ -2,14 +2,9 @@ import { Fragment, ReactNode, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import CloseModalIcon from "../../assets/close-modal.svg";
-import LeatherWalletIcon from "../../assets/leather-wallet.svg";
-import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
-import OKXWalletIcon from "../../assets/okx-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
-import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import {
   Chain,
-  Network,
   useOrdConnect,
   Wallet,
 } from "../../providers/OrdConnectProvider";
@@ -58,42 +53,12 @@ export function SelectWalletModal({
   const orderedWalletList = useMemo<WalletListItemProps[]>(() => {
     const ALL_WALLETS: WalletListItemProps[] = [
       {
-        wallet: Wallet.OKX,
-        onConnect: () => connectWallet(Wallet.OKX),
-        icon: OKXWalletIcon,
-        hidden: isMobile && network !== Network.MAINNET,
-        order: 20,
-        chains: [Chain.BITCOIN],
-      },
-      {
         wallet: Wallet.UNISAT,
         onConnect: () => connectWallet(Wallet.UNISAT),
         icon: UnisatWalletIcon,
         hidden: isMobile,
         order: 21,
         chains: [Chain.BITCOIN, Chain.FRACTAL_BITCOIN],
-      },
-      {
-        wallet: Wallet.XVERSE,
-        onConnect: () => connectWallet(Wallet.XVERSE),
-        icon: XverseWalletIcon,
-        order: 22,
-        chains: [Chain.BITCOIN],
-      },
-      {
-        wallet: Wallet.MAGICEDEN,
-        onConnect: () => connectWallet(Wallet.MAGICEDEN),
-        icon: MagicEdenWalletIcon,
-        order: 23,
-        chains: [Chain.BITCOIN],
-      },
-      {
-        wallet: Wallet.LEATHER,
-        onConnect: () => connectWallet(Wallet.LEATHER),
-        icon: LeatherWalletIcon,
-        hidden: isMobile,
-        order: 24,
-        chains: [Chain.BITCOIN],
       },
     ];
 
