@@ -30,8 +30,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ordzaar/ordit-sdk':
-        specifier: ^4.1.0
-        version: 4.1.0(typescript@5.7.2)
+        specifier: ^4.1.1
+        version: 4.1.1(typescript@5.7.2)
       bignumber.js:
         specifier: ^9.1.2
         version: 9.1.2
@@ -432,8 +432,8 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@ordzaar/ordit-sdk@4.1.0':
-    resolution: {integrity: sha512-YsfqHTMrG07tgf01I83lcx0Z8YKsX2JhrsvoDeiqYakHa0fFG4PfiXKzWt4LrfY3Fq55aT2TUjpm2jqea/LdCA==}
+  '@ordzaar/ordit-sdk@4.1.1':
+    resolution: {integrity: sha512-spdTd1g4VAoGcT7sMmSQGyR4fcONJWHS5Z9MlJ2hjQhmXydXQXrwBn0WoYqoi8T8nfwafue1RF6jBTqklnh3dw==}
 
   '@ordzaar/standard-prettier@2.2.0':
     resolution: {integrity: sha512-eWMecRnLXWG9dj1G/Yjj8vjllksHXw5QfOjUxqh3FQYlyQXRnnm//5F9snMf2COI8+MmgA7brycSDOj4s6eqyg==}
@@ -3285,7 +3285,7 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@ordzaar/ordit-sdk@4.1.0(typescript@5.7.2)':
+  '@ordzaar/ordit-sdk@4.1.1(typescript@5.7.2)':
     dependencies:
       '@bitcoinerlab/secp256k1': 1.1.1
       '@wallet-standard/core': 1.1.0
