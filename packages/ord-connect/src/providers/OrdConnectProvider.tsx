@@ -23,6 +23,8 @@ export enum Wallet {
   MAGICEDEN = "magiceden",
   LEATHER = "leather",
   OKX = "okx",
+  PHANTOM = "phantom",
+  OYL = "oyl",
 }
 
 export enum Chain {

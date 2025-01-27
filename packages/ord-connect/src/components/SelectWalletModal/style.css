@@ -152,6 +152,7 @@
 .ord-connect-wallet-modal .wallet-icon {
   width: 32px;
   height: 32px;
+  border-radius: 9999px;
 }
 
 .ord-connect-wallet-modal .wallet-option {
@@ -286,6 +287,7 @@
   .ord-connect-wallet-modal .wallet-icon {
     width: 40px;
     height: 40px;
+    border-radius: 9999px;
   }
 
   .ord-connect-wallet-modal .wallet-option-label {

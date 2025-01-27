@@ -2,6 +2,8 @@ import { Psbt } from "bitcoinjs-lib";
 import { signPsbt as signLeatherPsbt } from "@ordzaar/ordit-sdk/leather";
 import { signPsbt as signMagicEdenPsbt } from "@ordzaar/ordit-sdk/magiceden";
 import { signPsbt as signOKXPsbt } from "@ordzaar/ordit-sdk/okx";
+import { signPsbt as signOylPsbt } from "@ordzaar/ordit-sdk/oyl";
+import { signPsbt as signPhantomPsbt } from "@ordzaar/ordit-sdk/phantom";
 import { signPsbt as signUnisatPsbt } from "@ordzaar/ordit-sdk/unisat";
 import { signPsbt as signXversePsbt } from "@ordzaar/ordit-sdk/xverse";
 
@@ -122,6 +124,38 @@ export default async function signPsbt({
       ],
     });
     return signedOKXPsbt;
+  }
+
+  if (wallet === Wallet.PHANTOM) {
+    const signedPhantomPsbt = await signPhantomPsbt(psbt, {
+      finalize,
+      extractTx,
+      network,
+      inputsToSign: options?.inputsToSign ?? [
+        {
+          address,
+          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+          sigHash: options?.sigHash,
+        },
+      ],
+    });
+    return signedPhantomPsbt;
+  }
+
+  if (wallet === Wallet.OYL) {
+    const signedOylPsbt = await signOylPsbt(psbt, {
+      finalize,
+      extractTx,
+      network,
+      inputsToSign: options?.inputsToSign ?? [
+        {
+          address,
+          signingIndexes: options?.signingIndexes ?? getAllInputIndices(), // If signingIndexes is not provided, just sign everything
+          sigHash: options?.sigHash,
+        },
+      ],
+    });
+    return signedOylPsbt;
   }
 
   // else throw error

@@ -15,6 +15,8 @@
 | Xverse     | ✅             | ✅                 |
 | Magic Eden | ✅             | ✅                 |
 | Leather    | ✅             | ✅                 |
+| Phantom    | ✅             | ✅                 |
+| Oyl        | ✅             | ✅                 |
 
 ## Quick Start
 

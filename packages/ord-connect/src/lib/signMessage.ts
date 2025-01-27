@@ -5,6 +5,8 @@ import {
 } from "@ordzaar/ordit-sdk/leather";
 import { signMessage as signMagicEdenMessage } from "@ordzaar/ordit-sdk/magiceden";
 import { signMessage as signOKXMessage } from "@ordzaar/ordit-sdk/okx";
+import { signMessage as signOylMessage } from "@ordzaar/ordit-sdk/oyl";
+import { signMessage as signPhantomMessage } from "@ordzaar/ordit-sdk/phantom";
 import { signMessage as signUnisatMessage } from "@ordzaar/ordit-sdk/unisat";
 import { signMessage as signXverseMessage } from "@ordzaar/ordit-sdk/xverse";
 
@@ -69,6 +71,16 @@ export default async function signMessage({
 
   if (wallet === Wallet.OKX) {
     const { base64 } = await signOKXMessage(message, "bip322-simple", network);
+    return base64;
+  }
+
+  if (wallet === Wallet.PHANTOM) {
+    const { base64 } = await signPhantomMessage(message, address, network);
+    return base64;
+  }
+
+  if (wallet === Wallet.OYL) {
+    const { base64 } = await signOylMessage(message, address, network);
     return base64;
   }
 

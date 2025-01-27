@@ -7,6 +7,8 @@ import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import MagicEdenIcon from "../../assets/magiceden-wallet.svg";
 import OKXWalletIcon from "../../assets/okx-wallet.svg";
+import OylWalletIcon from "../../assets/oyl-wallet.svg";
+import PhantomWalletIcon from "../../assets/phantom-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import {
@@ -22,6 +24,8 @@ const WALLET_TO_ICON: Record<Wallet, string> = {
   [Wallet.XVERSE]: XverseWalletIcon,
   [Wallet.LEATHER]: LeatherWalletIcon,
   [Wallet.OKX]: OKXWalletIcon,
+  [Wallet.PHANTOM]: PhantomWalletIcon,
+  [Wallet.OYL]: OylWalletIcon,
 } as const;
 
 interface PostConnectButtonProps {
