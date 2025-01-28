@@ -5,6 +5,8 @@ import CloseModalIcon from "../../assets/close-modal.svg";
 import LeatherWalletIcon from "../../assets/leather-wallet.svg";
 import MagicEdenWalletIcon from "../../assets/magiceden-wallet.svg";
 import OKXWalletIcon from "../../assets/okx-wallet.svg";
+import OylWalletIcon from "../../assets/oyl-wallet.svg";
+import PhantomWalletIcon from "../../assets/phantom-wallet.svg";
 import UnisatWalletIcon from "../../assets/unisat-wallet.svg";
 import XverseWalletIcon from "../../assets/xverse-wallet.svg";
 import {
@@ -93,6 +95,22 @@ export function SelectWalletModal({
         icon: LeatherWalletIcon,
         hidden: isMobile,
         order: 24,
+        chains: [Chain.BITCOIN],
+      },
+      {
+        wallet: Wallet.PHANTOM,
+        onConnect: () => connectWallet(Wallet.PHANTOM),
+        icon: PhantomWalletIcon,
+        hidden: isMobile,
+        order: 25,
+        chains: [Chain.BITCOIN],
+      },
+      {
+        wallet: Wallet.OYL,
+        onConnect: () => connectWallet(Wallet.OYL),
+        icon: OylWalletIcon,
+        hidden: isMobile,
+        order: 26,
         chains: [Chain.BITCOIN],
       },
     ];

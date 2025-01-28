@@ -6,6 +6,8 @@ import {
 import { getAddresses as getLeatherAddresses } from "@ordzaar/ordit-sdk/leather";
 import { getAddresses as getMagicEdenAddress } from "@ordzaar/ordit-sdk/magiceden";
 import { getAddresses as getOKXAddresses } from "@ordzaar/ordit-sdk/okx";
+import { getAddresses as getOylAddresses } from "@ordzaar/ordit-sdk/oyl";
+import { getAddresses as getPhantomAddresses } from "@ordzaar/ordit-sdk/phantom";
 import { getAddresses as getUnisatAddresses } from "@ordzaar/ordit-sdk/unisat";
 import { getAddresses as getXverseAddresses } from "@ordzaar/ordit-sdk/xverse";
 
@@ -31,6 +33,8 @@ const WALLET_CHROME_EXTENSION_URL: Record<Wallet, string> = {
   [Wallet.UNISAT]: "https://unisat.io/download", // their www subdomain doesn't work
   [Wallet.XVERSE]: "https://www.xverse.app/download",
   [Wallet.LEATHER]: "https://leather.io/install-extension",
+  [Wallet.PHANTOM]: "https://phantom.com/download",
+  [Wallet.OYL]: "https://www.oyl.io/#get-wallet",
 };
 
 const connectWallet = async (
@@ -206,6 +210,84 @@ const connectWallet = async (
         format: {
           ordinals: okxWallet.format,
           payments: okxWallet.format,
+        },
+      };
+    }
+    case Wallet.PHANTOM: {
+      const phantom = await getPhantomAddresses(network);
+      if (!phantom || phantom.length < 1) {
+        throw new Error("Phantom via Ordit returned no addresses");
+      }
+
+      const paymentsAddress = phantom.find(
+        (walletAddress) => walletAddress.format === "segwit",
+      );
+
+      if (!paymentsAddress) {
+        throw new Error("Phantom via Ordit did not return a Segwit address");
+      }
+
+      const ordinalsAddress = phantom.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+
+      if (!ordinalsAddress) {
+        throw new Error("Phantom via Ordit did not return a Taproot address");
+      }
+
+      return {
+        address: {
+          ordinals: ordinalsAddress.address,
+          payments: paymentsAddress.address,
+        },
+        publicKey: {
+          ordinals: ordinalsAddress.publicKey,
+          payments: paymentsAddress.publicKey,
+        },
+        format: {
+          ordinals: ordinalsAddress.format,
+          payments: paymentsAddress.format,
+        },
+      };
+    }
+    case Wallet.OYL: {
+      const oyl = await getOylAddresses(network);
+      if (!oyl || oyl.length < 1) {
+        throw new Error("Oyl via Ordit returned no addresses");
+      }
+
+      const paymentsAddress = oyl.find(
+        (walletAddress) =>
+          walletAddress.format === "p2sh-p2wpkh" ||
+          walletAddress.format === "segwit",
+      );
+
+      if (!paymentsAddress) {
+        throw new Error(
+          "Oyl via Ordit did not return a P2SH or Segwit address",
+        );
+      }
+
+      const ordinalsAddress = oyl.find(
+        (walletAddress) => walletAddress.format === "taproot",
+      );
+
+      if (!ordinalsAddress) {
+        throw new Error("Oyl via Ordit did not return a Taproot address");
+      }
+
+      return {
+        address: {
+          ordinals: ordinalsAddress.address,
+          payments: paymentsAddress.address,
+        },
+        publicKey: {
+          ordinals: ordinalsAddress.publicKey,
+          payments: paymentsAddress.publicKey,
+        },
+        format: {
+          ordinals: ordinalsAddress.format,
+          payments: paymentsAddress.format,
         },
       };
     }
